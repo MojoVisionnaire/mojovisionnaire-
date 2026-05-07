@@ -12,6 +12,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
+#loading{position:fixed;inset:0;background:#07080e;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:16px}
+#loading h1{font-family:serif;font-size:2rem;color:#6e72ff}
+#loading p{font-size:0.75rem;color:#383a52;font-family:monospace}
+#loading-dot{width:8px;height:8px;border-radius:50%;background:#6e72ff;animation:pulse 1s infinite}
+</style>
+<style>
 :root{color-scheme:dark}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{background:#07080e}
@@ -44,8 +50,17 @@ input,textarea,select{color:#dde0ec}
 .typing span:nth-child(3){animation-delay:.4s}
 </style>
 </head>
-<body><div id="root"></div>
+<body><div id="loading">
+  <div id="loading-dot"></div>
+  <h1>mojoVisionnaire</h1>
+  <p>Chargement en cours...</p>
+</div>
+<div id="root"></div>
 <script type="text/babel">
+// Hide loader when React is ready
+if(document.getElementById('loading')){
+  document.getElementById('loading').style.display='none';
+}
 const{useState,useEffect,useRef,useCallback,useMemo}=React;
 
 /* ══════ TOKENS ══════ */
@@ -1300,6 +1315,8 @@ return(
 );
 }
 
+var loadingEl=document.getElementById(‘loading’);
+if(loadingEl)loadingEl.style.display=‘none’;
 ReactDOM.render(<App/>,document.getElementById(‘root’));
 </script>
 
