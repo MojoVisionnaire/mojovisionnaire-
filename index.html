@@ -884,7 +884,7 @@ renderFeed(); renderWiki(); renderMsgs(); renderSubmit(); renderProfile();
 loadPosts(); loadTxs();
 }
 
-window.addEventListener(“DOMContentLoaded”, function() {
+(function() {
 // Safety timeout - if app doesn’t load in 4s, force show auth
 setTimeout(function() {
 var splash = document.getElementById(“splash”);
@@ -911,7 +911,7 @@ if (u && u.id) { window._mjtok = tok; hideSplash(); startApp(u); return; }
 hideSplash();
 document.getElementById(“app”).appendChild(renderAuth());
 } catch(e) { document.getElementById(“app”).innerHTML = ’<div style="padding:40px;color:#ff4d6d;font-family:monospace;font-size:0.8rem">Erreur: ’ + e.message + ‘<br/><br/>’ + e.stack + ‘</div>’; var s=document.getElementById(“splash”); if(s)s.style.display=“none”; }
-});
+})();
 
 </script>
 </body>
