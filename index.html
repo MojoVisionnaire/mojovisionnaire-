@@ -885,7 +885,18 @@ loadPosts(); loadTxs();
 }
 
 window.addEventListener(“DOMContentLoaded”, function() {
-var tok = localStorage.getItem(“mj_tok”);
+// Safety timeout - if app doesn’t load in 4s, force show auth
+setTimeout(function() {
+var splash = document.getElementById(“splash”);
+var app = document.getElementById(“app”);
+if (splash && splash.style.opacity !== “0” && app && app.children.length === 0) {
+splash.style.opacity = “0”;
+setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); }, 400);
+app.appendChild(renderAuth());
+}
+}, 4000);
+
+try { var tok = localStorage.getItem(“mj_tok”);
 var usr = localStorage.getItem(“mj_usr”);
 var splash = document.getElementById(“splash”);
 function hideSplash() {
@@ -899,6 +910,7 @@ if (u && u.id) { window._mjtok = tok; hideSplash(); startApp(u); return; }
 }
 hideSplash();
 document.getElementById(“app”).appendChild(renderAuth());
+} catch(e) { document.getElementById(“app”).innerHTML = ’<div style="padding:40px;color:#ff4d6d;font-family:monospace;font-size:0.8rem">Erreur: ’ + e.message + ‘<br/><br/>’ + e.stack + ‘</div>’; var s=document.getElementById(“splash”); if(s)s.style.display=“none”; }
 });
 
 </script>
