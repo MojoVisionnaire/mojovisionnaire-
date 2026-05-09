@@ -667,14 +667,22 @@ loadPosts();loadTxs();
 // BOOT
 (function(){
 try {
-var tok=localStorage.getItem(“mj_tok”);
-var usr=localStorage.getItem(“mj_usr”);
+var tok=null,usr=null;
+try{tok=localStorage.getItem(“mj_tok”);usr=localStorage.getItem(“mj_usr”);}catch(e){}
 if(tok&&usr){
+try{
 var u=JSON.parse(usr);
 if(u&&u.id){window._mjtok=tok;startApp(u);return;}
+}catch(e){}
 }
-} catch(e) {}
 document.getElementById(“app”).appendChild(renderAuth());
+} catch(e) {
+document.getElementById(“app”).style.cssText=“min-height:100vh;background:#07080e;display:flex;align-items:center;justify-content:center;padding:20px”;
+var errDiv=document.createElement(“div”);
+errDiv.style.cssText=“background:#ff4d6d18;border:1px solid #ff4d6d33;border-radius:10px;padding:20px;color:#ff4d6d;font-family:monospace;font-size:0.75rem;word-break:break-all;max-width:100%”;
+errDiv.innerHTML=”<div style='font-size:1rem;margin-bottom:10px'>Erreur de demarrage:</div>”+e.message+”<br/><br/>”+String(e.stack).slice(0,500);
+document.getElementById(“app”).appendChild(errDiv);
+}
 })();
 </script>
 
