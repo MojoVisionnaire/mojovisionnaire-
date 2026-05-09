@@ -3,538 +3,365 @@
 <html lang="fr" style="color-scheme:dark">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="color-scheme" content="dark"/>
 <title>mojoVisionnaire</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:#07080e;color:#dde0ec;font-family:"Outfit",sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-#app{min-height:100vh}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#07080e;color:#dde0ec;font-family:"Outfit",sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
 input,textarea,select,button{font-family:"Outfit",sans-serif;-webkit-appearance:none;color-scheme:dark;color:#dde0ec}
 ::placeholder{color:#2e3048}
 ::-webkit-scrollbar{display:none}
-/* Splash */
-#splash{position:fixed;inset:0;background:#07080e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:9999;transition:opacity .4s}
-.spl{font-family:"DM Serif Display",serif;font-size:2.6rem;color:#dde0ec}.spl span{color:#6e72ff}
-.spb{width:140px;height:3px;background:#1a1a2e;border-radius:3px;overflow:hidden}
-.spf{height:100%;background:linear-gradient(90deg,#6e72ff,#00d2ff);border-radius:3px;animation:ld 1.8s ease forwards}
-.sps{font-size:.6rem;font-family:"Fira Code",monospace;color:#383a52;letter-spacing:.1em}
-@keyframes ld{from{width:0}to{width:100%}}
-/* Screens */
+#app{min-height:100vh}
 .screen{display:none;flex-direction:column;min-height:100vh;padding-bottom:64px}
 .screen.active{display:flex}
-/* TopBar */
-.topbar{height:52px;background:#07080eee;border-bottom:1px solid #ffffff0a;display:flex;align-items:center;padding:0 16px;gap:10px;position:sticky;top:0;z-index:60;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-shrink:0}
-/* BotBar */
-.botbar{height:64px;background:#07080eee;border-top:1px solid #ffffff0a;display:flex;align-items:stretch;position:fixed;bottom:0;left:0;right:0;z-index:60;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);padding-bottom:env(safe-area-inset-bottom)}
-.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:#383a52;position:relative;padding:6px 0;font-family:"Outfit",sans-serif;transition:color .18s}
+.topbar{height:52px;background:#07080eee;border-bottom:1px solid #ffffff0a;display:flex;align-items:center;padding:0 16px;gap:10px;position:sticky;top:0;z-index:60;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-shrink:0}
+.botbar{height:64px;background:#07080eee;border-top:1px solid #ffffff0a;display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:#383a52;font-family:"Outfit",sans-serif;font-size:.54rem;padding:6px 0;position:relative}
 .tab.on{color:#6e72ff}
 .tab.on::after{content:"";position:absolute;bottom:0;width:18px;height:2px;background:#6e72ff;border-radius:2px 2px 0 0}
-.tab svg{transition:transform .18s}
-.tab.on svg{transform:translateY(-1px)}
-.tab span{font-size:.54rem}
-.tab.on span{font-weight:700}
-/* Scrolls */
-.feed-scroll,.wiki-scroll,.msg-scroll,.profile-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-/* Forms */
-.inp{width:100%;background:#131420;border:1.5px solid #ffffff14;border-radius:10px;padding:13px 15px;font-size:.88rem;outline:none;color:#dde0ec;display:block;transition:border-color .2s}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.inp{width:100%;background:#131420;border:1.5px solid #ffffff14;border-radius:10px;padding:13px 15px;font-size:.88rem;outline:none;color:#dde0ec;display:block}
 .inp:focus{border-color:#6e72ff}
 .lbl{font-size:.58rem;color:#383a52;font-family:"Fira Code",monospace;letter-spacing:.1em;display:block;margin-bottom:6px}
-.err{background:#ff4d6d18;border:1px solid #ff4d6d33;border-radius:7px;padding:10px 13px;font-size:.78rem;color:#ff4d6d;margin-bottom:10px;word-break:break-word;line-height:1.5}
-/* Buttons */
-.btn{width:100%;background:#6e72ff;color:#fff;border:none;padding:14px;border-radius:14px;font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s;font-family:"Outfit",sans-serif}
-.btn:active{opacity:.8}
-.btn:disabled{background:#131420;color:#383a52;cursor:default;opacity:1}
+.btn{width:100%;background:#6e72ff;color:#fff;border:none;padding:14px;border-radius:14px;font-weight:700;font-size:.92rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:"Outfit",sans-serif}
+.btn:disabled{background:#131420;color:#383a52}
 .btn.ghost{background:none;border:1px solid #ffffff14;color:#7a7d9a}
 .btn.amber{background:#ffb547;color:#000}
+.err{background:#ff4d6d18;border:1px solid #ff4d6d33;border-radius:7px;padding:10px 13px;font-size:.78rem;color:#ff4d6d;margin-bottom:10px;word-break:break-word;line-height:1.5}
+.hr{height:1px;background:#ffffff0a}
+.spin{width:15px;height:15px;border:2px solid #ffffff14;border-top:2px solid #6e72ff;border-radius:50%;animation:spin .6s linear infinite;display:inline-block;flex-shrink:0}
+.card{background:#0d0e18;border:1px solid #ffffff0a;border-radius:14px;padding:14px}
+.post{padding:12px 16px;cursor:pointer}
+.post:active{background:#0d0e18}
+.wiki-item{padding:13px 16px;cursor:pointer}
+.wiki-item:active{background:#0d0e18}
 .paste-btn{background:#6e72ff18;border:1px solid #6e72ff30;color:#6e72ff;padding:0 14px;border-radius:10px;cursor:pointer;font-size:.7rem;font-weight:600;white-space:nowrap;min-height:48px;font-family:"Outfit",sans-serif}
-.copy-btn{background:#131420;border:1px solid #ffffff14;color:#7a7d9a;padding:5px 11px;border-radius:7px;cursor:pointer;font-size:.7rem;font-weight:600;transition:all .18s;white-space:nowrap;font-family:"Outfit",sans-serif}
+.copy-btn{background:#131420;border:1px solid #ffffff14;color:#7a7d9a;padding:5px 11px;border-radius:7px;cursor:pointer;font-size:.7rem;font-weight:600;white-space:nowrap;font-family:"Outfit",sans-serif}
 .copy-btn.ok{background:#3ddc84;color:#000}
 .back-btn{background:none;border:none;color:#7a7d9a;cursor:pointer;padding:4px 6px 4px 0;display:flex;align-items:center;flex-shrink:0}
-/* List items */
-.post,.wiki-item{cursor:pointer;padding:12px 16px}
-.post:active,.wiki-item:active{background:#0d0e18}
-/* Compose */
-.compose{padding:12px 16px;background:#0d0e18;border-bottom:1px solid #ffffff0a;animation:fu .3s ease}
-/* Misc */
-.hr{height:1px;background:#ffffff0a}
-.spin{width:15px;height:15px;border:2px solid #ffffff14;border-top:2px solid #6e72ff;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;display:inline-block}
-.pill{font-size:.56rem;font-family:"Fira Code",monospace;padding:2px 7px;border-radius:20px;white-space:nowrap}
-.tag{font-size:.56rem;padding:2px 7px;border-radius:20px;font-family:"Fira Code",monospace;white-space:nowrap}
-.fu{animation:fu .28s ease both}
-.fi{animation:fi .2s ease both}
-@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes fi{from{opacity:0}to{opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fu{animation:fu .25s ease both}
 </style>
 </head>
 <body>
-<div id="splash">
-  <div class="spl">mojo<span>Visionnaire</span></div>
-  <div class="spb"><div class="spf"></div></div>
-  <div class="sps">Chargement...</div>
-</div>
 <div id="app"></div>
 <script>
+"use strict";
 
-“use strict”;
+// Decode keys
+var _d = function(b) { try { return atob(b); } catch(e) { return “”; } };
+var _U = _d(“aHR0cHM6Ly9hbHlkbXlqbmJkeXJkaW9pcGtlay5zdXBhYmFzZS5jbw==”);
+var _K = _d(“ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1Gc2VXUnRlV3B1WW1SNWNtUnBiMmx3YTJWcklpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpneE16Z3pOamtzSW1WNGNDSTZNakE1TXpjeE5ETTJPWDAubDdkbkpOVVRReGROSVhsUUtFRGJQY3gtd08zTVhFeFlyYkFiQ3VSZGp0WQ==”);
 
-// ═══════════════════════════════════════════════
-// SÉCURITÉ : Clés obfusquées + Rate Limiting
-// ═══════════════════════════════════════════════
-var _c = function(b){ try{ return atob(b); }catch(e){ return “”; } };
-var _U = _c(“aHR0cHM6Ly9hbHlkbXlqbmJkeXJkaW9pcGtlay5zdXBhYmFzZS5jbw==”);
-var _K = _c(“ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW1Gc2VXUnRlV3B1WW1SNWNtUnBiMmx3YTJWcklpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpneE16Z3pOamtzSW1WNGNDSTZNakE1TXpjeE5ETTJPWDAubDdkbkpOVVRReGROSVhsUUtFRGJQY3gtd08zTVhFeFlyYkFiQ3VSZGp0WQ==”);
-
-// Rate Limiter — max N appels par fenêtre de temps
+// Rate limiter
 var RL = {
-_buckets: {},
-check: function(key, max, windowMs) {
+b: {},
+ok: function(key, max, ms) {
 var now = Date.now();
-if (!this._buckets[key]) this._buckets[key] = [];
-// Nettoyer les anciens appels
-this._buckets[key] = this._buckets[key].filter(function(t){ return now - t < windowMs; });
-if (this._buckets[key].length >= max) return false;
-this._buckets[key].push(now);
+if (!this.b[key]) this.b[key] = [];
+this.b[key] = this.b[key].filter(function(t) { return now - t < ms; });
+if (this.b[key].length >= max) return false;
+this.b[key].push(now);
 return true;
 }
 };
 
-// Sanitize inputs
+// Sanitize
 var san = {
-text: function(s, maxLen) {
-if (typeof s !== “string”) return “”;
-return s.replace(/<[^>]*>/g, “”).replace(/[<>”’&]/g, “”).trim().slice(0, maxLen || 500);
-},
-email: function(s) {
-s = (s||””).toLowerCase().trim().slice(0, 254);
-return /^[^\s@]+@[^\s@]+.[^\s@]+$/.test(s) ? s : “”;
-},
-code: function(s) {
-return (s||””).toUpperCase().replace(/[^A-Z0-9-]/g, “”).trim().slice(0, 20);
-},
-alias: function(s) {
-return (s||””).replace(/[^a-zA-Z0-9_-. ]/g, “”).trim().slice(0, 30);
-},
-password: function(s) {
-return (s||””).slice(0, 128);
-}
+t: function(s, n) { return String(s||””).replace(/<[^>]*>/g,””).replace(/[<>”&]/g,””).trim().slice(0,n||500); },
+email: function(s) { s=(s||””).toLowerCase().trim().slice(0,254); return /^[^\s@]+@[^\s@]+.[^\s@]+$/.test(s)?s:””; },
+code: function(s) { return (s||””).toUpperCase().replace(/[^A-Z0-9-]/g,””).trim().slice(0,20); },
+alias: function(s) { return (s||””).replace(/[^a-zA-Z0-9_.- ]/g,””).trim().slice(0,30); },
+pw: function(s) { return (s||””).slice(0,128); }
 };
 
-// Token
-function tok(){ return window._mjtok || _K; }
+function tok() { return window._mjtok || _K; }
 
-// ═══════════════════════════════════════════════
-// API CLIENT SÉCURISÉ
-// ═══════════════════════════════════════════════
+// API
 var api = {
-_req: function(method, path, body) {
-var opts = {
-method: method,
-headers: {
-apikey: _K,
-Authorization: “Bearer “ + tok(),
-“Content-Type”: “application/json”,
-Prefer: “return=representation”
-}
-};
-if (body) opts.body = JSON.stringify(body);
-return fetch(_U + path, opts)
-.then(function(r) {
+r: function(m, p, b) {
+var h = { apikey: _K, Authorization: “Bearer “+tok(), “Content-Type”: “application/json”, Prefer: “return=representation” };
+var o = { method: m, headers: h };
+if (b) o.body = JSON.stringify(b);
+return fetch(_U+p, o).then(function(r) {
 return r.text().then(function(t) {
 var d; try { d = JSON.parse(t); } catch(e) { d = t; }
-if (!r.ok) return { __err: true, status: r.status, msg: d && d.message ? d.message : String(d).slice(0, 200) };
+if (!r.ok) return { __e: true, msg: d&&d.message ? d.message : JSON.stringify(d).slice(0,200) };
 return d;
 });
-})
-.catch(function(e) { return { __err: true, msg: e.message }; });
+}).catch(function(e) { return { __e: true, msg: e.message }; });
 },
-
 findRef: function(code) {
-// Rate limit: 5 tentatives / minute
-if (!RL.check(“findRef”, 5, 60000)) return Promise.resolve({ __err: true, msg: “Trop de tentatives. Attendez 1 minute.” });
+if (!RL.ok(“ref”,5,60000)) return Promise.resolve({ __e:true, msg:“Trop de tentatives. Attendez 1 minute.” });
 var c = san.code(code);
-if (!c) return Promise.resolve({ __err: true, msg: “Code invalide.” });
-return this._req(“GET”, “/rest/v1/users?select=id,alias,referral_code&referral_code=eq.” + encodeURIComponent(c));
+if (!c) return Promise.resolve({ _*e:true, msg:“Code invalide.” });
+return this.r(“GET”, “/rest/v1/users?select=id,alias,referral_code&referral_code=eq.”+encodeURIComponent(c));
 },
-
-getUser: function(id) {
-if (!id) return Promise.resolve({ __err: true, msg: “ID manquant.” });
-return this._req(“GET”, “/rest/v1/users?select=*&id=eq.” + encodeURIComponent(id));
-},
-
-addUser: function(d) {
-return this._req(“POST”, “/rest/v1/users”, d);
-},
-
-addRef: function(d) {
-return this._req(“POST”, “/rest/v1/referrals”, d);
-},
-
+getUser: function(id) { return this.r(“GET”, “/rest/v1/users?select=*&id=eq.”+encodeURIComponent(id)); },
+addUser: function(d) { return this.r(“POST”, “/rest/v1/users”, d); },
+addRef: function(d) { return this.r(“POST”, “/rest/v1/referrals”, d); },
 signup: function(email, pw, alias) {
-// Rate limit: 3 inscriptions / 10 minutes
-if (!RL.check(“signup”, 3, 600000)) return Promise.resolve({ error: { message: “Trop de tentatives d’inscription. Réessayez dans 10 minutes.” } });
-return fetch(_U + “/auth/v1/signup”, {
-method: “POST”,
-headers: { apikey: _K, “Content-Type”: “application/json” },
-body: JSON.stringify({ email: email, password: pw, data: { alias: alias } })
-}).then(function(r){ return r.json(); }).catch(function(e){ return { error: { message: e.message } }; });
+if (!RL.ok(“signup”,3,600000)) return Promise.resolve({ error:{ message:“Trop de tentatives. Attendez 10 minutes.” } });
+return fetch(_U+”/auth/v1/signup”, { method:“POST”, headers:{ apikey:*K, “Content-Type”:“application/json” }, body:JSON.stringify({ email:email, password:pw, data:{ alias:alias } }) }).then(function(r){return r.json();}).catch(function(e){return{error:{message:e.message}};});
 },
-
 login: function(email, pw) {
-// Rate limit: 5 tentatives / 5 minutes
-if (!RL.check(“login_” + email, 5, 300000)) return Promise.resolve({ error: { message: “Trop de tentatives. Attendez 5 minutes.” } });
-return fetch(_U + “/auth/v1/token?grant_type=password”, {
-method: “POST”,
-headers: { apikey: _K, “Content-Type”: “application/json” },
-body: JSON.stringify({ email: email, password: pw })
-}).then(function(r){ return r.json(); }).catch(function(e){ return { error: { message: e.message } }; });
+if (!RL.ok(“login*”+email,5,300000)) return Promise.resolve({ error:{ message:“Trop de tentatives. Attendez 5 minutes.” } });
+return fetch(_U+”/auth/v1/token?grant_type=password”, { method:“POST”, headers:{ apikey:_K, “Content-Type”:“application/json” }, body:JSON.stringify({ email:email, password:pw }) }).then(function(r){return r.json();}).catch(function(e){return{error:{message:e.message}};});
 },
-
 logout: function() {
-if (window._mjtok) {
-try { fetch(_U + “/auth/v1/logout”, { method: “POST”, headers: { apikey: _K, Authorization: “Bearer “ + window._mjtok } }); } catch(e) {}
-}
-window._mjtok = null;
-localStorage.removeItem(“mj_tok”);
-localStorage.removeItem(“mj_usr”);
+if (window._mjtok) try { fetch(_U+”/auth/v1/logout”, { method:“POST”, headers:{ apikey:_K, Authorization:“Bearer “+window._mjtok } }); } catch(e) {}
+window.*mjtok = null;
+try { localStorage.removeItem(“mj_tok”); localStorage.removeItem(“mj_usr”); } catch(e) {}
 },
-
 posts: function() {
-if (!RL.check(“posts”, 20, 60000)) return Promise.resolve([]);
-return this._req(“GET”, “/rest/v1/posts?select=id,content,likes_count,comments_count,created_at,author_id,users(alias,level)&order=created_at.desc&limit=30”);
+if (!RL.ok(“posts”,20,60000)) return Promise.resolve([]);
+return this.r(“GET”, “/rest/v1/posts?select=id,content,likes_count,comments_count,created_at,author_id,users(alias,level)&order=created_at.desc&limit=30”);
 },
-
 addPost: function(d) {
-if (!RL.check(“addPost_” + (d.author_id||””), 5, 60000)) return Promise.resolve({ __err: true, msg: “Limite de publications atteinte (5/min).” });
-return this._req(“POST”, “/rest/v1/posts”, d);
+if (!RL.ok(“post*”+(d.author_id||””),5,60000)) return Promise.resolve({ _*e:true, msg:“Limite 5 posts/min.” });
+return this.r(“POST”, “/rest/v1/posts”, d);
 },
-
 like: function(pid, uid) {
-if (!RL.check(“like_” + uid, 30, 60000)) return Promise.resolve({});
-return this._req(“POST”, “/rest/v1/likes”, { user_id: uid, post_id: pid });
+if (!RL.ok(“like*”+uid,30,60000)) return Promise.resolve({});
+return this.r(“POST”, “/rest/v1/likes”, { user_id:uid, post_id:pid });
 },
-
-wiki: function() {
-return this._req(“GET”, “/rest/v1/wiki_articles?select=*&status=eq.verified&order=created_at.desc”);
-},
-
+wiki: function() { return this.r(“GET”, “/rest/v1/wiki_articles?select=*&status=eq.verified&order=created_at.desc”); },
 addWiki: function(d) {
-if (!RL.check(“addWiki_” + (d.submitted_by||””), 3, 3600000)) return Promise.resolve({ __err: true, msg: “Maximum 3 soumissions par heure.” });
-return this._req(“POST”, “/rest/v1/wiki_articles”, d);
+if (!RL.ok(“wiki*”+(d.submitted_by||””),3,3600000)) return Promise.resolve({ __e:true, msg:“Max 3 soumissions/heure.” });
+return this.r(“POST”, “/rest/v1/wiki_articles”, d);
 },
-
-txs: function(uid) {
-return this._req(“GET”, “/rest/v1/transactions?select=*&user_id=eq.” + encodeURIComponent(uid) + “&order=created_at.desc&limit=15”);
-}
+txs: function(uid) { return this.r(“GET”, “/rest/v1/transactions?select=*&user_id=eq.”+encodeURIComponent(uid)+”&order=created_at.desc&limit=15”); }
 };
 
-// ═══════════════════════════════════════════════
-// WIKI EXEMPLES
-// ═══════════════════════════════════════════════
 var WX = [
-{ id:“mkUltra”, title:“Operation MKUltra”, cat:“Gouvernement”, mjc:150, votes:342, cred:98,
-summary:“Programme secret CIA de contrôle mental via drogues et torture. Déclassifié en 1977.”,
-tags:[“CIA”,“Contrôle Mental”],
-content:“En 1953, la CIA lance MKUltra, un programme top secret utilisant le LSD, la privation de sommeil et la torture psychologique sur des sujets non consentants. En 1977, des documents déclassifiés révèlent l’ampleur du programme suite aux travaux du Comité Church.” },
-{ id:“prism”, title:“Programme PRISM — NSA”, cat:“Surveillance”, mjc:220, votes:891, cred:99,
-summary:“La NSA espionnait massivement via les géants du web. Révélé par Snowden en 2013.”,
-tags:[“NSA”,“Big Tech”],
-content:“En juin 2013, Edward Snowden révèle que la NSA accédait directement aux serveurs de Google, Apple et Facebook via PRISM. Des millions de données personnelles collectées sans mandat judiciaire.” },
-{ id:“northwoods”, title:“Opération Northwoods”, cat:“Faux Drapeau”, mjc:180, votes:567, cred:97,
-summary:“Plan militaire US pour simuler des attentats contre ses propres citoyens.”,
-tags:[“Militaire”,“Cuba”],
-content:“En 1962, les chefs d’état-major proposent à Kennedy de simuler des attaques terroristes pour justifier une invasion de Cuba. Kennedy refuse et limoge le général Lemnitzer. Déclassifié en 1997.” },
-{ id:“cointelpro”, title:“COINTELPRO — FBI”, cat:“Gouvernement”, mjc:195, votes:712, cred:96,
-summary:“Programme secret FBI pour surveiller et détruire les mouvements politiques américains.”,
-tags:[“FBI”,“Surveillance”],
-content:“De 1956 à 1971, le FBI mène COINTELPRO ciblant les Black Panthers, MLK, NAACP. Méthodes : infiltration, désinformation, chantage. Révélé en 1971 après le cambriolage du bureau FBI de Media.” }
+{ id:“mkUltra”, title:“Operation MKUltra”, cat:“Gouvernement”, mjc:150, votes:342, cred:98, summary:“Programme secret CIA de controle mental. Declassifie en 1977.”, tags:[“CIA”,“Controle Mental”], content:“En 1953, la CIA lance MKUltra, programme top secret utilisant le LSD et la torture psychologique sur des sujets non consentants. Declassifie en 1977 apres les travaux du Comite Church.” },
+{ id:“prism”, title:“Programme PRISM - NSA”, cat:“Surveillance”, mjc:220, votes:891, cred:99, summary:“La NSA espionnait via les geants du web. Revele par Snowden en 2013.”, tags:[“NSA”,“Big Tech”], content:“En juin 2013, Snowden revele que la NSA accedait aux serveurs de Google, Apple et Facebook via PRISM. Des millions de donnees collectees sans mandat judiciaire.” },
+{ id:“northwoods”, title:“Operation Northwoods”, cat:“Faux Drapeau”, mjc:180, votes:567, cred:97, summary:“Plan militaire US pour simuler des attentats contre ses propres citoyens.”, tags:[“Militaire”,“Cuba”], content:“En 1962, les chefs d etat-major proposent a Kennedy de simuler des attaques terroristes pour justifier une invasion de Cuba. Kennedy refuse. Declassifie en 1997.” },
+{ id:“cointelpro”, title:“COINTELPRO - FBI”, cat:“Gouvernement”, mjc:195, votes:712, cred:96, summary:“Programme secret FBI pour surveiller les mouvements politiques americains.”, tags:[“FBI”,“Surveillance”], content:“De 1956 a 1971, le FBI mene COINTELPRO ciblant les Black Panthers, MLK, NAACP. Infiltration, desinformation, chantage. Revele en 1971.” }
 ];
 
-// ═══════════════════════════════════════════════
-// DESIGN
-// ═══════════════════════════════════════════════
-var CAT = { Gouvernement:”#6e72ff”, Surveillance:”#00d2ff”, Finance:”#ffb547”, “Faux Drapeau”:”#ff4d6d”, Médical:”#c084fc”, Militaire:”#fb923c”, Histoire:”#3ddc84”, Médias:”#f472b6” };
-var LVC = { Oracle:”#ffb547”, Sentinel:”#ff4d6d”, Archiviste:”#3ddc84”, Éveillé:”#00d2ff”, Nouveau:”#383a52” };
-var LVB = { Oracle:”#ffb54718”, Sentinel:”#ff4d6d18”, Archiviste:”#3ddc8418”, Éveillé:”#00d2ff18”, Nouveau:”#38385218” };
+var CAT = { Gouvernement:”#6e72ff”, Surveillance:”#00d2ff”, Finance:”#ffb547”, “Faux Drapeau”:”#ff4d6d”, Medical:”#c084fc”, Militaire:”#fb923c”, Histoire:”#3ddc84”, Medias:”#f472b6” };
+var LVC = { Oracle:”#ffb547”, Sentinel:”#ff4d6d”, Archiviste:”#3ddc84”, Eveille:”#00d2ff”, Nouveau:”#383a52” };
+var LVB = { Oracle:”#ffb54718”, Sentinel:”#ff4d6d18”, Archiviste:”#3ddc8418”, Eveille:”#00d2ff18”, Nouveau:”#38385218” };
 
-// ═══════════════════════════════════════════════
-// DOM HELPERS
-// ═══════════════════════════════════════════════
-function mk(tag, props, children) {
+// DOM helper
+function mk(tag, props, kids) {
 var e = document.createElement(tag);
-if (props) {
-Object.keys(props).forEach(function(k) {
-if (k === “style” && typeof props[k] === “object”) { Object.assign(e.style, props[k]); }
-else if (k.startsWith(“on”)) { e.addEventListener(k.slice(2).toLowerCase(), props[k]); }
-else if (k === “cls”) { e.className = props[k]; }
-else { e.setAttribute(k, props[k]); }
+if (props) Object.keys(props).forEach(function(k) {
+if (k === “cls”) e.className = props[k];
+else if (k === “style” && typeof props[k] === “object”) Object.assign(e.style, props[k]);
+else if (k.startsWith(“on”)) e.addEventListener(k.slice(2).toLowerCase(), props[k]);
+else e.setAttribute(k, props[k]);
 });
-}
-if (children) {
-(Array.isArray(children) ? children : [children]).forEach(function(c) {
-if (c == null || c === false) return;
-if (typeof c === “string” || typeof c === “number”) e.appendChild(document.createTextNode(String(c)));
-else if (c instanceof Node) e.appendChild(c);
+if (kids) (Array.isArray(kids)?kids:[kids]).forEach(function(c) {
+if (c==null||c===false) return;
+e.appendChild(typeof c===“string”||typeof c===“number” ? document.createTextNode(String(c)) : c);
 });
-}
 return e;
 }
-function tx(s) { return document.createTextNode(String(s || “”)); }
+function tx(s) { return document.createTextNode(String(s||””)); }
+function hr() { return mk(“div”,{cls:“hr”}); }
+function spin() { return mk(“div”,{cls:“spin”}); }
 
-// UI Components
-function Coin(v, sm) {
-var e = mk(“span”, {style:{display:“inline-flex”,alignItems:“center”,gap:“3px”,color:”#ffb547”,fontWeight:600,fontSize:sm?“0.68rem”:“0.78rem”,fontFamily:“Fira Code,monospace”}});
-var m = mk(“span”, {style:{width:sm?“12px”:“14px”,height:sm?“12px”:“14px”,borderRadius:“50%”,background:“linear-gradient(135deg,#ffb547,#ff7c00)”,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:“0.4rem”,color:”#000”,fontWeight:900,flexShrink:0}}, “M”);
-e.appendChild(m); e.appendChild(tx(”+” + v)); return e;
+function Coin(v,sm) {
+var e=mk(“span”,{style:{display:“inline-flex”,alignItems:“center”,gap:“3px”,color:”#ffb547”,fontWeight:600,fontSize:sm?“0.68rem”:“0.78rem”,fontFamily:“Fira Code,monospace”}});
+var m=mk(“span”,{style:{width:sm?“12px”:“14px”,height:sm?“12px”:“14px”,borderRadius:“50%”,background:“linear-gradient(135deg,#ffb547,#ff7c00)”,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:“0.4rem”,color:”#000”,fontWeight:900,flexShrink:0}},“M”);
+e.appendChild(m); e.appendChild(tx(”+”+v)); return e;
 }
 function Pill(level) {
-return mk(“span”, {style:{fontSize:“0.56rem”,fontFamily:“Fira Code,monospace”,color:LVC[level]||”#383a52”,background:LVB[level]||”#38385218”,padding:“2px 7px”,borderRadius:“20px”,whiteSpace:“nowrap”}}, level);
+return mk(“span”,{style:{fontSize:“0.56rem”,fontFamily:“Fira Code,monospace”,color:LVC[level]||”#383a52”,background:LVB[level]||”#38385218”,padding:“2px 7px”,borderRadius:“20px”,whiteSpace:“nowrap”}},level);
 }
 function CTag(t) {
-var col = CAT[t] || “#7a7d9a”;
-return mk(“span”, {style:{fontSize:“0.56rem”,color:col,background:col+“15”,border:“1px solid “+col+“25”,padding:“2px 7px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”,whiteSpace:“nowrap”}}, “#” + t);
+var col=CAT[t]||”#7a7d9a”;
+return mk(“span”,{style:{fontSize:“0.56rem”,color:col,background:col+“15”,border:“1px solid “+col+“25”,padding:“2px 7px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”,whiteSpace:“nowrap”}},”#”+t);
 }
-function Bar(s, sm) {
-var col = s>=80 ? “#3ddc84” : s>=55 ? “#ffb547” : “#ff4d6d”;
-var wrap = mk(“div”, {style:{display:“flex”,alignItems:“center”,gap:“5px”}});
-var track = mk(“div”, {style:{flex:1,height:sm?“2px”:“3px”,background:”#ffffff08”,borderRadius:“4px”,overflow:“hidden”}});
-var fill = mk(“div”, {style:{width:s+”%”,height:“100%”,background:col,borderRadius:“4px”,transition:“width 1s ease”}});
-var label = mk(“span”, {style:{fontSize:sm?“0.54rem”:“0.6rem”,color:col,fontFamily:“Fira Code,monospace”,fontWeight:600,minWidth:“24px”}}, s + “%”);
-track.appendChild(fill); wrap.appendChild(track); wrap.appendChild(label); return wrap;
+function Bar(s,sm) {
+var col=s>=80?”#3ddc84”:s>=55?”#ffb547”:”#ff4d6d”;
+var w=mk(“div”,{style:{display:“flex”,alignItems:“center”,gap:“5px”}});
+var tr=mk(“div”,{style:{flex:1,height:sm?“2px”:“3px”,background:”#ffffff08”,borderRadius:“4px”,overflow:“hidden”}});
+tr.appendChild(mk(“div”,{style:{width:s+”%”,height:“100%”,background:col,borderRadius:“4px”}}));
+w.appendChild(tr);
+w.appendChild(mk(“span”,{style:{fontSize:sm?“0.54rem”:“0.6rem”,color:col,fontFamily:“Fira Code,monospace”,fontWeight:600,minWidth:“24px”}},s+”%”));
+return w;
 }
-function Ava(alias, level, size) {
-size = size || 36;
-var col = LVC[level] || “#6e72ff”;
-return mk(“div”, {style:{width:size+“px”,height:size+“px”,borderRadius:“50%”,background:“linear-gradient(135deg,”+col+“20,”+col+“40)”,border:“1.5px solid “+col+“35”,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:(size*.38)+“px”,fontWeight:700,color:col,flexShrink:0}},
-(alias ? alias[0] : “?”).toUpperCase());
+function Ava(alias,level,size) {
+size=size||36;
+var col=LVC[level]||”#6e72ff”;
+return mk(“div”,{style:{width:size+“px”,height:size+“px”,borderRadius:“50%”,background:“linear-gradient(135deg,”+col+“20,”+col+“40)”,border:“1.5px solid “+col+“35”,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:(size*.38)+“px”,fontWeight:700,color:col,flexShrink:0}},(alias?alias[0]:”?”).toUpperCase());
 }
-function Spin() { return mk(“div”, {cls:“spin”}); }
-function HR() { return mk(“div”, {cls:“hr”}); }
-function ErrBox(msg) {
-if (!msg) return null;
-return mk(“div”, {cls:“err”}, msg);
-}
-function TopBar(title, sub, onBack, right) {
-var d = mk(“div”, {cls:“topbar”});
+function TopBar(title,sub,onBack,right) {
+var d=mk(“div”,{cls:“topbar”});
 if (onBack) {
-var btn = mk(“button”, {cls:“back-btn”, onClick:onBack});
-btn.innerHTML = ‘<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>’;
-d.appendChild(btn);
+var b=mk(“button”,{cls:“back-btn”,onClick:onBack});
+b.innerHTML=’<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>’;
+d.appendChild(b);
 }
-var info = mk(“div”, {style:{flex:1,minWidth:0}});
-var h = mk(“div”, {style:{fontWeight:700,fontSize:“0.98rem”,letterSpacing:”-.02em”,overflow:“hidden”,textOverflow:“ellipsis”,whiteSpace:“nowrap”,lineHeight:1.2}}, title);
-info.appendChild(h);
-if (sub) info.appendChild(mk(“div”, {style:{fontSize:“0.58rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,marginTop:“1px”}}, sub));
+var info=mk(“div”,{style:{flex:1,minWidth:0}});
+info.appendChild(mk(“div”,{style:{fontWeight:700,fontSize:“0.98rem”,letterSpacing:”-.02em”,overflow:“hidden”,textOverflow:“ellipsis”,whiteSpace:“nowrap”}},title));
+if (sub) info.appendChild(mk(“div”,{style:{fontSize:“0.58rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,marginTop:“1px”}},sub));
 d.appendChild(info);
 if (right) d.appendChild(right);
 return d;
 }
 
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
+var TAB_SVG = {
+feed:’<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>’,
+wiki:’<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>’,
+msgs:’<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>’,
+submit:’<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>’,
+profile:’<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>’
+};
+var TAB_LABELS = { feed:“Flux”, wiki:“Wiki”, msgs:“Messages”, submit:“Deposer”, profile:“Profil” };
+
 var S = { user:null, tab:“feed”, posts:[], wikiExtra:[], liked:{}, txs:[], wikiSel:null, compose:false };
 
-// ═══════════════════════════════════════════════
-// BOTTOM BAR
-// ═══════════════════════════════════════════════
-var TAB_ICONS = {
-feed: ‘<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>’,
-wiki: ‘<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>’,
-msgs: ‘<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>’,
-submit: ‘<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>’,
-profile: ‘<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>’
-};
-var TAB_LABELS = { feed:“Flux”, wiki:“Wiki”, msgs:“Messages”, submit:“Déposer”, profile:“Profil” };
+function switchTab(id) {
+S.tab = id;
+document.querySelectorAll(”.tab”).forEach(function(b) { b.className=“tab”+(b.id===“t-”+id?” on”:””); });
+document.querySelectorAll(”.screen”).forEach(function(s) { s.classList.toggle(“active”,s.id===“s-”+id); });
+if (id===“feed”) renderFeed();
+if (id===“wiki”) renderWiki();
+if (id===“msgs”) renderMsgs();
+if (id===“submit”) renderSubmit();
+if (id===“profile”) { loadTxs(); renderProfile(); }
+}
 
 function makeBotbar() {
-var bar = mk(“div”, {cls:“botbar”});
-Object.keys(TAB_ICONS).forEach(function(id) {
-var btn = mk(“button”, {cls:“tab” + (S.tab===id?” on”:””), id:“tab-”+id, onClick:function(){ switchTab(id); }});
-btn.innerHTML = ‘<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">’ + TAB_ICONS[id] + ‘</svg><span>’ + TAB_LABELS[id] + ‘</span>’;
+var bar=mk(“div”,{cls:“botbar”});
+Object.keys(TAB_SVG).forEach(function(id) {
+var btn=mk(“button”,{cls:“tab”+(S.tab===id?” on”:””),id:“t-”+id,onClick:function(){switchTab(id);}});
+btn.innerHTML=’<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">’+TAB_SVG[id]+’</svg>’;
+btn.appendChild(tx(TAB_LABELS[id]));
 bar.appendChild(btn);
 });
 return bar;
 }
 
-function switchTab(id) {
-S.tab = id;
-document.querySelectorAll(”.tab”).forEach(function(b) {
-b.className = “tab” + (b.id === “tab-”+id ? “ on” : “”);
-});
-document.querySelectorAll(”.screen”).forEach(function(s) {
-s.classList.toggle(“active”, s.id === “screen-”+id);
-});
-if (id === “feed”) renderFeed();
-if (id === “wiki”) renderWiki();
-if (id === “msgs”) renderMsgs();
-if (id === “submit”) renderSubmit();
-if (id === “profile”) { loadTxs(); renderProfile(); }
-}
-
-// ═══════════════════════════════════════════════
 // AUTH
-// ═══════════════════════════════════════════════
 function renderAuth() {
-var root = mk(“div”, {style:{minHeight:“100vh”,background:”#07080e”,display:“flex”,flexDirection:“column”,padding:“0 20px”}});
-var inner = mk(“div”, {style:{flex:1,display:“flex”,flexDirection:“column”,paddingTop:“48px”,paddingBottom:“32px”}});
-
-// Logo
-var badge = mk(“div”, {style:{display:“inline-flex”,alignItems:“center”,gap:“6px”,background:”#6e72ff12”,border:“1px solid #6e72ff28”,borderRadius:“20px”,padding:“4px 12px 4px 8px”,marginBottom:“20px”}});
-badge.innerHTML = ‘<div style="width:6px;height:6px;border-radius:50%;background:#6e72ff;animation:pulse 2s infinite"></div><span style="font-size:.6rem;font-family:Fira Code,monospace;color:#6e72ff;letter-spacing:.08em">ACCÈS SUR PARRAINAGE</span>’;
+var root=mk(“div”,{style:{minHeight:“100vh”,background:”#07080e”,display:“flex”,flexDirection:“column”,padding:“0 20px”}});
+var inner=mk(“div”,{style:{flex:1,display:“flex”,flexDirection:“column”,paddingTop:“48px”,paddingBottom:“32px”}});
+var badge=mk(“div”,{style:{display:“inline-flex”,alignItems:“center”,gap:“6px”,background:”#6e72ff12”,border:“1px solid #6e72ff28”,borderRadius:“20px”,padding:“4px 12px 4px 8px”,marginBottom:“20px”}});
+badge.innerHTML=’<div style="width:6px;height:6px;border-radius:50%;background:#6e72ff;animation:pulse 2s infinite"></div><span style="font-size:.6rem;font-family:Fira Code,monospace;color:#6e72ff;letter-spacing:.08em">ACCES SUR PARRAINAGE</span>’;
 inner.appendChild(badge);
-var logo = mk(“h1”, {style:{fontFamily:“DM Serif Display,serif”,fontSize:“clamp(2.2rem,8vw,3.4rem)”,lineHeight:1.05,marginBottom:“8px”}});
-logo.innerHTML = ‘mojo<span style="color:#6e72ff">Visionnaire</span>’;
+var logo=mk(“h1”,{style:{fontFamily:“DM Serif Display,serif”,fontSize:“clamp(2.2rem,8vw,3.4rem)”,lineHeight:1.05,marginBottom:“8px”}});
+logo.innerHTML=‘mojo<span style="color:#6e72ff">Visionnaire</span>’;
 inner.appendChild(logo);
-inner.appendChild(mk(“p”, {style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,color:”#7a7d9a”,marginBottom:“28px”}}, “La vérité que l’histoire a confirmée.”));
+inner.appendChild(mk(“p”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,color:”#7a7d9a”,marginBottom:“24px”}},“La verite que l histoire a confirmee.”));
 
-var mode = “register”;
-var errDiv = mk(“div”, {cls:“err”, style:{display:“none”}});
+var mode=“register”;
+var errDiv=mk(“div”,{cls:“err”,style:{display:“none”}});
 
-// Tabs
-var tabs = mk(“div”, {style:{display:“flex”,background:”#0d0e18”,borderRadius:“14px”,padding:“4px”,marginBottom:“18px”}});
-function setMode(m) {
-mode = m;
-errDiv.style.display = “none”;
-[loginBtn, regBtn].forEach(function(b) {
-var active = (b === (m===“login” ? loginBtn : regBtn));
-b.style.background = active ? “#6e72ff” : “transparent”;
-b.style.color = active ? “#fff” : “#7a7d9a”;
-b.style.fontWeight = active ? 700 : 500;
-});
-renderFields();
+var tabs=mk(“div”,{style:{display:“flex”,background:”#0d0e18”,borderRadius:“14px”,padding:“4px”,marginBottom:“16px”}});
+var btnLogin=mk(“button”,{style:{flex:1,padding:“9px”,borderRadius:“10px”,border:“none”,background:“transparent”,color:”#7a7d9a”,fontWeight:500,cursor:“pointer”,fontSize:“0.84rem”},onClick:function(){mode=“login”;setTabs();renderFields();}});
+btnLogin.textContent=“Connexion”;
+var btnReg=mk(“button”,{style:{flex:1,padding:“9px”,borderRadius:“10px”,border:“none”,background:”#6e72ff”,color:”#fff”,fontWeight:700,cursor:“pointer”,fontSize:“0.84rem”},onClick:function(){mode=“register”;setTabs();renderFields();}});
+btnReg.textContent=“S inscrire”;
+function setTabs() {
+btnLogin.style.background=mode===“login”?”#6e72ff”:“transparent”;
+btnLogin.style.color=mode===“login”?”#fff”:”#7a7d9a”;
+btnLogin.style.fontWeight=mode===“login”?700:500;
+btnReg.style.background=mode===“register”?”#6e72ff”:“transparent”;
+btnReg.style.color=mode===“register”?”#fff”:”#7a7d9a”;
+btnReg.style.fontWeight=mode===“register”?700:500;
 }
-var loginBtn = mk(“button”, {style:{flex:1,padding:“9px”,borderRadius:“10px”,border:“none”,background:“transparent”,color:”#7a7d9a”,fontWeight:500,cursor:“pointer”,fontSize:“0.84rem”}, onClick:function(){ setMode(“login”); }}, “Connexion”);
-var regBtn = mk(“button”, {style:{flex:1,padding:“9px”,borderRadius:“10px”,border:“none”,background:”#6e72ff”,color:”#fff”,fontWeight:700,cursor:“pointer”,fontSize:“0.84rem”}, onClick:function(){ setMode(“register”); }}, “S’inscrire”);
-tabs.appendChild(loginBtn); tabs.appendChild(regBtn);
+tabs.appendChild(btnLogin); tabs.appendChild(btnReg);
 inner.appendChild(tabs);
 inner.appendChild(errDiv);
 
-var fieldsDiv = mk(“div”);
+var fieldsDiv=mk(“div”);
 inner.appendChild(fieldsDiv);
 
-var refInp, aliasInp, emailInp, pwInp, submitBtn;
+var refInp,aliasInp,emailInp,pwInp,submitBtn;
+
+function showErr(msg) { errDiv.textContent=msg; errDiv.style.display=“block”; }
+function hideErr() { errDiv.style.display=“none”; }
+function setLoad(on) { if(submitBtn){submitBtn.disabled=on;submitBtn.textContent=on?“Chargement…”:(mode===“login”?“Se connecter”:“Creer mon compte”);} }
 
 function renderFields() {
-fieldsDiv.innerHTML = “”;
-
-```
-function addField(label, type, val, extraStyle) {
-  var wrap = mk("div", {style:{marginBottom:"12px"}});
-  var lbl = mk("label", {cls:"lbl"}, label);
-  var inp;
-  if (type === "textarea") {
-    inp = mk("textarea", {cls:"inp", rows:3});
-    inp.style.resize = "none"; inp.style.lineHeight = "1.6";
-    inp.value = val || "";
-  } else {
-    inp = mk("input", {cls:"inp", type:type||"text", autocomplete:"off"});
-    inp.value = val || "";
-    if (extraStyle) Object.assign(inp.style, extraStyle);
-  }
-  wrap.appendChild(lbl); wrap.appendChild(inp);
-  fieldsDiv.appendChild(wrap);
-  return inp;
+fieldsDiv.innerHTML=””;
+if (mode===“register”) {
+var cw=mk(“div”,{style:{marginBottom:“12px”}});
+cw.appendChild(mk(“label”,{cls:“lbl”},“CODE PARRAIN *”));
+var cr=mk(“div”,{style:{display:“flex”,gap:“7px”}});
+refInp=mk(“input”,{cls:“inp”,type:“text”,placeholder:“MOJO229777V”,style:{flex:1,marginBottom:0,fontFamily:“Fira Code,monospace”,letterSpacing:“0.05em”}});
+refInp.value=“MOJO229777V”;
+refInp.addEventListener(“input”,function(){refInp.value=san.code(refInp.value);});
+var pb=mk(“button”,{cls:“paste-btn”,onClick:function(){
+if(navigator.clipboard&&navigator.clipboard.readText){
+navigator.clipboard.readText().then(function(t){refInp.value=san.code(t);}).catch(function(){});
 }
-
-if (mode === "register") {
-  var codeWrap = mk("div", {style:{marginBottom:"12px"}});
-  var codeLbl = mk("label", {cls:"lbl"}, "CODE PARRAIN *");
-  var codeRow = mk("div", {style:{display:"flex",gap:"7px"}});
-  refInp = mk("input", {cls:"inp", type:"text", placeholder:"MOJO229777V", style:{flex:1,marginBottom:0,fontFamily:"Fira Code,monospace",letterSpacing:"0.05em"}});
-  refInp.value = "MOJO229777V";
-  refInp.addEventListener("input", function() { refInp.value = san.code(refInp.value); });
-  var pasteBtn = mk("button", {cls:"paste-btn", onClick:function() {
-    if (navigator.clipboard && navigator.clipboard.readText) {
-      navigator.clipboard.readText().then(function(t) {
-        refInp.value = san.code(t);
-      }).catch(function() {});
-    }
-  }}, "Coller");
-  codeRow.appendChild(refInp); codeRow.appendChild(pasteBtn);
-  codeWrap.appendChild(codeLbl); codeWrap.appendChild(codeRow);
-  fieldsDiv.appendChild(codeWrap);
-  aliasInp = addField("ALIAS (PSEUDONYME)", "text");
+}});
+pb.textContent=“Coller”;
+cr.appendChild(refInp); cr.appendChild(pb);
+cw.appendChild(cr); fieldsDiv.appendChild(cw);
+var aw=mk(“div”,{style:{marginBottom:“12px”}});
+aw.appendChild(mk(“label”,{cls:“lbl”},“ALIAS”));
+aliasInp=mk(“input”,{cls:“inp”,type:“text”,placeholder:“VotreAlias”});
+aw.appendChild(aliasInp); fieldsDiv.appendChild(aw);
 }
-
-emailInp = addField("EMAIL", "email");
-emailInp.setAttribute("autocapitalize", "none");
-emailInp.setAttribute("autocorrect", "off");
-pwInp = addField("MOT DE PASSE", "password");
-
-if (mode === "register") {
-  fieldsDiv.appendChild(mk("div", {style:{background:"#ffb54709",border:"1px solid #ffb54722",borderRadius:"7px",padding:"11px 13px",marginBottom:"14px",display:"flex",gap:"9px",alignItems:"center"}},
-    mk("span", null, "💳"),
-    mk("div", null, [mk("div", {style:{fontSize:"0.8rem",fontWeight:600}}, "10 € / mois"), mk("div", {style:{fontSize:"0.68rem",color:"#7a7d9a"}}, "Paiement en euros · CB / virement")])
-  ));
+var ew=mk(“div”,{style:{marginBottom:“12px”}});
+ew.appendChild(mk(“label”,{cls:“lbl”},“EMAIL”));
+emailInp=mk(“input”,{cls:“inp”,type:“email”,placeholder:“votre@email.com”,autocapitalize:“none”,autocorrect:“off”});
+ew.appendChild(emailInp); fieldsDiv.appendChild(ew);
+var pw=mk(“div”,{style:{marginBottom:“12px”}});
+pw.appendChild(mk(“label”,{cls:“lbl”},“MOT DE PASSE”));
+pwInp=mk(“input”,{cls:“inp”,type:“password”,placeholder:“Min. 6 caracteres”});
+pw.appendChild(pwInp); fieldsDiv.appendChild(pw);
+if (mode===“register”) {
+fieldsDiv.appendChild(mk(“div”,{style:{background:”#ffb54709”,border:“1px solid #ffb54722”,borderRadius:“7px”,padding:“11px 13px”,marginBottom:“14px”,display:“flex”,gap:“9px”,alignItems:“center”}},
+[mk(“span”,null,“💳”),mk(“div”,null,[mk(“div”,{style:{fontSize:“0.8rem”,fontWeight:600}},“10 EUR / mois”),mk(“div”,{style:{fontSize:“0.68rem”,color:”#7a7d9a”}},“Paiement en euros - CB / virement”)])]
+));
 }
-
-submitBtn = mk("button", {cls:"btn", onClick:doSubmit}, mode === "login" ? "Se connecter →" : "Créer mon compte →");
+submitBtn=mk(“button”,{cls:“btn”,onClick:doSubmit},mode===“login”?“Se connecter”:“Creer mon compte”);
 fieldsDiv.appendChild(submitBtn);
-```
-
-}
-
-function showErr(msg) { errDiv.textContent = msg; errDiv.style.display = “block”; }
-function setLoading(on) {
-if (submitBtn) { submitBtn.disabled = on; submitBtn.textContent = on ? “Chargement…” : (mode === “login” ? “Se connecter →” : “Créer mon compte →”); }
 }
 
 async function doSubmit() {
-showErr(””); errDiv.style.display = “none”;
-var email = san.email(emailInp ? emailInp.value : “”);
-var pw = san.password(pwInp ? pwInp.value : “”);
-if (!email) { showErr(“Email invalide.”); return; }
-if (!pw || pw.length < 6) { showErr(“Mot de passe trop court (6 caractères minimum).”); return; }
-
-```
-if (mode === "register") {
-  var code = san.code(refInp ? refInp.value : "");
-  var alias = san.alias(aliasInp ? aliasInp.value : "");
-  if (!code) { showErr("Code parrain requis."); return; }
-  if (!alias || alias.length < 2) { showErr("Alias invalide (2 caractères minimum)."); return; }
-
-  setLoading(true);
-  var refs = await api.findRef(code);
-  if (refs && refs.__err) { showErr(refs.msg); setLoading(false); return; }
-  if (!Array.isArray(refs) || refs.length === 0) {
-    showErr('Code parrain [' + code + '] introuvable. Verifiez la lettre O (pas le chiffre 0).');
-    setLoading(false); return;
-  }
-  var referrer = refs[0];
-  var res = await api.signup(email, pw, alias);
-  if (res.error) { showErr("Inscription : " + (res.error.message || "erreur inconnue")); setLoading(false); return; }
-  if (!res.user) { showErr("Erreur serveur. Réessayez."); setLoading(false); return; }
-  var uid = res.user.id;
-  if (res.access_token) { window._mjtok = res.access_token; localStorage.setItem("mj_tok", res.access_token); }
-  var myCode = "MOJO-" + alias.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5) + "-" + Math.random().toString(36).substring(2,6).toUpperCase();
-  var ins = await api.addUser({ id:uid, email:email, alias:alias, level:"Nouveau", mojocoin_balance:0, referral_code:myCode, referred_by:referrer.id, subscription_active:false, months_active:0, verified:false });
-  if (ins && ins.__err) { showErr("Profil non créé : " + ins.msg); setLoading(false); return; }
-  await api.addRef({ referrer_id:referrer.id, referred_id:uid });
-  var u = { id:uid, email:email, alias:alias, level:"Nouveau", mojocoin_balance:0, referral_code:myCode, subscription_active:false, months_active:0 };
-  localStorage.setItem("mj_usr", JSON.stringify(u));
-  setLoading(false);
-  startApp(u);
+hideErr();
+var email=san.email(emailInp?emailInp.value:””);
+var pw=san.pw(pwInp?pwInp.value:””);
+if(!email){showErr(“Email invalide.”);return;}
+if(!pw||pw.length<6){showErr(“Mot de passe trop court (6 min).”);return;}
+if(mode===“register”){
+var code=san.code(refInp?refInp.value:””);
+var alias=san.alias(aliasInp?aliasInp.value:””);
+if(!code){showErr(“Code parrain requis.”);return;}
+if(!alias||alias.length<2){showErr(“Alias invalide (2 min).”);return;}
+setLoad(true);
+var refs=await api.findRef(code);
+if(refs&&refs.__e){showErr(refs.msg);setLoad(false);return;}
+if(!Array.isArray(refs)||refs.length===0){showErr(“Code parrain introuvable. Verifiez la lettre O (pas le chiffre 0).”);setLoad(false);return;}
+var referrer=refs[0];
+var res=await api.signup(email,pw,alias);
+if(res.error){showErr(res.error.message||“Erreur inscription.”);setLoad(false);return;}
+if(!res.user){showErr(“Erreur serveur. Reessayez.”);setLoad(false);return;}
+var uid=res.user.id;
+if(res.access_token){window._mjtok=res.access_token;try{localStorage.setItem(“mj_tok”,res.access_token);}catch(e){}}
+var myCode=“MOJO-”+alias.toUpperCase().replace(/[^A-Z0-9]/g,””).slice(0,5)+”-”+Math.random().toString(36).substring(2,6).toUpperCase();
+var ins=await api.addUser({id:uid,email:email,alias:alias,level:“Nouveau”,mojocoin_balance:0,referral_code:myCode,referred_by:referrer.id,subscription_active:false,months_active:0,verified:false});
+if(ins&&ins.__e){showErr(“Profil: “+ins.msg);setLoad(false);return;}
+await api.addRef({referrer_id:referrer.id,referred_id:uid});
+var u={id:uid,email:email,alias:alias,level:“Nouveau”,mojocoin_balance:0,referral_code:myCode,subscription_active:false,months_active:0};
+try{localStorage.setItem(“mj_usr”,JSON.stringify(u));}catch(e){}
+setLoad(false); startApp(u);
 } else {
-  setLoading(true);
-  var res = await api.login(email, pw);
-  if (res.error) { showErr("Connexion : " + (res.error.message || "email ou mot de passe incorrect")); setLoading(false); return; }
-  if (!res.access_token) { showErr("Erreur d'authentification. Réessayez."); setLoading(false); return; }
-  window._mjtok = res.access_token;
-  localStorage.setItem("mj_tok", res.access_token);
-  var users = await api.getUser(res.user.id);
-  if (!Array.isArray(users) || !users[0]) { showErr("Profil introuvable. Contactez le support."); setLoading(false); return; }
-  var u = users[0];
-  localStorage.setItem("mj_usr", JSON.stringify(u));
-  setLoading(false);
-  startApp(u);
+setLoad(true);
+var res=await api.login(email,pw);
+if(res.error){showErr(res.error.message||“Email ou mot de passe incorrect.”);setLoad(false);return;}
+if(!res.access_token){showErr(“Erreur authentification.”);setLoad(false);return;}
+window._mjtok=res.access_token;
+try{localStorage.setItem(“mj_tok”,res.access_token);}catch(e){}
+var users=await api.getUser(res.user.id);
+if(!Array.isArray(users)||!users[0]){showErr(“Profil introuvable.”);setLoad(false);return;}
+var u=users[0];
+try{localStorage.setItem(“mj_usr”,JSON.stringify(u));}catch(e){}
+setLoad(false); startApp(u);
 }
-```
-
 }
 
 renderFields();
@@ -542,377 +369,314 @@ root.appendChild(inner);
 return root;
 }
 
-// ═══════════════════════════════════════════════
 // FEED
-// ═══════════════════════════════════════════════
 function loadPosts() {
-api.posts().then(function(d) { if (Array.isArray(d)) { S.posts = d; renderFeed(); } });
+api.posts().then(function(d){if(Array.isArray(d)){S.posts=d;renderFeed();}});
 }
-
 function renderFeed() {
-var scr = document.getElementById(“screen-feed”); if (!scr) return;
-scr.innerHTML = “”;
-
-var compBtn = mk(“button”, {style:{width:“30px”,height:“30px”,borderRadius:“50%”,background:S.compose?”#6e72ff”:”#131420”,border:“1px solid #ffffff14”,cursor:“pointer”,display:“flex”,alignItems:“center”,justifyContent:“center”,color:S.compose?”#fff”:”#dde0ec”}, onClick:function(){S.compose=!S.compose;renderFeed();}});
-compBtn.innerHTML = S.compose
-? ‘<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>’
-: ‘<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>’;
-scr.appendChild(TopBar(“Flux”, “Réseau global”, null, compBtn));
-
-if (S.compose) {
-var comp = mk(“div”, {cls:“compose”});
-var ta = mk(“textarea”, {cls:“inp”, rows:3, placeholder:“Partagez une révélation…”});
-ta.style.resize = “none”; ta.style.lineHeight = “1.6”; ta.style.fontFamily = “DM Serif Display,serif”;
-var row = mk(“div”, {style:{display:“flex”,gap:“7px”,marginTop:“9px”}});
-var cancelBtn = mk(“button”, {cls:“btn ghost”, style:{flex:1,fontSize:“0.78rem”,padding:“9px”}, onClick:function(){S.compose=false;renderFeed();}}, “Annuler”);
-var pubBtn = mk(“button”, {cls:“btn”, style:{flex:2,fontSize:“0.78rem”,padding:“9px”}, onClick:async function(){
-var content = san.text(ta.value, 2000);
-if (!content) return;
-pubBtn.disabled = true; pubBtn.textContent = “Envoi…”;
-var res = await api.addPost({ author_id:S.user.id, content:content, tags:[], likes_count:0, comments_count:0 });
-if (res && res.__err) { pubBtn.disabled=false; pubBtn.textContent=“Publier”; return; }
-if (Array.isArray(res) && res[0]) {
-res[0].users = { alias:S.user.alias, level:S.user.level };
-S.posts.unshift(res[0]);
-}
-S.compose = false; renderFeed();
-}}, “Publier”);
-row.appendChild(cancelBtn); row.appendChild(pubBtn);
-comp.appendChild(ta); comp.appendChild(row);
+var scr=document.getElementById(“s-feed”);if(!scr)return;
+scr.innerHTML=””;
+var cb=mk(“button”,{style:{width:“30px”,height:“30px”,borderRadius:“50%”,background:S.compose?”#6e72ff”:”#131420”,border:“1px solid #ffffff14”,cursor:“pointer”,display:“flex”,alignItems:“center”,justifyContent:“center”,color:S.compose?”#fff”:”#dde0ec”},onClick:function(){S.compose=!S.compose;renderFeed();}});
+cb.innerHTML=S.compose?’<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>’:’<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>’;
+scr.appendChild(TopBar(“Flux”,“Reseau global”,null,cb));
+if(S.compose){
+var comp=mk(“div”,{style:{padding:“12px 16px”,background:”#0d0e18”,borderBottom:“1px solid #ffffff0a”}});
+var ta=mk(“textarea”,{cls:“inp”,rows:3,placeholder:“Partagez une revelation…”});
+ta.style.resize=“none”;ta.style.lineHeight=“1.6”;ta.style.fontFamily=“DM Serif Display,serif”;
+var row=mk(“div”,{style:{display:“flex”,gap:“7px”,marginTop:“9px”}});
+var canc=mk(“button”,{cls:“btn ghost”,style:{flex:1,fontSize:“0.78rem”,padding:“9px”},onClick:function(){S.compose=false;renderFeed();}});
+canc.textContent=“Annuler”;
+var pub=mk(“button”,{cls:“btn”,style:{flex:2,fontSize:“0.78rem”,padding:“9px”},onClick:async function(){
+var c=san.t(ta.value,2000);if(!c)return;
+pub.disabled=true;pub.textContent=“Envoi…”;
+var res=await api.addPost({author_id:S.user.id,content:c,tags:[],likes_count:0,comments_count:0});
+if(Array.isArray(res)&&res[0]){res[0].users={alias:S.user.alias,level:S.user.level};S.posts.unshift(res[0]);}
+S.compose=false;renderFeed();
+}});
+pub.textContent=“Publier”;
+row.appendChild(canc);row.appendChild(pub);
+comp.appendChild(ta);comp.appendChild(row);
 scr.appendChild(comp);
 }
-
-var scroll = mk(“div”, {cls:“feed-scroll”});
-if (S.posts.length === 0) {
-var sp = mk(“div”, {style:{display:“flex”,justifyContent:“center”,padding:“40px”}});
-sp.appendChild(Spin()); scroll.appendChild(sp);
+var scroll=mk(“div”,{cls:“scroll”});
+if(S.posts.length===0){
+var sp=mk(“div”,{style:{display:“flex”,justifyContent:“center”,padding:“40px”}});
+sp.appendChild(spin());scroll.appendChild(sp);
 } else {
-S.posts.forEach(function(p, i) {
-var alias = (p.users && p.users.alias) || “Anonyme”;
-var level = (p.users && p.users.level) || “Nouveau”;
-var item = mk(“div”, {cls:“post fu”, style:{animationDelay:i*0.04+“s”}});
-var row = mk(“div”, {style:{display:“flex”,gap:“9px”,marginBottom:“8px”}});
-row.appendChild(Ava(alias, level, 34));
-var info = mk(“div”, {style:{flex:1,minWidth:0}});
-var meta = mk(“div”, {style:{display:“flex”,gap:“5px”,alignItems:“center”,flexWrap:“wrap”,marginBottom:“3px”}});
-var nameEl = mk(“b”, {style:{fontSize:“0.84rem”}}, alias);
-var dateEl = mk(“span”, {style:{color:”#383a52”,fontSize:“0.62rem”,fontFamily:“Fira Code,monospace”,marginLeft:“auto”}}, new Date(p.created_at).toLocaleDateString(“fr-FR”));
-meta.appendChild(nameEl); meta.appendChild(Pill(level)); meta.appendChild(dateEl);
-var content = mk(“p”, {style:{color:”#7a7d9a”,lineHeight:1.6,fontSize:“0.85rem”,display:”-webkit-box”,WebkitLineClamp:3,WebkitBoxOrient:“vertical”,overflow:“hidden”}}, p.content);
-info.appendChild(meta); info.appendChild(content);
+S.posts.forEach(function(p,i){
+var alias=(p.users&&p.users.alias)||“Anonyme”;
+var level=(p.users&&p.users.level)||“Nouveau”;
+var item=mk(“div”,{cls:“post fu”,style:{animationDelay:i*.04+“s”}});
+var row=mk(“div”,{style:{display:“flex”,gap:“9px”,marginBottom:“8px”}});
+row.appendChild(Ava(alias,level,34));
+var info=mk(“div”,{style:{flex:1,minWidth:0}});
+var meta=mk(“div”,{style:{display:“flex”,gap:“5px”,alignItems:“center”,flexWrap:“wrap”,marginBottom:“3px”}});
+meta.appendChild(mk(“b”,{style:{fontSize:“0.84rem”}},alias));
+meta.appendChild(Pill(level));
+meta.appendChild(mk(“span”,{style:{color:”#383a52”,fontSize:“0.62rem”,fontFamily:“Fira Code,monospace”,marginLeft:“auto”}},new Date(p.created_at).toLocaleDateString(“fr-FR”)));
+var ct=mk(“p”,{style:{color:”#7a7d9a”,lineHeight:1.6,fontSize:“0.85rem”,display:”-webkit-box”,WebkitLineClamp:3,WebkitBoxOrient:“vertical”,overflow:“hidden”}},p.content);
+info.appendChild(meta);info.appendChild(ct);
 row.appendChild(info);
-var actions = mk(“div”, {style:{display:“flex”,gap:“12px”,paddingLeft:“43px”,marginTop:“4px”}});
-var likeBtn = mk(“button”, {style:{display:“flex”,alignItems:“center”,gap:“4px”,background:“none”,border:“none”,cursor:“pointer”,color:S.liked[p.id]?”#ff4d6d”:”#383a52”,fontSize:“0.74rem”,padding:“3px 0”}});
-likeBtn.innerHTML = ‘<svg width=“12” height=“12” viewBox=“0 0 24 24” fill=”’+(S.liked[p.id]?“currentColor”:“none”)+’” stroke=“currentColor” stroke-width=“2”><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>’;
-likeBtn.appendChild(tx((p.likes_count||0) + (S.liked[p.id]?1:0)));
-likeBtn.addEventListener(“click”, async function(e) {
+var actions=mk(“div”,{style:{display:“flex”,gap:“12px”,paddingLeft:“43px”,marginTop:“4px”}});
+var lb=mk(“button”,{style:{display:“flex”,alignItems:“center”,gap:“4px”,background:“none”,border:“none”,cursor:“pointer”,color:S.liked[p.id]?”#ff4d6d”:”#383a52”,fontSize:“0.74rem”,padding:“3px 0”}});
+lb.innerHTML=’<svg width=“12” height=“12” viewBox=“0 0 24 24” fill=”’+(S.liked[p.id]?“currentColor”:“none”)+’” stroke=“currentColor” stroke-width=“2”><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>’;
+lb.appendChild(tx((p.likes_count||0)+(S.liked[p.id]?1:0)));
+lb.addEventListener(“click”,async function(e){
 e.stopPropagation();
-if (S.liked[p.id]) { S.liked[p.id]=false; p.likes_count=Math.max(0,(p.likes_count||0)-1); }
-else { S.liked[p.id]=true; p.likes_count=(p.likes_count||0)+1; await api.like(p.id, S.user.id); }
+if(S.liked[p.id]){S.liked[p.id]=false;p.likes_count=Math.max(0,(p.likes_count||0)-1);}
+else{S.liked[p.id]=true;p.likes_count=(p.likes_count||0)+1;await api.like(p.id,S.user.id);}
 renderFeed();
 });
-actions.appendChild(likeBtn);
-item.appendChild(row); item.appendChild(actions);
-scroll.appendChild(item); scroll.appendChild(HR());
+actions.appendChild(lb);
+item.appendChild(row);item.appendChild(actions);
+scroll.appendChild(item);scroll.appendChild(hr());
 });
 }
-scroll.appendChild(mk(“div”, {style:{height:“20px”}}));
+scroll.appendChild(mk(“div”,{style:{height:“20px”}}));
 scr.appendChild(scroll);
 }
 
-// ═══════════════════════════════════════════════
 // WIKI
-// ═══════════════════════════════════════════════
 function renderWiki() {
-var scr = document.getElementById(“screen-wiki”); if (!scr) return;
-scr.innerHTML = “”;
-var all = WX.concat((S.wikiExtra||[]).filter(function(d){ return !WX.find(function(e){ return e.id===d.id; }); }));
-
-if (S.wikiSel) {
-var r = S.wikiSel;
-var vBadge = mk(“span”, {style:{fontSize:“0.56rem”,color:”#3ddc84”,background:”#3ddc8412”,border:“1px solid #3ddc8428”,padding:“2px 7px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”}}, “✦ VÉRIFIÉ”);
-scr.appendChild(TopBar(r.title, null, function(){ S.wikiSel=null; renderWiki(); }, vBadge));
-var scroll = mk(“div”, {cls:“wiki-scroll”, style:{padding:“16px”}});
-var tags = mk(“div”, {style:{display:“flex”,gap:“5px”,flexWrap:“wrap”,marginBottom:“11px”}});
-([r.cat]).concat(r.tags||[]).filter(Boolean).forEach(function(t){ tags.appendChild(CTag(t)); });
+var scr=document.getElementById(“s-wiki”);if(!scr)return;
+scr.innerHTML=””;
+var all=WX.concat((S.wikiExtra||[]).filter(function(d){return !WX.find(function(e){return e.id===d.id;});}));
+if(S.wikiSel){
+var r=S.wikiSel;
+var vb=mk(“span”,{style:{fontSize:“0.56rem”,color:”#3ddc84”,background:”#3ddc8412”,border:“1px solid #3ddc8428”,padding:“2px 7px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”}},“VERIFIE”);
+scr.appendChild(TopBar(r.title,null,function(){S.wikiSel=null;renderWiki();},vb));
+var scroll=mk(“div”,{cls:“scroll”,style:{padding:“16px”}});
+var tags=mk(“div”,{style:{display:“flex”,gap:“5px”,flexWrap:“wrap”,marginBottom:“11px”}});
+([r.cat]).concat(r.tags||[]).filter(Boolean).forEach(function(t){tags.appendChild(CTag(t));});
 scroll.appendChild(tags);
-scroll.appendChild(mk(“p”, {style:{fontFamily:“DM Serif Display,serif”,fontSize:“0.98rem”,lineHeight:1.65,color:”#7a7d9a”,fontStyle:“italic”,marginBottom:“13px”}}, r.summary));
-var stats = mk(“div”, {style:{display:“flex”,gap:“11px”,alignItems:“center”,marginBottom:“14px”,flexWrap:“wrap”}});
+scroll.appendChild(mk(“p”,{style:{fontFamily:“DM Serif Display,serif”,fontSize:“0.98rem”,lineHeight:1.65,color:”#7a7d9a”,fontStyle:“italic”,marginBottom:“13px”}},r.summary));
+var stats=mk(“div”,{style:{display:“flex”,gap:“11px”,alignItems:“center”,marginBottom:“14px”}});
 stats.appendChild(Coin(r.mjc||0));
-stats.appendChild(mk(“span”, {style:{color:”#383a52”,fontSize:“0.66rem”,fontFamily:“Fira Code,monospace”}}, “↑”+(r.votes||0)+” votes”));
-var barWrap = mk(“div”, {style:{flex:1,minWidth:“70px”}}); barWrap.appendChild(Bar(r.cred||95,true)); stats.appendChild(barWrap);
-scroll.appendChild(stats); scroll.appendChild(HR());
-var sec = mk(“div”, {style:{padding:“13px 0”}});
-sec.appendChild(mk(“div”, {style:{fontSize:“0.56rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,letterSpacing:“0.1em”,marginBottom:“9px”}}, “DOSSIER”));
-sec.appendChild(mk(“p”, {style:{fontFamily:“DM Serif Display,serif”,lineHeight:1.8,fontSize:“0.9rem”,color:”#7a7d9a”}}, r.content));
+stats.appendChild(mk(“span”,{style:{color:”#383a52”,fontSize:“0.66rem”,fontFamily:“Fira Code,monospace”}},”+”+(r.votes||0)+” votes”));
+var bw=mk(“div”,{style:{flex:1,minWidth:“70px”}});bw.appendChild(Bar(r.cred||95,true));stats.appendChild(bw);
+scroll.appendChild(stats);scroll.appendChild(hr());
+var sec=mk(“div”,{style:{padding:“13px 0”}});
+sec.appendChild(mk(“div”,{style:{fontSize:“0.56rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,letterSpacing:“0.1em”,marginBottom:“9px”}},“DOSSIER”));
+sec.appendChild(mk(“p”,{style:{fontFamily:“DM Serif Display,serif”,lineHeight:1.8,fontSize:“0.9rem”,color:”#7a7d9a”}},r.content));
 scroll.appendChild(sec);
 scr.appendChild(scroll);
 return;
 }
-
-scr.appendChild(TopBar(“Encyclopédie”, all.length+” articles vérifiés”));
-var searchInp = mk(“input”, {cls:“inp”, type:“text”, placeholder:“Rechercher…”, style:{margin:“11px 16px”,width:“calc(100% - 32px)”,borderRadius:“20px”}});
-scr.appendChild(searchInp);
-var scroll = mk(“div”, {cls:“wiki-scroll”});
-
-function renderList(q) {
-scroll.innerHTML = “”;
-var filtered = all.filter(function(r){ return !q || r.title.toLowerCase().indexOf(q)>=0 || (r.cat||””).toLowerCase().indexOf(q)>=0; });
-filtered.forEach(function(r, i) {
-var item = mk(“div”, {cls:“wiki-item fu”, style:{animationDelay:i*0.05+“s”}});
-item.addEventListener(“click”, function(){ S.wikiSel=r; renderWiki(); });
-var head = mk(“div”, {style:{display:“flex”,gap:“6px”,marginBottom:“7px”,flexWrap:“wrap”,alignItems:“center”}});
-head.appendChild(mk(“span”, {style:{fontSize:“0.54rem”,color:”#3ddc84”,background:”#3ddc8412”,border:“1px solid #3ddc8428”,padding:“2px 6px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”}}, “✦ VÉRIFIÉ”));
-if (r.cat) head.appendChild(CTag(r.cat));
-var bd = mk(“div”, {style:{marginLeft:“auto”}}); bd.appendChild(Bar(r.cred||95,true)); head.appendChild(bd);
-var title = mk(“h3”, {style:{fontFamily:“DM Serif Display,serif”,fontSize:“0.98rem”,fontWeight:400,marginBottom:“4px”,lineHeight:1.3}}, r.title);
-var sumEl = mk(“p”, {style:{fontSize:“0.78rem”,color:”#7a7d9a”,lineHeight:1.5,marginBottom:“8px”}}, r.summary);
-var foot = mk(“div”, {style:{display:“flex”,gap:“8px”,alignItems:“center”,flexWrap:“wrap”}});
-foot.appendChild(Coin(r.mjc||0, true));
-foot.appendChild(mk(“span”, {style:{color:”#383a52”,fontSize:“0.65rem”,fontFamily:“Fira Code,monospace”}}, “↑”+(r.votes||0)));
-(r.tags||[]).forEach(function(t){ foot.appendChild(CTag(t)); });
-item.appendChild(head); item.appendChild(title); item.appendChild(sumEl); item.appendChild(foot);
-scroll.appendChild(item); scroll.appendChild(HR());
+scr.appendChild(TopBar(“Encyclopedie”,all.length+” articles verifies”));
+var si=mk(“input”,{cls:“inp”,type:“text”,placeholder:“Rechercher…”,style:{margin:“11px 16px”,width:“calc(100% - 32px)”,borderRadius:“20px”}});
+scr.appendChild(si);
+var scroll=mk(“div”,{cls:“scroll”});
+function drawList(q) {
+scroll.innerHTML=””;
+var f=all.filter(function(r){return !q||r.title.toLowerCase().indexOf(q)>=0;});
+f.forEach(function(r,i){
+var item=mk(“div”,{cls:“wiki-item fu”,style:{animationDelay:i*.05+“s”}});
+item.addEventListener(“click”,function(){S.wikiSel=r;renderWiki();});
+var head=mk(“div”,{style:{display:“flex”,gap:“6px”,marginBottom:“7px”,flexWrap:“wrap”,alignItems:“center”}});
+head.appendChild(mk(“span”,{style:{fontSize:“0.54rem”,color:”#3ddc84”,background:”#3ddc8412”,border:“1px solid #3ddc8428”,padding:“2px 6px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”}},“VERIFIE”));
+if(r.cat)head.appendChild(CTag(r.cat));
+var bd=mk(“div”,{style:{marginLeft:“auto”}});bd.appendChild(Bar(r.cred||95,true));head.appendChild(bd);
+item.appendChild(head);
+item.appendChild(mk(“h3”,{style:{fontFamily:“DM Serif Display,serif”,fontSize:“0.98rem”,fontWeight:400,marginBottom:“4px”,lineHeight:1.3}},r.title));
+item.appendChild(mk(“p”,{style:{fontSize:“0.78rem”,color:”#7a7d9a”,lineHeight:1.5,marginBottom:“8px”}},r.summary));
+var foot=mk(“div”,{style:{display:“flex”,gap:“8px”,alignItems:“center”}});
+foot.appendChild(Coin(r.mjc||0,true));
+(r.tags||[]).forEach(function(t){foot.appendChild(CTag(t));});
+item.appendChild(foot);
+scroll.appendChild(item);scroll.appendChild(hr());
 });
-scroll.appendChild(mk(“div”, {style:{height:“20px”}}));
+scroll.appendChild(mk(“div”,{style:{height:“20px”}}));
 }
-searchInp.addEventListener(“input”, function(){ renderList(san.text(searchInp.value,100).toLowerCase()); });
-renderList(””);
+si.addEventListener(“input”,function(){drawList(san.t(si.value,100).toLowerCase());});
+drawList(””);
 scr.appendChild(scroll);
-
-api.wiki().then(function(d){ if(Array.isArray(d)){ S.wikiExtra=d; renderList(san.text(searchInp.value,100).toLowerCase()); } });
+api.wiki().then(function(d){if(Array.isArray(d)){S.wikiExtra=d;drawList(san.t(si.value,100).toLowerCase());}});
 }
 
-// ═══════════════════════════════════════════════
 // MESSAGES
-// ═══════════════════════════════════════════════
 function renderMsgs() {
-var scr = document.getElementById(“screen-msgs”); if (!scr) return;
-scr.innerHTML = “”;
-scr.appendChild(TopBar(“Messages”, “Chiffrés de bout en bout”));
-var scroll = mk(“div”, {cls:“msg-scroll”});
-var empty = mk(“div”, {style:{textAlign:“center”,padding:“48px 24px”,color:”#7a7d9a”}});
-empty.innerHTML = ‘<div style="font-size:2rem;margin-bottom:12px">💬</div><p style="font-family:DM Serif Display,serif;font-size:1rem">Aucun message pour l'instant.</p><p style="font-size:.78rem;margin-top:6px">Interagissez avec des membres pour démarrer.</p>’;
+var scr=document.getElementById(“s-msgs”);if(!scr)return;
+scr.innerHTML=””;
+scr.appendChild(TopBar(“Messages”,“Chiffres de bout en bout”));
+var scroll=mk(“div”,{cls:“scroll”});
+var empty=mk(“div”,{style:{textAlign:“center”,padding:“48px 24px”,color:”#7a7d9a”}});
+empty.innerHTML=”<div style='font-size:2rem;margin-bottom:12px'>💬</div><p style='font-family:DM Serif Display,serif;font-size:1rem'>Aucun message.</p><p style='font-size:.78rem;margin-top:6px'>Interagissez avec des membres.</p>”;
 scroll.appendChild(empty);
 scr.appendChild(scroll);
 }
 
-// ═══════════════════════════════════════════════
 // SUBMIT
-// ═══════════════════════════════════════════════
 function renderSubmit() {
-var scr = document.getElementById(“screen-submit”); if (!scr) return;
-scr.innerHTML = “”;
-scr.appendChild(TopBar(“Déposer”, “Modération communautaire”));
-var scroll = mk(“div”, {style:{flex:1,overflowY:“auto”,padding:“16px”}});
-
-var submitted = false;
-var form = { title:””, cat:””, summary:””, content:”” };
-
-function draw() {
-scroll.innerHTML = “”;
-if (submitted) {
-var ok = mk(“div”, {style:{display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,textAlign:“center”,padding:“32px”,minHeight:“60vh”}});
-ok.innerHTML = ‘<div style="width:72px;height:72px;border-radius:50%;background:#6e72ff18;border:2px solid #6e72ff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px">✦</div><h2 style="font-family:DM Serif Display,serif;font-size:1.6rem;margin-bottom:8px">Révélation soumise</h2><p style="color:#7a7d9a;font-size:.88rem;line-height:1.6;margin-bottom:20px">En modération. +<strong style="color:#ffb547">10 MJC</strong> dès validation par 50 membres.</p>’;
-var again = mk(“button”, {cls:“btn ghost”, onClick:function(){ submitted=false; form={title:””,cat:””,summary:””,content:””}; draw(); }}, “Nouvelle soumission”);
-ok.appendChild(again); scroll.appendChild(ok); return;
+var scr=document.getElementById(“s-submit”);if(!scr)return;
+scr.innerHTML=””;
+scr.appendChild(TopBar(“Deposer”,“Moderation communautaire”));
+var scroll=mk(“div”,{cls:“scroll”,style:{padding:“16px”}});
+var submitted=false;
+var form={title:””,cat:””,summary:””,content:””};
+function draw(){
+scroll.innerHTML=””;
+if(submitted){
+var ok=mk(“div”,{style:{display:“flex”,flexDirection:“column”,alignItems:“center”,justifyContent:“center”,textAlign:“center”,padding:“32px”,minHeight:“60vh”}});
+ok.innerHTML=”<div style='width:72px;height:72px;border-radius:50%;background:#6e72ff18;border:2px solid #6e72ff;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:20px'>✦</div><h2 style='font-family:DM Serif Display,serif;font-size:1.6rem;margin-bottom:8px'>Revelation soumise</h2><p style='color:#7a7d9a;font-size:.88rem;line-height:1.6;margin-bottom:20px'>En moderation. +10 MJC a la validation par 50 membres.</p>”;
+var ag=mk(“button”,{cls:“btn ghost”,onClick:function(){submitted=false;form={title:””,cat:””,summary:””,content:””};draw();}});
+ag.textContent=“Nouvelle soumission”;ok.appendChild(ag);scroll.appendChild(ok);return;
 }
-function field(lbl, key, type, rows) {
-var wrap = mk(“div”, {style:{marginBottom:“13px”}});
-wrap.appendChild(mk(“label”, {cls:“lbl”}, lbl));
+function field(label,key,type,rows){
+var w=mk(“div”,{style:{marginBottom:“13px”}});
+w.appendChild(mk(“label”,{cls:“lbl”},label));
 var inp;
-if (type === “select”) {
-inp = mk(“select”, {cls:“inp”});
-[[””,“Sélectionner…”],[“Gouvernement”],[“Surveillance”],[“Finance”],[“Médical”],[“Militaire”],[“Faux Drapeau”],[“Médias”],[“Histoire”]].forEach(function(o){
-var opt = mk(“option”); opt.value = o[0]; opt.textContent = o[1]||o[0]; opt.style.background=”#131420”; inp.appendChild(opt);
+if(type===“select”){
+inp=mk(“select”,{cls:“inp”});
+[””,“Gouvernement”,“Surveillance”,“Finance”,“Medical”,“Militaire”,“Faux Drapeau”,“Medias”,“Histoire”].forEach(function(c){
+var o=mk(“option”);o.value=c;o.textContent=c||“Selectionner…”;o.style.background=”#131420”;inp.appendChild(o);
 });
-inp.value = form[key];
-} else if (rows) {
-inp = mk(“textarea”, {cls:“inp”, rows:rows}); inp.style.resize=“none”; inp.style.lineHeight=“1.6”; inp.value=form[key];
+inp.value=form[key];
+} else if(rows){
+inp=mk(“textarea”,{cls:“inp”,rows:rows});inp.style.resize=“none”;inp.style.lineHeight=“1.6”;inp.value=form[key];
 if(key===“content”)inp.style.fontFamily=“DM Serif Display,serif”;
 } else {
-inp = mk(“input”, {cls:“inp”, type:“text”}); inp.value=form[key];
+inp=mk(“input”,{cls:“inp”,type:“text”});inp.value=form[key];
 }
-inp.addEventListener(“input”, function(){ form[key]=inp.value; });
-wrap.appendChild(inp); scroll.appendChild(wrap);
+inp.addEventListener(“input”,function(){form[key]=inp.value;});
+w.appendChild(inp);scroll.appendChild(w);
 }
-field(“TITRE”, “title”, “text”);
-field(“CATÉGORIE”, “cat”, “select”);
-field(“RÉSUMÉ”, “summary”, “text”, 2);
-field(“DOSSIER COMPLET”, “content”, “text”, 5);
-var submitBtn = mk(“button”, {cls:“btn”, onClick:async function(){
-var title = san.text(form.title, 200);
-var summary = san.text(form.summary, 500);
-var content = san.text(form.content, 5000);
-if (!title || !form.cat || !summary) return;
-submitBtn.disabled=true; submitBtn.innerHTML=’<div class="spin"></div> Envoi…’;
-var slug = title.toLowerCase().replace(/\s+/g,”-”).replace(/[^a-z0-9-]/g,””).slice(0,30)+”-”+Date.now();
-var res = await api.addWiki({ id:slug, title:title, category:form.cat, summary:summary, content:content, tags:[], status:“pending”, submitted_by:S.user.id, cred_score:50, votes_count:0, mojocoin_reward:10 });
-if (res && res.__err) { submitBtn.disabled=false; submitBtn.textContent=“Soumettre →”; return; }
-submitted=true; draw();
-}}, “Soumettre →”);
-scroll.appendChild(submitBtn);
-scroll.appendChild(mk(“div”, {style:{height:“20px”}}));
+field(“TITRE”,“title”,“text”);
+field(“CATEGORIE”,“cat”,“select”);
+field(“RESUME”,“summary”,“text”,2);
+field(“DOSSIER”,“content”,“text”,5);
+var sb=mk(“button”,{cls:“btn”,style:{marginTop:“4px”},onClick:async function(){
+var t=san.t(form.title,200),s=san.t(form.summary,500),c=san.t(form.content,5000);
+if(!t||!form.cat||!s)return;
+sb.disabled=true;sb.innerHTML=’<div class="spin"></div>’;
+var slug=t.toLowerCase().replace(/\s+/g,”-”).replace(/[^a-z0-9-]/g,””).slice(0,30)+”-”+Date.now();
+await api.addWiki({id:slug,title:t,category:form.cat,summary:s,content:c,tags:[],status:“pending”,submitted_by:S.user.id,cred_score:50,votes_count:0,mojocoin_reward:10});
+submitted=true;draw();
+}});
+sb.textContent=“Soumettre”;
+scroll.appendChild(sb);
+scroll.appendChild(mk(“div”,{style:{height:“20px”}}));
 }
 draw();
 scr.appendChild(scroll);
 }
 
-// ═══════════════════════════════════════════════
 // PROFILE
-// ═══════════════════════════════════════════════
-function loadTxs() {
-if (!S.user) return;
-api.txs(S.user.id).then(function(d){ if(Array.isArray(d)){ S.txs=d; renderProfile(); } });
+function loadTxs(){
+if(!S.user)return;
+api.txs(S.user.id).then(function(d){if(Array.isArray(d)){S.txs=d;renderProfile();}});
 }
+function renderProfile(){
+var scr=document.getElementById(“s-profile”);if(!scr)return;
+scr.innerHTML=””;
+var u=S.user;
+var lb=mk(“button”,{style:{background:”#ff4d6d15”,border:“1px solid #ff4d6d30”,color:”#ff4d6d”,padding:“5px 11px”,borderRadius:“20px”,cursor:“pointer”,fontSize:“0.7rem”,fontWeight:600},onClick:function(){api.logout();location.reload();}});
+lb.textContent=“Deconnexion”;
+scr.appendChild(TopBar(“Profil”,null,null,lb));
+var scroll=mk(“div”,{cls:“scroll”});
 
-function renderProfile() {
-var scr = document.getElementById(“screen-profile”); if (!scr) return;
-scr.innerHTML = “”;
-var u = S.user;
-var logoutBtn = mk(“button”, {style:{background:”#ff4d6d15”,border:“1px solid #ff4d6d30”,color:”#ff4d6d”,padding:“5px 11px”,borderRadius:“20px”,cursor:“pointer”,fontSize:“0.7rem”,fontWeight:600}, onClick:function(){ api.logout(); location.reload(); }}, “Déconnexion”);
-scr.appendChild(TopBar(“Profil”, null, null, logoutBtn));
-
-var scroll = mk(“div”, {cls:“profile-scroll”});
-// Header user
-var ucard = mk(“div”, {style:{padding:“20px 16px 16px”,background:“linear-gradient(180deg,#6e72ff06,transparent)”}});
-var urow = mk(“div”, {style:{display:“flex”,gap:“14px”,alignItems:“center”,marginBottom:“16px”}});
-urow.appendChild(Ava(u.alias, u.level||“Nouveau”, 56));
-var uinfo = mk(“div”, {style:{flex:1}});
-uinfo.appendChild(mk(“div”, {style:{fontWeight:700,fontSize:“1.1rem”,marginBottom:“5px”}}, u.alias));
-uinfo.appendChild(Pill(u.level||“Nouveau”));
-var bal = mk(“div”, {style:{textAlign:“right”}});
-bal.appendChild(mk(“div”, {style:{fontFamily:“Fira Code,monospace”,fontSize:“1.3rem”,fontWeight:600,color:”#ffb547”}}, u.mojocoin_balance||0));
-bal.appendChild(mk(“div”, {style:{fontSize:“0.55rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”}}, “MJC”));
-urow.appendChild(uinfo); urow.appendChild(bal);
-ucard.appendChild(urow); scroll.appendChild(ucard); scroll.appendChild(HR());
+// Header
+var uh=mk(“div”,{style:{padding:“20px 16px 16px”,background:“linear-gradient(180deg,#6e72ff06,transparent)”}});
+var ur=mk(“div”,{style:{display:“flex”,gap:“14px”,alignItems:“center”,marginBottom:“16px”}});
+ur.appendChild(Ava(u.alias,u.level||“Nouveau”,56));
+var ui=mk(“div”,{style:{flex:1}});
+ui.appendChild(mk(“div”,{style:{fontWeight:700,fontSize:“1.1rem”,marginBottom:“5px”}},u.alias));
+ui.appendChild(Pill(u.level||“Nouveau”));
+var ub=mk(“div”,{style:{textAlign:“right”}});
+ub.appendChild(mk(“div”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“1.3rem”,fontWeight:600,color:”#ffb547”}},u.mojocoin_balance||0));
+ub.appendChild(mk(“div”,{style:{fontSize:“0.55rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”}},“MJC”));
+ur.appendChild(ui);ur.appendChild(ub);
+uh.appendChild(ur);scroll.appendChild(uh);scroll.appendChild(hr());
 
 // Abonnement
-var sub = mk(“div”, {style:{padding:“14px 16px”}});
-sub.appendChild(mk(“div”, {cls:“lbl”}, “ABONNEMENT”));
-var subCard = mk(“div”, {style:{background:u.subscription_active?”#3ddc840a”:”#ff4d6d0a”,border:“1px solid “+(u.subscription_active?”#3ddc8422”:”#ff4d6d22”),borderRadius:“10px”,padding:“12px 14px”,display:“flex”,justifyContent:“space-between”,alignItems:“center”}});
-var subInfo = mk(“div”);
-subInfo.appendChild(mk(“div”, {style:{fontWeight:600,fontSize:“0.85rem”,marginBottom:“3px”}}, u.subscription_active?“✓ Actif”:“✗ Inactif”));
-subInfo.appendChild(mk(“div”, {style:{fontSize:“0.7rem”,color:”#7a7d9a”}}, “10 € / mois · Paiement CB”));
-subCard.appendChild(subInfo);
-if (!u.subscription_active) subCard.appendChild(mk(“button”, {cls:“btn amber”, style:{width:“auto”,padding:“7px 13px”,borderRadius:“20px”,fontSize:“0.72rem”}}, “Activer”));
-sub.appendChild(subCard); scroll.appendChild(sub); scroll.appendChild(HR());
+var sub=mk(“div”,{style:{padding:“14px 16px”}});
+sub.appendChild(mk(“div”,{cls:“lbl”},“ABONNEMENT”));
+var sc=mk(“div”,{style:{background:u.subscription_active?”#3ddc840a”:”#ff4d6d0a”,border:“1px solid “+(u.subscription_active?”#3ddc8422”:”#ff4d6d22”),borderRadius:“10px”,padding:“12px 14px”,display:“flex”,justifyContent:“space-between”,alignItems:“center”}});
+var si=mk(“div”);
+si.appendChild(mk(“div”,{style:{fontWeight:600,fontSize:“0.85rem”,marginBottom:“3px”}},u.subscription_active?“Actif”:“Inactif”));
+si.appendChild(mk(“div”,{style:{fontSize:“0.7rem”,color:”#7a7d9a”}},“10 EUR / mois”));
+sc.appendChild(si);
+if(!u.subscription_active){var ab=mk(“button”,{cls:“btn amber”,style:{width:“auto”,padding:“7px 13px”,borderRadius:“20px”,fontSize:“0.72rem”}});ab.textContent=“Activer”;sc.appendChild(ab);}
+sub.appendChild(sc);scroll.appendChild(sub);scroll.appendChild(hr());
 
 // Code parrain
-var refSec = mk(“div”, {style:{padding:“14px 16px”}});
-refSec.appendChild(mk(“div”, {cls:“lbl”}, “CODE PARRAIN”));
-var refCard = mk(“div”, {style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“11px 13px”,display:“flex”,alignItems:“center”,gap:“9px”}});
-refCard.appendChild(mk(“span”, {style:{fontFamily:“Fira Code,monospace”,fontSize:“0.88rem”,fontWeight:600,color:”#6e72ff”,flex:1}}, u.referral_code||”…”));
-var copyBtn = mk(“button”, {cls:“copy-btn”, onClick:function(){
-try{ navigator.clipboard.writeText(u.referral_code||””); }catch(e){ var t=document.createElement(“textarea”);t.value=u.referral_code||””;document.body.appendChild(t);t.select();document.execCommand(“copy”);document.body.removeChild(t); }
-copyBtn.textContent=“✓ Copié”; copyBtn.className=“copy-btn ok”;
-setTimeout(function(){ copyBtn.textContent=“Copier”; copyBtn.className=“copy-btn”; }, 1800);
-}}, “Copier”);
-refCard.appendChild(copyBtn);
-refSec.appendChild(refCard);
-refSec.appendChild(mk(“p”, {style:{fontSize:“0.66rem”,color:”#383a52”,marginTop:“7px”}}, “50 MJC par filleul parrainé”));
-scroll.appendChild(refSec); scroll.appendChild(HR());
+var rs=mk(“div”,{style:{padding:“14px 16px”}});
+rs.appendChild(mk(“div”,{cls:“lbl”},“CODE PARRAIN”));
+var rc=mk(“div”,{style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“11px 13px”,display:“flex”,alignItems:“center”,gap:“9px”}});
+rc.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.88rem”,fontWeight:600,color:”#6e72ff”,flex:1}},u.referral_code||”…”));
+var cpb=mk(“button”,{cls:“copy-btn”,onClick:function(){
+try{navigator.clipboard.writeText(u.referral_code||””);}catch(e){var t=document.createElement(“textarea”);t.value=u.referral_code||””;document.body.appendChild(t);t.select();document.execCommand(“copy”);document.body.removeChild(t);}
+cpb.textContent=“Copie!”;cpb.className=“copy-btn ok”;
+setTimeout(function(){cpb.textContent=“Copier”;cpb.className=“copy-btn”;},1800);
+}});
+cpb.textContent=“Copier”;
+rc.appendChild(cpb);
+rs.appendChild(rc);
+rs.appendChild(mk(“p”,{style:{fontSize:“0.66rem”,color:”#383a52”,marginTop:“7px”}},“50 MJC par filleul parraine”));
+scroll.appendChild(rs);scroll.appendChild(hr());
 
 // Retrait
-var balance = u.mojocoin_balance||0;
-var months = u.months_active||0;
-var retSec = mk(“div”, {style:{padding:“14px 16px”}});
-retSec.appendChild(mk(“div”, {cls:“lbl”}, “RETRAIT EN EUROS”));
-var retCard = mk(“div”, {style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“12px 14px”}});
-function progBar(val, max, col) {
-var r = mk(“div”);
-var row = mk(“div”, {style:{display:“flex”,justifyContent:“space-between”,marginBottom:“4px”}});
-var lab = mk(“span”, {style:{fontSize:“0.75rem”}}, val===“balance”?“Solde minimum”:“Ancienneté”);
-var valEl = mk(“span”, {style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,fontWeight:700,color:val>=max?col:”#ff4d6d”}}, val+” / “+max+(val===“balance”?” MJC”:” mois”));
-row.appendChild(lab); row.appendChild(valEl);
-var track = mk(“div”, {style:{height:“4px”,background:”#ffffff14”,borderRadius:“4px”,overflow:“hidden”,marginBottom:“8px”}});
-var fill = mk(“div”, {style:{height:“100%”,width:Math.min(100,(val/max)*100)+”%”,background:val>=max?col:”#ffb547”,borderRadius:“4px”,transition:“width 1s ease”}});
-track.appendChild(fill); r.appendChild(row); r.appendChild(track); return r;
+var bal=u.mojocoin_balance||0,months=u.months_active||0;
+var ret=mk(“div”,{style:{padding:“14px 16px”}});
+ret.appendChild(mk(“div”,{cls:“lbl”},“RETRAIT EN EUROS”));
+var retc=mk(“div”,{style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“12px 14px”}});
+function prog(val,max,col,label){
+var r=mk(“div”,{style:{marginBottom:“8px”}});
+var row=mk(“div”,{style:{display:“flex”,justifyContent:“space-between”,marginBottom:“4px”}});
+row.appendChild(mk(“span”,{style:{fontSize:“0.75rem”}},label));
+row.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,fontWeight:700,color:val>=max?”#3ddc84”:”#ff4d6d”}},val+” / “+max));
+var tr=mk(“div”,{style:{height:“4px”,background:”#ffffff14”,borderRadius:“4px”,overflow:“hidden”}});
+tr.appendChild(mk(“div”,{style:{height:“100%”,width:Math.min(100,(val/max)*100)+”%”,background:val>=max?col:”#ffb547”,borderRadius:“4px”}}));
+r.appendChild(row);r.appendChild(tr);return r;
 }
-var b1 = mk(“div”);
-var br1 = mk(“div”, {style:{display:“flex”,justifyContent:“space-between”,marginBottom:“4px”}});
-br1.appendChild(mk(“span”,{style:{fontSize:“0.75rem”}},“Solde minimum”));
-br1.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,fontWeight:700,color:balance>=500?”#3ddc84”:”#ff4d6d”}},balance+” / 500 MJC”));
-var bt1 = mk(“div”,{style:{height:“4px”,background:”#ffffff14”,borderRadius:“4px”,overflow:“hidden”,marginBottom:“8px”}});
-bt1.appendChild(mk(“div”,{style:{height:“100%”,width:Math.min(100,(balance/500)*100)+”%”,background:balance>=500?”#3ddc84”:”#ffb547”,borderRadius:“4px”}}));
-b1.appendChild(br1);b1.appendChild(bt1);retCard.appendChild(b1);
-
-var b2 = mk(“div”);
-var br2 = mk(“div”, {style:{display:“flex”,justifyContent:“space-between”,marginBottom:“4px”}});
-br2.appendChild(mk(“span”,{style:{fontSize:“0.75rem”}},“Ancienneté”));
-br2.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,fontWeight:700,color:months>=5?”#3ddc84”:”#ff4d6d”}},months+” / 5 mois”));
-var bt2 = mk(“div”,{style:{height:“4px”,background:”#ffffff14”,borderRadius:“4px”,overflow:“hidden”,marginBottom:“8px”}});
-bt2.appendChild(mk(“div”,{style:{height:“100%”,width:Math.min(100,(months/5)*100)+”%”,background:months>=5?”#3ddc84”:”#ffb547”,borderRadius:“4px”}}));
-b2.appendChild(br2);b2.appendChild(bt2);retCard.appendChild(b2);
-
-retCard.appendChild(mk(“p”,{style:{fontSize:“0.68rem”,color:”#383a52”,marginTop:“8px”}},“1 MJC = 0.10 € · Virement bancaire sous 3-5 jours”));
-retSec.appendChild(retCard); scroll.appendChild(retSec); scroll.appendChild(HR());
+retc.appendChild(prog(bal,500,”#3ddc84”,“Solde (MJC)”));
+retc.appendChild(prog(months,5,”#3ddc84”,“Anciennete (mois)”));
+retc.appendChild(mk(“p”,{style:{fontSize:“0.68rem”,color:”#383a52”,marginTop:“8px”}},“1 MJC = 0.10 EUR - Virement sous 3-5 jours”));
+ret.appendChild(retc);scroll.appendChild(ret);scroll.appendChild(hr());
 
 // Transactions
-var txSec = mk(“div”, {style:{padding:“14px 16px”}});
-txSec.appendChild(mk(“div”, {cls:“lbl”}, “TRANSACTIONS”));
-if (!S.txs || S.txs.length===0) {
-txSec.appendChild(mk(“p”, {style:{fontSize:“0.78rem”,color:”#7a7d9a”}}, “Aucune transaction pour l’instant.”));
-} else {
-S.txs.forEach(function(tx) {
-var row = mk(“div”, {style:{display:“flex”,justifyContent:“space-between”,alignItems:“center”,padding:“9px 0”,borderBottom:“1px solid #ffffff0a”}});
-var left = mk(“div”);
-left.appendChild(mk(“div”, {style:{fontWeight:500,fontSize:“0.8rem”,marginBottom:“1px”}}, san.text(tx.label||“Transaction”, 100)));
-left.appendChild(mk(“div”, {style:{color:”#383a52”,fontSize:“0.6rem”,fontFamily:“Fira Code,monospace”}}, new Date(tx.created_at).toLocaleDateString(“fr-FR”)));
-row.appendChild(left);
-row.appendChild(mk(“span”, {style:{color:tx.type===“earn”?”#3ddc84”:”#ff4d6d”,fontWeight:700,fontFamily:“Fira Code,monospace”,fontSize:“0.78rem”,marginLeft:“10px”}}, (tx.amount>0?”+”:””)+tx.amount+” MJC”));
-txSec.appendChild(row);
+var txs=mk(“div”,{style:{padding:“14px 16px”}});
+txs.appendChild(mk(“div”,{cls:“lbl”},“TRANSACTIONS”));
+if(!S.txs||!S.txs.length){txs.appendChild(mk(“p”,{style:{fontSize:“0.78rem”,color:”#7a7d9a”}},“Aucune transaction.”));}
+else S.txs.forEach(function(tx){
+var row=mk(“div”,{style:{display:“flex”,justifyContent:“space-between”,alignItems:“center”,padding:“9px 0”,borderBottom:“1px solid #ffffff0a”}});
+var l=mk(“div”);
+l.appendChild(mk(“div”,{style:{fontWeight:500,fontSize:“0.8rem”,marginBottom:“1px”}},san.t(tx.label||“Transaction”,100)));
+l.appendChild(mk(“div”,{style:{color:”#383a52”,fontSize:“0.6rem”,fontFamily:“Fira Code,monospace”}},new Date(tx.created_at).toLocaleDateString(“fr-FR”)));
+row.appendChild(l);
+row.appendChild(mk(“span”,{style:{color:tx.type===“earn”?”#3ddc84”:”#ff4d6d”,fontWeight:700,fontFamily:“Fira Code,monospace”,fontSize:“0.78rem”,marginLeft:“10px”}},(tx.amount>0?”+”:””)+tx.amount+” MJC”));
+txs.appendChild(row);
 });
-}
-scroll.appendChild(txSec);
-scroll.appendChild(mk(“div”, {style:{height:“20px”}}));
+scroll.appendChild(txs);
+scroll.appendChild(mk(“div”,{style:{height:“20px”}}));
 scr.appendChild(scroll);
 }
 
-// ═══════════════════════════════════════════════
-// DÉMARRAGE
-// ═══════════════════════════════════════════════
+// START APP
 function startApp(user) {
-S.user = user;
-var app = document.getElementById(“app”);
-app.innerHTML = “”;
-[“feed”,“wiki”,“msgs”,“submit”,“profile”].forEach(function(id) {
-app.appendChild(mk(“div”, {cls:“screen”+(id===“feed”?” active”:””), id:“screen-”+id}));
+S.user=user;
+var app=document.getElementById(“app”);
+app.innerHTML=””;
+[“feed”,“wiki”,“msgs”,“submit”,“profile”].forEach(function(id){
+app.appendChild(mk(“div”,{cls:“screen”+(id===“feed”?” active”:””),id:“s-”+id}));
 });
 app.appendChild(makeBotbar());
-renderFeed(); renderWiki(); renderMsgs(); renderSubmit(); renderProfile();
-loadPosts(); loadTxs();
+renderFeed();renderWiki();renderMsgs();renderSubmit();renderProfile();
+loadPosts();loadTxs();
 }
 
-(function() {
-// Safety timeout - if app doesn’t load in 4s, force show auth
-setTimeout(function() {
-var splash = document.getElementById(“splash”);
-var app = document.getElementById(“app”);
-if (splash && splash.style.opacity !== “0” && app && app.children.length === 0) {
-splash.style.opacity = “0”;
-setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); }, 400);
-app.appendChild(renderAuth());
-}
-}, 4000);
-
-try { var tok = localStorage.getItem(“mj_tok”);
-var usr = localStorage.getItem(“mj_usr”);
-var splash = document.getElementById(“splash”);
-function hideSplash() {
-if (splash) { splash.style.opacity=“0”; setTimeout(function(){ if(splash.parentNode) splash.parentNode.removeChild(splash); }, 400); }
-}
-if (tok && usr) {
+// BOOT
+(function(){
 try {
-var u = JSON.parse(usr);
-if (u && u.id) { window._mjtok = tok; hideSplash(); startApp(u); return; }
-} catch(e) {}
+var tok=localStorage.getItem(“mj_tok”);
+var usr=localStorage.getItem(“mj_usr”);
+if(tok&&usr){
+var u=JSON.parse(usr);
+if(u&&u.id){window._mjtok=tok;startApp(u);return;}
 }
-hideSplash();
+} catch(e) {}
 document.getElementById(“app”).appendChild(renderAuth());
-} catch(e) { document.getElementById(“app”).innerHTML = ’<div style="padding:40px;color:#ff4d6d;font-family:monospace;font-size:0.8rem">Erreur: ’ + e.message + ‘<br/><br/>’ + e.stack + ‘</div>’; var s=document.getElementById(“splash”); if(s)s.style.display=“none”; }
 })();
-
 </script>
+
 </body>
 </html>
