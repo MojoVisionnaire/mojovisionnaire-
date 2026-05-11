@@ -99,72 +99,80 @@ function renderTimeline(){
 var scr=document.getElementById("s-timeline");if(!scr)return;
 scr.innerHTML="";
 scr.appendChild(TopBar("Timeline","Chronologie des complots prouves"));
-
-// Countdown
-var launch=new Date(“2026-05-22T00:00:00”);
 var now=new Date();
+var launch=new Date(2026,4,22);
 var diff=launch-now;
 if(diff>0){
-var days=Math.floor(diff/(1000*60*60*24));
-var hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-var mins=Math.floor((diff%(1000*60*60))/(1000*60));
-var banner=mk(“div”,{style:{background:“linear-gradient(135deg,#6e72ff15,#00d2ff10)”,border:“1px solid #6e72ff30”,margin:“12px 16px”,borderRadius:“12px”,padding:“12px 14px”}});
-var btop=mk(“div”,{style:{display:“flex”,justifyContent:“space-between”,alignItems:“center”,marginBottom:“8px”}});
-var btitle=mk(“div”,{style:{fontSize:“0.7rem”,fontWeight:700,color:”#6e72ff”}});btitle.textContent=“LANCEMENT LE 22 MAI”;
-var boffer=mk(“div”,{style:{fontSize:“0.62rem”,color:”#ffb547”,fontFamily:“Fira Code,monospace”,fontWeight:600}});boffer.textContent=“OFFRE FONDATEURS”;
-btop.appendChild(btitle);btop.appendChild(boffer);
-var timer=mk(“div”,{style:{display:“flex”,gap:“8px”,justifyContent:“center”,marginBottom:“8px”}});
-[{v:days,l:“JOURS”},{v:hours,l:“HEURES”},{v:mins,l:“MINS”}].forEach(function(item){
-var box=mk(“div”,{style:{background:”#07080e”,borderRadius:“8px”,padding:“8px 12px”,textAlign:“center”,flex:1,border:“1px solid #ffffff14”}});
-var sv=String(item.v);
-var num=mk(“div”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“1.4rem”,fontWeight:700,color:”#dde0ec”,lineHeight:1}});
-num.textContent=sv.length<2?“0”+sv:sv;
-var lbl=mk(“div”,{style:{fontSize:“0.48rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,marginTop:“2px”}});
-lbl.textContent=item.l;
-box.appendChild(num);box.appendChild(lbl);timer.appendChild(box);
-});
-var bnote=mk(“div”,{style:{fontSize:“0.68rem”,color:”#7a7d9a”,textAlign:“center”}});
-bnote.textContent=“Chaque parrainage = +5 EUR direct pendant le 1er mois”;
-banner.appendChild(btop);banner.appendChild(timer);banner.appendChild(bnote);
-scr.appendChild(banner);
+  var days=Math.floor(diff/86400000);
+  var hours=Math.floor((diff%86400000)/3600000);
+  var mins=Math.floor((diff%3600000)/60000);
+  var banner=mk("div",{style:{background:"#6e72ff0d",border:"1px solid #6e72ff28",margin:"12px 16px 0",borderRadius:"12px",padding:"12px 14px"}});
+  var btop=mk("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"8px"}});
+  var btitle=mk("div",{style:{fontSize:"0.7rem",fontWeight:700,color:"#6e72ff"}});
+  btitle.textContent="LANCEMENT LE 22 MAI";
+  var boffer=mk("div",{style:{fontSize:"0.62rem",color:"#ffb547",fontFamily:"Fira Code,monospace",fontWeight:600}});
+  boffer.textContent="OFFRE FONDATEURS";
+  btop.appendChild(btitle);btop.appendChild(boffer);
+  var timer=mk("div",{style:{display:"flex",gap:"8px",marginBottom:"8px"}});
+  var vals=[{v:days,l:"JOURS"},{v:hours,l:"HEURES"},{v:mins,l:"MINS"}];
+  for(var vi=0;vi<vals.length;vi++){
+    var item=vals[vi];
+    var box=mk("div",{style:{background:"#07080e",borderRadius:"8px",padding:"8px 12px",textAlign:"center",flex:1,border:"1px solid #ffffff14"}});
+    var sv=String(item.v);
+    var num=mk("div",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.3rem",fontWeight:700,color:"#dde0ec",lineHeight:1}});
+    num.textContent=sv.length<2?"0"+sv:sv;
+    var lbl=mk("div",{style:{fontSize:"0.48rem",color:"#383a52",fontFamily:"Fira Code,monospace",marginTop:"2px"}});
+    lbl.textContent=item.l;
+    box.appendChild(num);box.appendChild(lbl);timer.appendChild(box);
+  }
+  var bnote=mk("div",{style:{fontSize:"0.66rem",color:"#7a7d9a",textAlign:"center"}});
+  bnote.textContent="+5 EUR par parrainage pendant le 1er mois";
+  banner.appendChild(btop);banner.appendChild(timer);banner.appendChild(bnote);
+  scr.appendChild(banner);
 }
-
 var EVTS=[
-{year:“1953”,title:“Operation MKUltra”,cat:“Gouvernement”,col:”#6e72ff”,desc:“La CIA lance un programme secret de controle mental via le LSD sur des sujets non consentants.”},
-{year:“1956”,title:“COINTELPRO - FBI”,cat:“Gouvernement”,col:”#6e72ff”,desc:“Le FBI surveille et destabilise les mouvements politiques americains.”},
-{year:“1962”,title:“Operation Northwoods”,cat:“Faux Drapeau”,col:”#ff4d6d”,desc:“Les militaires US proposent de simuler des attentats pour justifier une Cuba. Kennedy refuse.”},
-{year:“1971”,title:“Fin de COINTELPRO”,cat:“Gouvernement”,col:”#6e72ff”,desc:“Le programme est revele apres le cambriolage du bureau FBI de Media.”},
-{year:“1977”,title:“MKUltra declassifie”,cat:“Gouvernement”,col:”#6e72ff”,desc:“Des milliers de documents CIA sont rendus publics revelant l ampleur du programme.”},
-{year:“1997”,title:“Northwoods declassifie”,cat:“Faux Drapeau”,col:”#ff4d6d”,desc:“Les documents du plan Northwoods sont officiellement declassifies.”},
-{year:“2007”,title:“Programme PRISM lance”,cat:“Surveillance”,col:”#00d2ff”,desc:“La NSA collecte massivement des donnees via Google, Apple et Facebook.”},
-{year:“2013”,title:“Snowden revele PRISM”,cat:“Surveillance”,col:”#00d2ff”,desc:“Edward Snowden revele au monde l existence du programme PRISM.”},
+  {year:"1953",title:"Operation MKUltra",cat:"Gouvernement",col:"#6e72ff",desc:"La CIA lance un programme de controle mental via le LSD sur des sujets non consentants."},
+  {year:"1956",title:"COINTELPRO",cat:"Gouvernement",col:"#6e72ff",desc:"Le FBI surveille et destabilise les mouvements politiques americains."},
+  {year:"1962",title:"Operation Northwoods",cat:"Faux Drapeau",col:"#ff4d6d",desc:"Les militaires proposent de simuler des attentats contre des citoyens US. Kennedy refuse."},
+  {year:"1971",title:"Fin de COINTELPRO",cat:"Gouvernement",col:"#6e72ff",desc:"Le programme est revele apres le cambriolage du bureau FBI de Media."},
+  {year:"1977",title:"MKUltra declassifie",cat:"Gouvernement",col:"#6e72ff",desc:"Des milliers de documents CIA sont rendus publics."},
+  {year:"1997",title:"Northwoods declassifie",cat:"Faux Drapeau",col:"#ff4d6d",desc:"Les documents du plan Northwoods sont officiellement declassifies."},
+  {year:"2007",title:"Programme PRISM",cat:"Surveillance",col:"#00d2ff",desc:"La NSA collecte massivement les donnees via Google, Apple et Facebook."},
+  {year:"2013",title:"Snowden revele PRISM",cat:"Surveillance",col:"#00d2ff",desc:"Snowden revele au monde l existence du programme de surveillance PRISM."}
 ];
-
-var scroll=mk(“div”,{cls:“scroll”,style:{padding:“16px 0”}});
-EVTS.forEach(function(ev,i){
-var item=mk(“div”,{cls:“fu”,style:{display:“flex”,gap:“0”,animationDelay:i*0.05+“s”,padding:“0 16px”,marginBottom:“4px”}});
-var left=mk(“div”,{style:{width:“52px”,flexShrink:0,paddingTop:“4px”,textAlign:“right”,paddingRight:“8px”}});
-var yr=mk(“div”,{style:{fontSize:“0.62rem”,fontFamily:“Fira Code,monospace”,color:ev.col,fontWeight:700}});
-yr.textContent=ev.year;left.appendChild(yr);
-var center=mk(“div”,{style:{width:“20px”,flexShrink:0,display:“flex”,flexDirection:“column”,alignItems:“center”}});
-var dot=mk(“div”,{style:{width:“10px”,height:“10px”,borderRadius:“50%”,background:ev.col,border:“2px solid #07080e”,flexShrink:0,marginTop:“5px”}});
-var line=mk(“div”,{style:{width:“2px”,background:”#ffffff0a”,flex:1,marginTop:“2px”,minHeight:“30px”}});
-center.appendChild(dot);if(i<EVTS.length-1)center.appendChild(line);
-var right=mk(“div”,{style:{flex:1,paddingLeft:“10px”,paddingBottom:“20px”}});
-var head=mk(“div”,{style:{marginBottom:“4px”}});
-var ttl=mk(“div”,{style:{fontWeight:700,fontSize:“0.88rem”,color:”#dde0ec”,marginBottom:“3px”}});ttl.textContent=ev.title;
-var ctag=mk(“span”,{style:{fontSize:“0.52rem”,color:ev.col,background:ev.col+“15”,border:“1px solid “+ev.col+“25”,padding:“1px 6px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”,marginRight:“4px”}});ctag.textContent=ev.cat;
-var vbadge=mk(“span”,{style:{fontSize:“0.52rem”,color:”#3ddc84”,background:”#3ddc8412”,border:“1px solid #3ddc8428”,padding:“1px 6px”,borderRadius:“20px”,fontFamily:“Fira Code,monospace”}});vbadge.textContent=“VERIFIE”;
-head.appendChild(ttl);
-var tags=mk(“div”,{style:{display:“flex”,gap:“4px”,marginBottom:“5px”}});tags.appendChild(ctag);tags.appendChild(vbadge);
-var desc=mk(“p”,{style:{fontSize:“0.78rem”,color:”#7a7d9a”,lineHeight:1.55}});desc.textContent=ev.desc;
-right.appendChild(head);right.appendChild(tags);right.appendChild(desc);
-item.appendChild(left);item.appendChild(center);item.appendChild(right);
-scroll.appendChild(item);
-});
-scroll.appendChild(mk(“div”,{style:{height:“20px”}}));
+var scroll=mk("div",{cls:"scroll",style:{padding:"16px 0"}});
+for(var ei=0;ei<EVTS.length;ei++){
+  var ev=EVTS[ei];
+  var row=mk("div",{cls:"fu",style:{display:"flex",padding:"0 16px",marginBottom:"4px",animationDelay:ei*0.05+"s"}});
+  var left=mk("div",{style:{width:"52px",flexShrink:0,paddingTop:"4px",textAlign:"right",paddingRight:"8px"}});
+  var yr=mk("div",{style:{fontSize:"0.62rem",fontFamily:"Fira Code,monospace",color:ev.col,fontWeight:700}});
+  yr.textContent=ev.year;left.appendChild(yr);
+  var mid=mk("div",{style:{width:"20px",flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center"}});
+  var dot=mk("div",{style:{width:"10px",height:"10px",borderRadius:"50%",background:ev.col,border:"2px solid #07080e",flexShrink:0,marginTop:"5px"}});
+  mid.appendChild(dot);
+  if(ei<EVTS.length-1){
+    var line=mk("div",{style:{width:"2px",background:"#ffffff0a",flex:1,marginTop:"2px",minHeight:"40px"}});
+    mid.appendChild(line);
+  }
+  var right=mk("div",{style:{flex:1,paddingLeft:"10px",paddingBottom:"18px"}});
+  var ttl=mk("div",{style:{fontWeight:700,fontSize:"0.86rem",color:"#dde0ec",marginBottom:"4px"}});
+  ttl.textContent=ev.title;
+  var tags=mk("div",{style:{display:"flex",gap:"4px",marginBottom:"5px"}});
+  var ctag=mk("span",{style:{fontSize:"0.52rem",color:ev.col,background:ev.col+"15",border:"1px solid "+ev.col+"25",padding:"1px 6px",borderRadius:"20px",fontFamily:"Fira Code,monospace"}});
+  ctag.textContent=ev.cat;
+  var vb=mk("span",{style:{fontSize:"0.52rem",color:"#3ddc84",background:"#3ddc8412",border:"1px solid #3ddc8428",padding:"1px 6px",borderRadius:"20px",fontFamily:"Fira Code,monospace"}});
+  vb.textContent="VERIFIE";
+  tags.appendChild(ctag);tags.appendChild(vb);
+  var desc=mk("p",{style:{fontSize:"0.76rem",color:"#7a7d9a",lineHeight:1.5}});
+  desc.textContent=ev.desc;
+  right.appendChild(ttl);right.appendChild(tags);right.appendChild(desc);
+  row.appendChild(left);row.appendChild(mid);row.appendChild(right);
+  scroll.appendChild(row);
+}
+scroll.appendChild(mk("div",{style:{height:"20px"}}));
 scr.appendChild(scroll);
 }
+
 function loadTxs(){if(!S.user)return;api.txs(S.user.id).then(function(d){if(Array.isArray(d)){S.txs=d;renderProfile();}});}
 function renderProfile(){var scr=document.getElementById(“s-profile”);if(!scr)return;scr.innerHTML=””;var u=S.user;var lb=mk(“button”,{style:{background:”#ff4d6d15”,border:“1px solid #ff4d6d30”,color:”#ff4d6d”,padding:“5px 11px”,borderRadius:“20px”,cursor:“pointer”,fontSize:“0.7rem”,fontWeight:600},onClick:function(){api.logout();location.reload();}});lb.textContent=“Deconnexion”;scr.appendChild(TopBar(“Profil”,null,null,lb));var scroll=mk(“div”,{cls:“scroll”});var uh=mk(“div”,{style:{padding:“20px 16px 16px”,background:“linear-gradient(180deg,#6e72ff06,transparent)”}});var ur=mk(“div”,{style:{display:“flex”,gap:“14px”,alignItems:“center”,marginBottom:“16px”}});ur.appendChild(Ava(u.alias,u.level||“Nouveau”,56));var ui=mk(“div”,{style:{flex:1}});ui.appendChild(mk(“div”,{style:{fontWeight:700,fontSize:“1.1rem”,marginBottom:“5px”}},u.alias));ui.appendChild(Pill(u.level||“Nouveau”));var ub=mk(“div”,{style:{textAlign:“right”}});ub.appendChild(mk(“div”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“1.3rem”,fontWeight:600,color:”#ffb547”}},u.mojocoin_balance||0));ub.appendChild(mk(“div”,{style:{fontSize:“0.55rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”}},“MJC”));ur.appendChild(ui);ur.appendChild(ub);uh.appendChild(ur);scroll.appendChild(uh);scroll.appendChild(hr());var rs=mk(“div”,{style:{padding:“14px 16px”}});rs.appendChild(mk(“div”,{cls:“lbl”},“CODE PARRAIN”));var rc=mk(“div”,{style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“11px 13px”,display:“flex”,alignItems:“center”,gap:“9px”}});rc.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.88rem”,fontWeight:600,color:”#6e72ff”,flex:1}},u.referral_code||”…”));var cpb=mk(“button”,{cls:“copy-btn”,onClick:function(){try{navigator.clipboard.writeText(u.referral_code||””);}catch(e){var t=document.createElement(“textarea”);t.value=u.referral_code||””;document.body.appendChild(t);t.select();document.execCommand(“copy”);document.body.removeChild(t);}cpb.textContent=“Copie!”;cpb.className=“copy-btn ok”;setTimeout(function(){cpb.textContent=“Copier”;cpb.className=“copy-btn”;},1800);}});cpb.textContent=“Copier”;rc.appendChild(cpb);rs.appendChild(rc);rs.appendChild(mk(“p”,{style:{fontSize:“0.66rem”,color:”#383a52”,marginTop:“7px”}},“50 MJC par filleul parraine”));scroll.appendChild(rs);scroll.appendChild(hr());var bal=u.mojocoin_balance||0,months=u.months_active||0;var ret=mk(“div”,{style:{padding:“14px 16px”}});ret.appendChild(mk(“div”,{cls:“lbl”},“RETRAIT EN EUROS”));var retc=mk(“div”,{style:{background:”#0d0e18”,border:“1px solid #ffffff14”,borderRadius:“10px”,padding:“12px 14px”}});function prog(val,max,label){var r=mk(“div”,{style:{marginBottom:“8px”}});var row=mk(“div”,{style:{display:“flex”,justifyContent:“space-between”,marginBottom:“4px”}});row.appendChild(mk(“span”,{style:{fontSize:“0.75rem”}},label));row.appendChild(mk(“span”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“0.72rem”,fontWeight:700,color:val>=max?”#3ddc84”:”#ff4d6d”}},val+” / “+max));var tr=mk(“div”,{style:{height:“4px”,background:”#ffffff14”,borderRadius:“4px”,overflow:“hidden”}});tr.appendChild(mk(“div”,{style:{height:“100%”,width:Math.min(100,(val/max)*100)+”%”,background:val>=max?”#3ddc84”:”#ffb547”,borderRadius:“4px”}}));r.appendChild(row);r.appendChild(tr);return r;}retc.appendChild(prog(bal,500,“Solde (MJC)”));retc.appendChild(prog(months,5,“Anciennete (mois)”));retc.appendChild(mk(“p”,{style:{fontSize:“0.68rem”,color:”#383a52”,marginTop:“8px”}},“1 MJC = 0.10 EUR”));ret.appendChild(retc);scroll.appendChild(ret);scroll.appendChild(hr());var txs=mk(“div”,{style:{padding:“14px 16px”}});txs.appendChild(mk(“div”,{cls:“lbl”},“TRANSACTIONS”));if(!S.txs||!S.txs.length)txs.appendChild(mk(“p”,{style:{fontSize:“0.78rem”,color:”#7a7d9a”}},“Aucune transaction.”));else S.txs.forEach(function(tx){var row=mk(“div”,{style:{display:“flex”,justifyContent:“space-between”,alignItems:“center”,padding:“9px 0”,borderBottom:“1px solid #ffffff0a”}});var l=mk(“div”);l.appendChild(mk(“div”,{style:{fontWeight:500,fontSize:“0.8rem”,marginBottom:“1px”}},san.t(tx.label||“Transaction”,100)));l.appendChild(mk(“div”,{style:{color:”#383a52”,fontSize:“0.6rem”,fontFamily:“Fira Code,monospace”}},new Date(tx.created_at).toLocaleDateString(“fr-FR”)));row.appendChild(l);row.appendChild(mk(“span”,{style:{color:tx.type===“earn”?”#3ddc84”:”#ff4d6d”,fontWeight:700,fontFamily:“Fira Code,monospace”,fontSize:“0.78rem”,marginLeft:“10px”}},(tx.amount>0?”+”:””)+tx.amount+” MJC”));txs.appendChild(row);});scroll.appendChild(txs);scroll.appendChild(mk(“div”,{style:{height:“20px”}}));scr.appendChild(scroll);}
 function startApp(user){S.user=user;var app=document.getElementById(“app”);app.innerHTML=””;[“feed”,“timeline”,“wiki”,“msgs”,“profile”].forEach(function(id){app.appendChild(mk(“div”,{cls:“screen”+(id===“feed”?” active”:””),id:“s-”+id}));});app.appendChild(makeBotbar());renderFeed();renderTimeline();renderWiki();renderMsgs();renderProfile();loadPosts();loadTxs();}
