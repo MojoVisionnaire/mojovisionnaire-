@@ -99,7 +99,7 @@ function renderSubmit(){var scr=document.getElementById("s-submit");if(!scr)retu
 
 // COUNTDOWN BANNER
 function getCountdown(){
-var launch=new Date(“2025-05-22T00:00:00”);
+var launch=new Date(“2026-05-22T00:00:00”);
 var now=new Date();
 var diff=launch-now;
 if(diff<=0)return null;
@@ -123,7 +123,7 @@ var timer=mk(“div”,{style:{display:“flex”,gap:“8px”,justifyContent:�
 [{v:cd.days,l:“JOURS”},{v:cd.hours,l:“HEURES”},{v:cd.mins,l:“MINS”}].forEach(function(item){
 var box=mk(“div”,{style:{background:”#07080e”,borderRadius:“8px”,padding:“8px 12px”,textAlign:“center”,flex:1,border:“1px solid #ffffff14”}});
 var num=mk(“div”,{style:{fontFamily:“Fira Code,monospace”,fontSize:“1.4rem”,fontWeight:700,color:”#dde0ec”,lineHeight:1}});
-num.textContent=String(item.v).padStart(2,“0”);
+var sv=String(item.v);num.textContent=sv.length<2?“0”+sv:sv;
 var lbl=mk(“div”,{style:{fontSize:“0.48rem”,color:”#383a52”,fontFamily:“Fira Code,monospace”,marginTop:“2px”}});
 lbl.textContent=item.l;
 box.appendChild(num);box.appendChild(lbl);
