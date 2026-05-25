@@ -407,6 +407,10 @@ function renderSubmit(){
       vbtn.textContent=voted?"✓ Validé":"Valider (+1 vote)";
       if(!voted){vbtn.addEventListener("click",async function(){vbtn.disabled=true;vbtn.innerHTML="<div class='spin'></div>";await doVote(art);});}
       card.appendChild(vbtn);
+      if(art.submitted_by===S.user.id){
+        var delArtBtn=mk("button",{style:{width:"100%",background:"#ff4d6d12",border:"1px solid #ff4d6d25",color:"#ff4d6d",padding:"7px",borderRadius:"10px",fontWeight:600,fontSize:"0.72rem",cursor:"pointer",fontFamily:"Outfit,sans-serif",marginTop:"7px"},onClick:async function(){if(!confirm("Supprimer cet article ?"))return;await api.r("DELETE","/rest/v1/wiki_articles?id=eq."+encodeURIComponent(art.id));S.pendingArticles=S.pendingArticles.filter(function(a){return a.id!==art.id;});renderSubmit();}});
+        delArtBtn.textContent="Supprimer mon article";card.appendChild(delArtBtn);
+      }
       scroll.appendChild(card);
     });
   }
@@ -573,6 +577,9 @@ function renderRevolution(){
           if(isOrg){
             var ob=mk("div",{style:{flex:1,background:"#6e72ff18",border:"1px solid #6e72ff30",color:"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.76rem",textAlign:"center",fontFamily:"Outfit,sans-serif"}});
             ob.textContent="Organisateur ✓";br.appendChild(ob);
+            var delGBtn=mk("button",{style:{background:"#ff4d6d12",border:"1px solid #ff4d6d25",color:"#ff4d6d",padding:"9px 13px",borderRadius:"10px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif"},onClick:async function(){if(!confirm("Supprimer ce groupe ?"))return;await api.r("DELETE","/rest/v1/groups?id=eq."+encodeURIComponent(g.id));S.revGroups=S.revGroups.filter(function(x){return x.id!==g.id;});renderRevolution();}});
+            delGBtn.innerHTML="<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><polyline points='3,6 5,6 21,6'/><path d='M19,6l-1,14H6L5,6'/><path d='M9,6V4h6v2'/></svg>";
+            br.appendChild(delGBtn);
           } else {
             var jb=mk("button",{style:{flex:1,background:isMember?"#3ddc8418":"#6e72ff18",border:"1px solid "+(isMember?"#3ddc8430":"#6e72ff30"),color:isMember?"#3ddc84":"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.76rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"}});
             jb.textContent=isMember?"Membre ✓":"Rejoindre";
@@ -655,6 +662,9 @@ function renderRevolution(){
               }
             });
             ebr.appendChild(actBtn);
+            var delEvBtn=mk("button",{style:{background:"#ff4d6d12",border:"1px solid #ff4d6d25",color:"#ff4d6d",padding:"9px 13px",borderRadius:"10px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif"},onClick:async function(){if(!confirm("Supprimer cet événement ?"))return;await api.r("DELETE","/rest/v1/events?id=eq."+encodeURIComponent(ev.id));S.revEvents=S.revEvents.filter(function(x){return x.id!==ev.id;});renderRevolution();}});
+            delEvBtn.innerHTML="<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><polyline points='3,6 5,6 21,6'/><path d='M19,6l-1,14H6L5,6'/><path d='M9,6V4h6v2'/></svg>";
+            ebr.appendChild(delEvBtn);
             if(ev.check_in_active&&ev.check_in_code){
               var codeBox=mk("div",{style:{background:"#3ddc8418",border:"1px solid #3ddc8430",borderRadius:"10px",padding:"9px 13px",display:"flex",alignItems:"center",gap:"8px",marginTop:"8px",width:"100%"}});
               codeBox.appendChild(mk("span",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.1rem",fontWeight:700,color:"#3ddc84",letterSpacing:"0.2em"}},ev.check_in_code));
