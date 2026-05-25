@@ -105,7 +105,11 @@ var api={
   findEventByCode:function(code){return this.r("GET","/rest/v1/events?select=*&check_in_code=eq."+encodeURIComponent(code)+"&check_in_active=eq.true");},
   doCheckin:function(d){return this.r("POST","/rest/v1/event_checkins",d);},
   myCheckins:function(uid){return this.r("GET","/rest/v1/event_checkins?select=event_id&user_id=eq."+encodeURIComponent(uid));},
-  eventAttendees:function(eid){return this.r("GET","/rest/v1/event_checkins?select=*,users(alias,level)&event_id=eq."+encodeURIComponent(eid)+"&order=checked_in_at.desc");}
+  eventAttendees:function(eid){return this.r("GET","/rest/v1/event_checkins?select=*,users(alias,level)&event_id=eq."+encodeURIComponent(eid)+"&order=checked_in_at.desc");},
+  getGroupMessages:function(gid){return this.r("GET","/rest/v1/group_messages?select=*&group_id=eq."+encodeURIComponent(gid)+"&order=created_at.asc&limit=100");},
+  sendMessage:function(d){return this.r("POST","/rest/v1/group_messages",d);},
+  deleteMessage:function(id){return this.r("DELETE","/rest/v1/group_messages?id=eq."+encodeURIComponent(id));},
+  uploadGroupImage:function(file,path){return fetch(_U+"/storage/v1/object/group-images/"+path,{method:"POST",headers:{apikey:_K,Authorization:"Bearer "+tok(),"Content-Type":file.type,"x-upsert":"true"},body:file}).then(function(r){return r.json();}).catch(function(e){return{error:e.message};});}
 };
 var WX=[{id:"mkUltra",title:"Operation MKUltra",cat:"Gouvernement",mjc:150,votes:342,cred:98,summary:"Programme secret CIA de controle mental. Declassifie en 1977.",tags:["CIA"],content:"En 1953, la CIA lance MKUltra utilisant le LSD sur des sujets non consentants. Declassifie en 1977."},{id:"prism",title:"Programme PRISM - NSA",cat:"Surveillance",mjc:220,votes:891,cred:99,summary:"La NSA espionnait via les geants du web. Revele par Snowden en 2013.",tags:["NSA"],content:"En 2013, Snowden revele que la NSA accedait aux serveurs de Google et Apple via PRISM."},{id:"northwoods",title:"Operation Northwoods",cat:"Faux Drapeau",mjc:180,votes:567,cred:97,summary:"Plan US pour simuler des attentats contre ses propres citoyens.",tags:["Militaire"],content:"En 1962, des chefs militaires proposent a Kennedy de simuler des attaques terroristes. Kennedy refuse."},{id:"cointelpro",title:"COINTELPRO - FBI",cat:"Gouvernement",mjc:195,votes:712,cred:96,summary:"Programme FBI pour surveiller les mouvements politiques americains.",tags:["FBI"],content:"De 1956 a 1971, le FBI infiltre et destabilise les Black Panthers, MLK, NAACP."}];
 var CAT={Gouvernement:"#6e72ff",Surveillance:"#00d2ff",Finance:"#ffb547","Faux Drapeau":"#ff4d6d",Medical:"#c084fc",Militaire:"#fb923c",Histoire:"#3ddc84",Medias:"#f472b6"};
@@ -123,8 +127,8 @@ function Ava(alias,level,size){size=size||36;var col=LVC[level]||"#6e72ff";retur
 function TopBar(title,sub,onBack,right){var d=mk("div",{cls:"topbar"});if(onBack){var b=mk("button",{cls:"back",onClick:onBack});b.innerHTML="<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='m15 18-6-6 6-6'/></svg>";d.appendChild(b);}var info=mk("div",{style:{flex:1,minWidth:0}});info.appendChild(mk("div",{style:{fontWeight:700,fontSize:"0.98rem",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},title));if(sub)info.appendChild(mk("div",{style:{fontSize:"0.58rem",color:"#383a52",fontFamily:"Fira Code,monospace",marginTop:"1px"}},sub));d.appendChild(info);if(right)d.appendChild(right);return d;}
 var TSVG={feed:"<path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9,22 9,12 15,12 15,22'/>",timeline:"<circle cx='12' cy='12' r='10'/><polyline points='12,6 12,12 16,14'/>",wiki:"<path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/><path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/>",submit:"<circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='16'/><line x1='8' y1='12' x2='16' y2='12'/>",revolution:"<path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/>",profile:"<path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/>"};
 var TLBL={feed:"Flux",timeline:"Timeline",wiki:"Wiki",submit:"Déposer",revolution:"Révolution",profile:"Profil"};
-var S={user:null,tab:"feed",posts:[],wikiExtra:[],liked:{},txs:[],wikiSel:null,compose:false,composeText:"",postsLoading:false,postsErr:null,postsLoaded:false,revelations:[],tlRevs:[],submitDone:false,pendingArticles:[],wikiVoted:{},pendingLoaded:false,revTab:"groups",revGroups:[],revMyGroups:{},revEvents:[],revSel:null,revEventSel:null,revLoaded:false,revCheckinCode:"",revCreateGroup:false,revCreateEvent:false,revMyCheckins:{}};
-function switchTab(id){S.tab=id;document.querySelectorAll(".tab").forEach(function(b){b.className="tab"+(b.id==="t-"+id?" on":"");});document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("active",s.id==="s-"+id);});if(id==="feed")renderFeed();if(id==="timeline")renderTimeline();if(id==="wiki")renderWiki();if(id==="submit"){S.submitDone=false;loadPending();}if(id==="revolution"){loadRevolution();}if(id==="profile"){loadTxs();renderProfile();}}
+var S={user:null,tab:"feed",posts:[],wikiExtra:[],liked:{},txs:[],wikiSel:null,compose:false,composeText:"",postsLoading:false,postsErr:null,postsLoaded:false,revelations:[],tlRevs:[],submitDone:false,pendingArticles:[],wikiVoted:{},pendingLoaded:false,revTab:"groups",revGroups:[],revMyGroups:{},revEvents:[],revSel:null,revEventSel:null,revLoaded:false,revCheckinCode:"",revCreateGroup:false,revCreateEvent:false,revMyCheckins:{},revGroupSel:null,revMessages:[],revMsgPoll:null};
+function switchTab(id){S.tab=id;document.querySelectorAll(".tab").forEach(function(b){b.className="tab"+(b.id==="t-"+id?" on":"");});document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("active",s.id==="s-"+id);});if(id==="feed")renderFeed();if(id==="timeline")renderTimeline();if(id==="wiki")renderWiki();if(id==="submit"){S.submitDone=false;loadPending();}if(id==="revolution"){if(S.revGroupSel){S.revGroupSel=null;S.revMessages=[];}loadRevolution();}if(id!=="revolution"){stopMsgPoll();}if(id==="profile"){loadTxs();renderProfile();}}
 function makeBotbar(){var bar=mk("div",{cls:"botbar"});Object.keys(TSVG).forEach(function(id){var btn=mk("button",{cls:"tab"+(S.tab===id?" on":""),id:"t-"+id,onClick:function(){switchTab(id);}});btn.innerHTML="<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'>"+TSVG[id]+"</svg>";btn.appendChild(tx(TLBL[id]));bar.appendChild(btn);});return bar;}
 function renderAuth(initMode){var root=mk("div",{style:{minHeight:"100vh",background:"#07080e",display:"flex",flexDirection:"column",padding:"0 20px"}});var inner=mk("div",{style:{flex:1,display:"flex",flexDirection:"column",paddingTop:"48px",paddingBottom:"32px"}});var badge=mk("div",{style:{display:"inline-flex",alignItems:"center",gap:"6px",background:"#6e72ff12",border:"1px solid #6e72ff28",borderRadius:"20px",padding:"4px 12px 4px 8px",marginBottom:"20px"}});badge.innerHTML="<div style='width:6px;height:6px;border-radius:50%;background:#6e72ff;animation:pulse 2s infinite'></div><span style='font-size:.6rem;font-family:Fira Code,monospace;color:#6e72ff;letter-spacing:.08em'>ACCES SUR PARRAINAGE</span>";inner.appendChild(badge);var logo=mk("h1",{style:{fontFamily:"DM Serif Display,serif",fontSize:"clamp(2.2rem,8vw,3.4rem)",lineHeight:1.05,marginBottom:"8px"}});logo.innerHTML="mojo<span style='color:#6e72ff'>Visionnaire</span>";inner.appendChild(logo);inner.appendChild(mk("p",{style:{fontFamily:"Fira Code,monospace",fontSize:"0.72rem",color:"#7a7d9a",marginBottom:"24px"}},"La verite confirmee par l histoire."));var mode=initMode||"register";var errDiv=mk("div",{cls:"err",style:{display:"none"}});var tabs=mk("div",{style:{display:"flex",background:"#0d0e18",borderRadius:"14px",padding:"4px",marginBottom:"16px"}});var bL=mk("button",{style:{flex:1,padding:"9px",borderRadius:"10px",border:"none",background:"transparent",color:"#7a7d9a",fontWeight:500,cursor:"pointer",fontSize:"0.84rem"},onClick:function(){mode="login";sync();renderFields();}});bL.textContent="Connexion";var bR=mk("button",{style:{flex:1,padding:"9px",borderRadius:"10px",border:"none",background:"#6e72ff",color:"#fff",fontWeight:700,cursor:"pointer",fontSize:"0.84rem"},onClick:function(){mode="register";sync();renderFields();}});bR.textContent="S'inscrire";function sync(){bL.style.background=mode==="login"?"#6e72ff":"transparent";bL.style.color=mode==="login"?"#fff":"#7a7d9a";bL.style.fontWeight=mode==="login"?700:500;bR.style.background=mode==="register"?"#6e72ff":"transparent";bR.style.color=mode==="register"?"#fff":"#7a7d9a";bR.style.fontWeight=mode==="register"?700:500;}tabs.appendChild(bL);tabs.appendChild(bR);inner.appendChild(tabs);inner.appendChild(errDiv);var fDiv=mk("div");inner.appendChild(fDiv);var refI,aliasI,emailI,pwI,subBtn;function showErr(m){errDiv.textContent=m;errDiv.style.display="block";}function hideErr(){errDiv.style.display="none";}function setLoad(on){if(subBtn){subBtn.disabled=on;subBtn.innerHTML=on?"<div class='spin'></div>&nbsp;Chargement...":(mode==="login"?"Se connecter":"Créer mon compte");}}function renderFields(){fDiv.innerHTML="";if(mode==="register"){var cw=mk("div",{style:{marginBottom:"12px"}});cw.appendChild(mk("label",{cls:"lbl"},"CODE PARRAIN *"));var cr=mk("div",{style:{display:"flex",gap:"7px"}});refI=mk("input",{cls:"inp",type:"text",placeholder:"MOJO229777V",style:{flex:1,marginBottom:0,fontFamily:"Fira Code,monospace",letterSpacing:"0.05em"}});refI.value="MOJO229777V";refI.addEventListener("input",function(){refI.value=san.code(refI.value);});var pb=mk("button",{cls:"paste-btn",onClick:function(){if(navigator.clipboard&&navigator.clipboard.readText){navigator.clipboard.readText().then(function(t){refI.value=san.code(t);}).catch(function(){});}}});pb.textContent="Coller";cr.appendChild(refI);cr.appendChild(pb);cw.appendChild(cr);fDiv.appendChild(cw);var aw=mk("div",{style:{marginBottom:"12px"}});aw.appendChild(mk("label",{cls:"lbl"},"ALIAS"));aliasI=mk("input",{cls:"inp",type:"text",placeholder:"VotreAlias"});aw.appendChild(aliasI);fDiv.appendChild(aw);}var ew=mk("div",{style:{marginBottom:"12px"}});ew.appendChild(mk("label",{cls:"lbl"},"EMAIL"));emailI=mk("input",{cls:"inp",type:"email",placeholder:"votre@email.com"});emailI.setAttribute("autocapitalize","none");emailI.setAttribute("autocorrect","off");ew.appendChild(emailI);fDiv.appendChild(ew);var pw=mk("div",{style:{marginBottom:"12px"}});pw.appendChild(mk("label",{cls:"lbl"},"MOT DE PASSE"));pwI=mk("input",{cls:"inp",type:"password",placeholder:"Min. 6 caractères"});pw.appendChild(pwI);fDiv.appendChild(pw);if(mode==="register"){fDiv.appendChild(mk("div",{style:{background:"#ffb54709",border:"1px solid #ffb54722",borderRadius:"7px",padding:"11px 13px",marginBottom:"14px",display:"flex",gap:"9px",alignItems:"center"}},[mk("span",null,"💳"),mk("div",null,[mk("div",{style:{fontSize:"0.8rem",fontWeight:600}},"10 EUR / mois"),mk("div",{style:{fontSize:"0.68rem",color:"#7a7d9a"}},"Paiement en euros")])]));}subBtn=mk("button",{cls:"btn",onClick:doSubmit},mode==="login"?"Se connecter":"Créer mon compte");fDiv.appendChild(subBtn);}
 async function doSubmit(){hideErr();var email=san.email(emailI?emailI.value:"");var pw=san.pw(pwI?pwI.value:"");if(!email){showErr("Email invalide.");return;}if(!pw||pw.length<6){showErr("Mot de passe trop court (6 min).");return;}if(mode==="register"){var code=san.code(refI?refI.value:"");var alias=san.alias(aliasI?aliasI.value:"");if(!code){showErr("Code parrain requis.");return;}if(!alias||alias.length<2){showErr("Alias invalide (2 min).");return;}setLoad(true);var refs=await api.findRef(code);if(refs&&refs.__e){showErr(refs.msg);setLoad(false);return;}if(!Array.isArray(refs)||refs.length===0){showErr("Code introuvable. Vérifiez la lettre O (pas le chiffre 0).");setLoad(false);return;}var referrer=refs[0];var res=await api.signup(email,pw,alias);if(res.error){showErr(res.error.message||"Erreur inscription.");setLoad(false);return;}if(!res.user){showErr("Erreur serveur. Réessayez.");setLoad(false);return;}var uid=res.user.id;if(res.access_token){window._mjtok=res.access_token;try{localStorage.setItem("mj_tok",res.access_token);}catch(e){}if(res.refresh_token){try{localStorage.setItem("mj_ref",res.refresh_token);}catch(e){}}}var myCode="MOJO-"+alias.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,5)+"-"+Math.random().toString(36).substring(2,6).toUpperCase();var ins=await api.addUser({id:uid,email:email,alias:alias,level:"Nouveau",mojocoin_balance:0,referral_code:myCode,referred_by:referrer.id,subscription_active:false,months_active:0,verified:false});if(ins&&ins.__e){showErr("Profil: "+ins.msg);setLoad(false);return;}await api.addRef({referrer_id:referrer.id,referred_id:uid});var u={id:uid,email:email,alias:alias,level:"Nouveau",mojocoin_balance:0,referral_code:myCode,subscription_active:false,months_active:0};try{localStorage.setItem("mj_usr",JSON.stringify(u));}catch(e){}setLoad(false);if(STRIPE_LINK){window.location.href=STRIPE_LINK+"?prefilled_email="+encodeURIComponent(email);}else{startApp(u);}}setLoad(true);var res=await api.login(email,pw);if(res.error){showErr(res.error.message||"Email ou mot de passe incorrect.");setLoad(false);return;}if(!res.access_token){showErr("Erreur authentification.");setLoad(false);return;}window._mjtok=res.access_token;try{localStorage.setItem("mj_tok",res.access_token);}catch(e){}if(res.refresh_token){try{localStorage.setItem("mj_ref",res.refresh_token);}catch(e){}}var users=await api.getUser(res.user.id);if(!Array.isArray(users)||!users[0]){showErr("Profil introuvable.");setLoad(false);return;}var u=users[0];try{localStorage.setItem("mj_usr",JSON.stringify(u));}catch(e){}setLoad(false);startApp(u);}
@@ -449,6 +453,79 @@ function renderSubmit(){
   }
   scr.appendChild(scroll);
 }
+function stopMsgPoll(){if(S.revMsgPoll){clearInterval(S.revMsgPoll);S.revMsgPoll=null;}}
+function startMsgPoll(gid){
+  stopMsgPoll();
+  S.revMsgPoll=setInterval(function(){
+    api.getGroupMessages(gid).then(function(msgs){
+      if(Array.isArray(msgs)&&msgs.length!==S.revMessages.length){S.revMessages=msgs;renderGroupChat();}
+    });
+  },3000);
+}
+function openGroupChat(g){
+  S.revGroupSel=g;S.revMessages=[];
+  renderGroupChat();
+  api.getGroupMessages(g.id).then(function(msgs){if(Array.isArray(msgs)){S.revMessages=msgs;renderGroupChat();}});
+}
+function renderGroupChat(){
+  var scr=document.getElementById("s-revolution");if(!scr)return;
+  var g=S.revGroupSel;if(!g){renderRevolution();return;}
+  scr.innerHTML="";var uid=S.user.id;
+  scr.appendChild(TopBar(san.t(g.name,30),(g.theme||"")+" · "+(g.members_count||0)+" membres",function(){stopMsgPoll();S.revGroupSel=null;S.revMessages=[];renderRevolution();}));
+  var wrap=mk("div",{style:{display:"flex",flexDirection:"column",height:"calc(100vh - 52px - 64px)",overflow:"hidden"}});
+  var msgScroll=mk("div",{style:{flex:1,overflowY:"auto",WebkitOverflowScrolling:"touch",padding:"12px 16px 80px"}});
+  if(!S.revMessages.length){
+    var es=mk("div",{cls:"empty-state"});es.appendChild(mk("div",{cls:"ico"},"💬"));es.appendChild(mk("div",{cls:"ttl"},"Aucun message"));es.appendChild(mk("div",{cls:"sub"},"Partagez une info avec le groupe."));msgScroll.appendChild(es);
+  }else{
+    S.revMessages.forEach(function(msg){
+      var isMe=msg.author_id===uid;
+      var row=mk("div",{style:{display:"flex",gap:"8px",marginBottom:"10px",flexDirection:isMe?"row-reverse":"row",alignItems:"flex-end"}});
+      row.appendChild(Ava(msg.author_alias||"?",msg.author_level||"Nouveau",26));
+      var bub=mk("div",{style:{maxWidth:"72%",background:isMe?"#6e72ff1a":"#0d0e18",border:"1px solid "+(isMe?"#6e72ff30":"#ffffff0a"),borderRadius:"12px",padding:"8px 11px"}});
+      if(!isMe)bub.appendChild(mk("div",{style:{fontSize:"0.6rem",fontWeight:700,color:LVC[msg.author_level||"Nouveau"]||"#6e72ff",marginBottom:"3px"}},msg.author_alias||"?"));
+      if(msg.content)bub.appendChild(mk("p",{style:{fontSize:"0.83rem",lineHeight:1.5,wordBreak:"break-word",margin:0,color:"#dde0ec"}},msg.content));
+      if(msg.image_url){var img=mk("img",{src:msg.image_url,style:{maxWidth:"100%",borderRadius:"8px",marginTop:msg.content?"7px":"0",display:"block",cursor:"pointer"}});img.addEventListener("click",function(){window.open(msg.image_url,"_blank");});bub.appendChild(img);}
+      var foot=mk("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginTop:"4px",gap:"6px"}});
+      if(isMe){var db=mk("button",{style:{background:"none",border:"none",cursor:"pointer",color:"#383a52",padding:"0",display:"flex"},onClick:function(){if(!confirm("Supprimer ?"))return;api.deleteMessage(msg.id).then(function(){S.revMessages=S.revMessages.filter(function(m){return m.id!==msg.id;});renderGroupChat();});}});db.innerHTML="<svg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><polyline points='3,6 5,6 21,6'/><path d='M19,6l-1,14H6L5,6'/><path d='M9,6V4h6v2'/></svg>";foot.appendChild(db);}
+      foot.appendChild(mk("span",{style:{fontSize:"0.52rem",color:"#383a52",fontFamily:"Fira Code,monospace"}},reltime(msg.created_at)));
+      bub.appendChild(foot);row.appendChild(bub);msgScroll.appendChild(row);
+    });
+  }
+  wrap.appendChild(msgScroll);
+  setTimeout(function(){msgScroll.scrollTop=msgScroll.scrollHeight;},60);
+  var bar=mk("div",{style:{padding:"8px 12px",background:"#07080e",borderTop:"1px solid #ffffff0a",display:"flex",gap:"8px",alignItems:"flex-end",flexShrink:0}});
+  var fi=mk("input",{type:"file",accept:"image/*",style:{display:"none"}});
+  var imgB=mk("button",{style:{background:"#131420",border:"1px solid #ffffff14",color:"#7a7d9a",width:"42px",height:"42px",borderRadius:"10px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}});
+  imgB.innerHTML="<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>";
+  imgB.addEventListener("click",function(){fi.click();});
+  var ta=mk("textarea",{cls:"inp",rows:1,placeholder:"Message...",style:{flex:1,resize:"none",lineHeight:"1.5",padding:"10px 12px",fontSize:"0.83rem",maxHeight:"80px",overflowY:"auto",marginBottom:0}});
+  ta.addEventListener("input",function(){ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,80)+"px";});
+  var snd=mk("button",{style:{background:"#6e72ff",border:"none",color:"#fff",width:"42px",height:"42px",borderRadius:"10px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}});
+  snd.innerHTML="<svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><line x1='22' y1='2' x2='11' y2='13'/><polygon points='22,2 15,22 11,13 2,9 22,2'/></svg>";
+  async function sendMsg(content,imgUrl){
+    var tmp={id:"tmp_"+Date.now(),group_id:g.id,author_id:uid,author_alias:S.user.alias,author_level:S.user.level||"Nouveau",content:content||null,image_url:imgUrl||null,created_at:new Date().toISOString()};
+    S.revMessages.push(tmp);renderGroupChat();
+    var r=await api.sendMessage({group_id:g.id,author_id:uid,author_alias:S.user.alias,author_level:S.user.level||"Nouveau",content:content||null,image_url:imgUrl||null});
+    if(r&&r.__e){showToast(r.msg||"Erreur.",true);S.revMessages=S.revMessages.filter(function(m){return m.id!==tmp.id;});renderGroupChat();}
+    else if(Array.isArray(r)&&r[0]){S.revMessages=S.revMessages.map(function(m){return m.id===tmp.id?r[0]:m;});}
+  }
+  snd.addEventListener("click",async function(){var c=san.t(ta.value,1000);if(!c)return;ta.value="";ta.style.height="auto";await sendMsg(c,null);});
+  ta.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();snd.click();}});
+  fi.addEventListener("change",async function(){
+    var file=fi.files[0];if(!file)return;
+    if(file.size>5*1024*1024){showToast("Image max 5MB.",true);return;}
+    imgB.innerHTML="<div class='spin'></div>";imgB.disabled=true;
+    var path=uid.replace(/-/g,"")+"/"+Date.now()+"_"+file.name.slice(0,30).replace(/[^a-zA-Z0-9._]/g,"_");
+    var up=await api.uploadGroupImage(file,path);
+    imgB.disabled=false;imgB.innerHTML="<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>";
+    if(up&&up.error){showToast("Erreur image.",true);fi.value="";return;}
+    var c=san.t(ta.value,1000);ta.value="";ta.style.height="auto";
+    await sendMsg(c||null,_U+"/storage/v1/object/public/group-images/"+path);fi.value="";
+  });
+  bar.appendChild(fi);bar.appendChild(imgB);bar.appendChild(ta);bar.appendChild(snd);
+  wrap.appendChild(bar);scr.appendChild(wrap);
+  startMsgPoll(g.id);
+}
 function loadRevolution(){
   if(!S.user)return;
   S.revLoaded=false;
@@ -590,6 +667,11 @@ function renderRevolution(){
             br.appendChild(jb);
           }
           card.appendChild(br);
+          if(isMember||isOrg){
+            var enterBtn=mk("button",{style:{width:"100%",background:"#131420",border:"1px solid #ffffff0a",color:"#7a7d9a",padding:"9px",borderRadius:"10px",cursor:"pointer",fontSize:"0.76rem",fontFamily:"Outfit,sans-serif",marginTop:"7px",display:"flex",alignItems:"center",justifyContent:"center",gap:"5px"},onClick:function(e){e.stopPropagation();openGroupChat(g);}});
+            enterBtn.innerHTML="Entrer dans le groupe <svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12,5 19,12 12,19'/></svg>";
+            card.appendChild(enterBtn);
+          }
           scroll.appendChild(card);
         });
       }
