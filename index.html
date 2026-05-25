@@ -559,7 +559,10 @@ function renderRevolution(){
           if(isOrg)meta.appendChild(mk("span",{style:{color:"#6e72ff"}},"ORGANISATEUR"));
           card.appendChild(meta);
           var br=mk("div",{style:{display:"flex",gap:"7px"}});
-          if(!isOrg){
+          if(isOrg){
+            var ob=mk("div",{style:{flex:1,background:"#6e72ff18",border:"1px solid #6e72ff30",color:"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.76rem",textAlign:"center",fontFamily:"Outfit,sans-serif"}});
+            ob.textContent="Organisateur ✓";br.appendChild(ob);
+          } else {
             var jb=mk("button",{style:{flex:1,background:isMember?"#3ddc8418":"#6e72ff18",border:"1px solid "+(isMember?"#3ddc8430":"#6e72ff30"),color:isMember?"#3ddc84":"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.76rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"}});
             jb.textContent=isMember?"Membre ✓":"Rejoindre";
             jb.addEventListener("click",function(){
