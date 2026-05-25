@@ -287,6 +287,19 @@ function loadPending(){
     renderSubmit();
   });
 }
+function aiValidate(art){
+  var title=art.title||"";var summary=art.summary||"";var content=art.content||"";
+  if(title.length<4)return{ok:false,reason:"Titre trop court."};
+  if(content.length<60)return{ok:false,reason:"Dossier insuffisant (min. 60 caractères)."};
+  var upper=(content.match(/[A-Z]/g)||[]).length;
+  if(content.length>20&&upper/content.length>0.5)return{ok:false,reason:"Contenu non lisible (trop de majuscules)."};
+  if(/https?:\/\/|www\./i.test(content+summary))return{ok:false,reason:"Les liens externes ne sont pas autorisés."};
+  var txt=(title+" "+summary+" "+content).toLowerCase();
+  var kw=["gouvernement","cia","fbi","nsa","opération","programme","surveillance","militaire","document","déclassifié","classifié","secret","archive","enquête","preuve","témoignage","rapport","révélé","prouvé","complot","manipulation","contrôle","pouvoir","agence","service","renseignement","politique","historique","officiel","autorité"];
+  var hits=kw.filter(function(k){return txt.indexOf(k)>=0;});
+  if(hits.length===0)return{ok:false,reason:"Contenu hors sujet ou trop vague."};
+  return{ok:true};
+}
 async function doVote(art){
   var vr=await api.castVote(art.id,S.user.id);
   if(vr&&vr.__e){
@@ -296,7 +309,17 @@ async function doVote(art){
     renderSubmit();return;
   }
   var newCount=(art.votes_count||0)+1;
-  var verified=newCount>=50;
+  var votesOk=newCount>=10;
+  if(votesOk){
+    var ai=aiValidate(art);
+    if(!ai.ok){
+      await api.patchWiki(art.id,{votes_count:newCount,status:"rejected",rejection_reason:ai.reason});
+      S.pendingArticles=S.pendingArticles.filter(function(a){return a.id!==art.id;});
+      showToast("IA : article rejeté — "+ai.reason,true);
+      S.wikiVoted[art.id]=true;renderSubmit();return;
+    }
+  }
+  var verified=votesOk;
   await api.patchWiki(art.id,verified?{votes_count:newCount,status:"verified"}:{votes_count:newCount});
   if(verified&&art.submitted_by){
     var sub=await api.getUser(art.submitted_by);
@@ -306,10 +329,10 @@ async function doVote(art){
       await api.r("POST","/rest/v1/transactions",{user_id:art.submitted_by,amount:10,type:"earn",label:"Article validé: "+san.t(art.title,50)});
     }
     S.pendingArticles=S.pendingArticles.filter(function(a){return a.id!==art.id;});
-    showToast("Article validé et publié ! +10 MJC au soumetteur");
+    showToast("IA ✓ Article validé ! +10 MJC au soumetteur");
   } else {
     art.votes_count=newCount;
-    showToast("Vote enregistré ✓");
+    showToast("Vote enregistré ("+newCount+"/10) ✓");
   }
   S.wikiVoted[art.id]=true;
   renderSubmit();
@@ -332,7 +355,7 @@ function renderSubmit(){
   } else {
     S.pendingArticles.forEach(function(art){
       var voted=!!S.wikiVoted[art.id];
-      var pct=Math.min(100,Math.round((art.votes_count||0)/50*100));
+      var pct=Math.min(100,Math.round((art.votes_count||0)/10*100));
       var card=mk("div",{style:{background:"#0d0e18",border:"1px solid "+(voted?"#6e72ff30":"#ffffff0a"),borderRadius:"12px",padding:"13px",marginBottom:"10px"}});
       var ch=mk("div",{style:{display:"flex",gap:"6px",marginBottom:"6px",alignItems:"center",flexWrap:"wrap"}});
       if(art.category)ch.appendChild(CTag(art.category));
@@ -351,7 +374,7 @@ function renderSubmit(){
       }
       var prow=mk("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:"3px"}});
       prow.appendChild(mk("span",{style:{fontSize:"0.58rem",fontFamily:"Fira Code,monospace",color:"#383a52"}},"VOTES"));
-      prow.appendChild(mk("span",{style:{fontSize:"0.58rem",fontFamily:"Fira Code,monospace",color:pct>=100?"#3ddc84":"#ffb547"}},(art.votes_count||0)+" / 50"));
+      prow.appendChild(mk("span",{style:{fontSize:"0.58rem",fontFamily:"Fira Code,monospace",color:pct>=100?"#3ddc84":"#ffb547"}},(art.votes_count||0)+" / 10"));
       var ptr=mk("div",{style:{height:"3px",background:"#ffffff08",borderRadius:"4px",overflow:"hidden",marginBottom:"10px"}});
       ptr.appendChild(mk("div",{style:{width:pct+"%",height:"100%",background:pct>=100?"#3ddc84":"#6e72ff",borderRadius:"4px"}}));
       card.appendChild(prow);card.appendChild(ptr);
