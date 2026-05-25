@@ -279,7 +279,18 @@ function renderFeed(){
         renderFeed();
       });
       actions.appendChild(lb);
-      item.appendChild(row);
+      if(p.author_id===S.user.id){
+        var db=mk("button",{style:{display:"flex",alignItems:"center",gap:"4px",background:"none",border:"none",cursor:"pointer",color:"#383a52",fontSize:"0.74rem",padding:"3px 0",marginLeft:"auto",transition:"color .15s"}});
+        db.innerHTML="<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><polyline points='3,6 5,6 21,6'/><path d='M19,6l-1,14H6L5,6'/><path d='M10,11v6'/><path d='M14,11v6'/><path d='M9,6V4h6v2'/></svg>";
+        db.addEventListener("click",async function(e){
+          e.stopPropagation();
+          if(!confirm("Supprimer cette révélation ?"))return;
+          await api.r("DELETE","/rest/v1/posts?id=eq."+encodeURIComponent(p.id));
+          S.posts=S.posts.filter(function(x){return x.id!==p.id;});
+          renderFeed();
+        });
+        actions.appendChild(db);
+      }
       item.appendChild(actions);
       scroll.appendChild(item);
       scroll.appendChild(hr());
