@@ -535,6 +535,7 @@ function renderRevolution(){
         cb.disabled=true;cb.innerHTML="<div class='spin'></div>";
         var res=await api.createGroup({name:n,theme:form.theme,description:d,organizer_id:uid,members_count:1});
         if(res&&res.__e){errD.textContent=res.msg||"Erreur création.";errD.style.display="block";cb.disabled=false;cb.textContent="Créer";return;}
+        if(Array.isArray(res)&&res[0])await api.joinGroup({group_id:res[0].id,user_id:uid,role:"organizer"});
         S.revCreateGroup=false;S.revLoaded=false;loadRevolution();showToast("Groupe créé ✓");
       }});cb.textContent="Créer";
       row.appendChild(ca);row.appendChild(cb);scroll.appendChild(row);
@@ -544,7 +545,7 @@ function renderRevolution(){
         var es=mk("div",{cls:"empty-state"});es.appendChild(mk("div",{cls:"ico"},"⚡"));es.appendChild(mk("div",{cls:"ttl"},"Aucun groupe"));es.appendChild(mk("div",{cls:"sub"},"Créez le premier groupe de votre révolution."));scroll.appendChild(es);
       } else {
         S.revGroups.forEach(function(g){
-          var isMember=!!S.revMyGroups[g.id];var isOrg=g.organizer_id===uid;
+          var isOrg=g.organizer_id===uid;var isMember=!!S.revMyGroups[g.id]||isOrg;
           var card=mk("div",{style:{background:"#0d0e18",border:"1px solid #ffffff0a",borderRadius:"12px",padding:"13px",marginBottom:"10px"}});
           var ch=mk("div",{style:{display:"flex",alignItems:"center",gap:"7px",marginBottom:"7px",flexWrap:"wrap"}});
           ch.appendChild(mk("span",{style:{fontWeight:700,fontSize:"0.92rem",flex:1}},san.t(g.name||"",60)));
