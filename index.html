@@ -434,6 +434,265 @@ function renderSubmit(){
   }
   scr.appendChild(scroll);
 }
+function loadRevolution(){
+  if(!S.user)return;
+  S.revLoaded=false;
+  renderRevolution();
+  Promise.all([api.listGroups(),api.myGroupIds(S.user.id),api.allEvents(),api.myCheckins(S.user.id)]).then(function(res){
+    S.revGroups=Array.isArray(res[0])?res[0]:[];
+    var myIds={};if(Array.isArray(res[1]))res[1].forEach(function(r){myIds[r.group_id]=true;});
+    S.revMyGroups=myIds;
+    S.revEvents=Array.isArray(res[2])?res[2]:[];
+    var myCheckins={};if(Array.isArray(res[3]))res[3].forEach(function(r){myCheckins[r.event_id]=true;});
+    S.revMyCheckins=myCheckins;
+    S.revLoaded=true;
+    renderRevolution();
+  });
+}
+function doEventCheckin(code){
+  var c=san.t(code,6).replace(/\D/g,"");
+  if(c.length!==6){showToast("Code à 6 chiffres requis.",true);return;}
+  api.findEventByCode(c).then(function(evs){
+    if(!Array.isArray(evs)||!evs.length){showToast("Code invalide ou pointage inactif.",true);return;}
+    var ev=evs[0];
+    if(S.revMyCheckins[ev.id]){showToast("Vous êtes déjà enregistré pour cet événement.",true);return;}
+    api.doCheckin({event_id:ev.id,user_id:S.user.id}).then(function(cr){
+      if(cr&&cr.__e){
+        var m=cr.msg||"";
+        if(m.indexOf("duplicate")>=0||m.indexOf("23505")>=0){showToast("Déjà enregistré ✓",true);}
+        else{showToast(m||"Erreur pointage.",true);}
+        return;
+      }
+      S.revMyCheckins[ev.id]=true;
+      api.getUser(S.user.id).then(function(us){
+        var bal=(Array.isArray(us)&&us[0])?us[0].mojocoin_balance||0:S.user.mojocoin_balance||0;
+        var newBal=bal+10;
+        api.r("PATCH","/rest/v1/users?id=eq."+encodeURIComponent(S.user.id),{mojocoin_balance:newBal});
+        api.r("POST","/rest/v1/transactions",{user_id:S.user.id,amount:10,type:"earn",label:"Pointage: "+san.t(ev.title||"Événement",50)});
+        S.user.mojocoin_balance=newBal;
+        try{localStorage.setItem("mj_usr",JSON.stringify(S.user));}catch(e){}
+      });
+      api.r("PATCH","/rest/v1/events?id=eq."+encodeURIComponent(ev.id),{attendees_count:(ev.attendees_count||0)+1});
+      S.revCheckinCode="";
+      showToast("✓ Présence enregistrée ! +10 MJC");
+      renderRevolution();
+    });
+  });
+}
+function renderRevolution(){
+  var scr=document.getElementById("s-revolution");
+  if(!scr)return;
+  scr.innerHTML="";
+  var uid=S.user?S.user.id:null;
+  var tab=S.revTab||"groups";
+  // Determine if user is organizer of any group
+  var myOrgGroups=S.revGroups.filter(function(g){return g.organizer_id===uid;});
+  // Right button for top bar
+  var rightBtn=null;
+  if(tab==="groups"){
+    rightBtn=mk("button",{cls:"icon-btn"+(S.revCreateGroup?" active":""),onClick:function(){S.revCreateGroup=!S.revCreateGroup;S.revCreateEvent=false;renderRevolution();}});
+    rightBtn.innerHTML=S.revCreateGroup?"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>":"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='12' y1='5' x2='12' y2='19'/><line x1='5' y1='12' x2='19' y2='12'/></svg>";
+  } else if(tab==="events"&&myOrgGroups.length>0){
+    rightBtn=mk("button",{cls:"icon-btn"+(S.revCreateEvent?" active":""),onClick:function(){S.revCreateEvent=!S.revCreateEvent;S.revCreateGroup=false;renderRevolution();}});
+    rightBtn.innerHTML=S.revCreateEvent?"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>":"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='12' y1='5' x2='12' y2='19'/><line x1='5' y1='12' x2='19' y2='12'/></svg>";
+  }
+  scr.appendChild(TopBar("Révolution","Groupes & Événements",null,rightBtn));
+  // Sub-tab bar
+  var stabs=mk("div",{style:{display:"flex",background:"#0d0e18",margin:"10px 16px",borderRadius:"12px",padding:"4px",gap:"2px"}});
+  [["groups","Groupes"],["events","Événements"],["pointer","Pointer"]].forEach(function(pair){
+    var active=tab===pair[0];
+    var b=mk("button",{style:{flex:1,padding:"8px 4px",borderRadius:"8px",border:"none",background:active?"#6e72ff":"transparent",color:active?"#fff":"#7a7d9a",fontWeight:active?700:500,cursor:"pointer",fontSize:"0.76rem",fontFamily:"Outfit,sans-serif",transition:"all .15s"},onClick:function(){S.revTab=pair[0];S.revCreateGroup=false;S.revCreateEvent=false;renderRevolution();}},pair[1]);
+    stabs.appendChild(b);
+  });
+  scr.appendChild(stabs);
+  var scroll=mk("div",{cls:"scroll",style:{padding:"0 16px 16px"}});
+  if(!S.revLoaded){
+    var sp=mk("div",{style:{display:"flex",justifyContent:"center",padding:"48px"}});sp.appendChild(spin());scroll.appendChild(sp);
+    scr.appendChild(scroll);return;
+  }
+  // --- GROUPS TAB ---
+  if(tab==="groups"){
+    if(S.revCreateGroup){
+      // Create group form
+      var form={name:"",theme:"MKUltra",desc:""};
+      var errD=mk("div",{cls:"err",style:{display:"none"}});
+      scroll.appendChild(errD);
+      var nw=mk("div",{style:{marginBottom:"13px"}});nw.appendChild(mk("label",{cls:"lbl"},"NOM DU GROUPE"));
+      var ni=mk("input",{cls:"inp",type:"text",placeholder:"Ex: Groupe Surveillance..."});
+      ni.addEventListener("input",function(){form.name=ni.value;});nw.appendChild(ni);scroll.appendChild(nw);
+      var tw=mk("div",{style:{marginBottom:"13px"}});tw.appendChild(mk("label",{cls:"lbl"},"THÈME"));
+      var ti=mk("select",{cls:"inp"});
+      ["MKUltra","Surveillance","Finance","Politique","Santé","Militaire","Médias","Autre"].forEach(function(opt){var o=mk("option");o.value=opt;o.textContent=opt;o.style.background="#131420";ti.appendChild(o);});
+      ti.addEventListener("change",function(){form.theme=ti.value;});tw.appendChild(ti);scroll.appendChild(tw);
+      var dw=mk("div",{style:{marginBottom:"13px"}});dw.appendChild(mk("label",{cls:"lbl"},"DESCRIPTION"));
+      var di=mk("textarea",{cls:"inp",rows:3});di.style.resize="none";
+      di.addEventListener("input",function(){form.desc=di.value;});dw.appendChild(di);scroll.appendChild(dw);
+      var row=mk("div",{style:{display:"flex",gap:"8px",marginTop:"4px"}});
+      var ca=mk("button",{cls:"btn ghost",style:{flex:1,fontSize:"0.8rem",padding:"11px"},onClick:function(){S.revCreateGroup=false;renderRevolution();}});ca.textContent="Annuler";
+      var cb=mk("button",{cls:"btn",style:{flex:2,fontSize:"0.8rem",padding:"11px"},onClick:async function(){
+        var n=san.t(form.name,100);var d=san.t(form.desc,500);
+        if(!n||n.length<2){errD.textContent="Nom requis (2 min).";errD.style.display="block";return;}
+        cb.disabled=true;cb.innerHTML="<div class='spin'></div>";
+        var res=await api.createGroup({name:n,theme:form.theme,description:d,organizer_id:uid,members_count:1});
+        if(res&&res.__e){errD.textContent=res.msg||"Erreur création.";errD.style.display="block";cb.disabled=false;cb.textContent="Créer";return;}
+        S.revCreateGroup=false;S.revLoaded=false;loadRevolution();showToast("Groupe créé ✓");
+      }});cb.textContent="Créer";
+      row.appendChild(ca);row.appendChild(cb);scroll.appendChild(row);
+    } else {
+      // List groups
+      if(!S.revGroups.length){
+        var es=mk("div",{cls:"empty-state"});es.appendChild(mk("div",{cls:"ico"},"⚡"));es.appendChild(mk("div",{cls:"ttl"},"Aucun groupe"));es.appendChild(mk("div",{cls:"sub"},"Créez le premier groupe de votre révolution."));scroll.appendChild(es);
+      } else {
+        S.revGroups.forEach(function(g){
+          var isMember=!!S.revMyGroups[g.id];var isOrg=g.organizer_id===uid;
+          var card=mk("div",{style:{background:"#0d0e18",border:"1px solid #ffffff0a",borderRadius:"12px",padding:"13px",marginBottom:"10px"}});
+          var ch=mk("div",{style:{display:"flex",alignItems:"center",gap:"7px",marginBottom:"7px",flexWrap:"wrap"}});
+          ch.appendChild(mk("span",{style:{fontWeight:700,fontSize:"0.92rem",flex:1}},san.t(g.name||"",60)));
+          if(g.theme)ch.appendChild(CTag(g.theme));
+          card.appendChild(ch);
+          if(g.description){card.appendChild(mk("p",{style:{fontSize:"0.76rem",color:"#7a7d9a",lineHeight:1.5,marginBottom:"8px"}},san.t(g.description,150)));}
+          var meta=mk("div",{style:{display:"flex",gap:"10px",alignItems:"center",marginBottom:"10px",fontSize:"0.66rem",color:"#7a7d9a",fontFamily:"Fira Code,monospace"}});
+          meta.appendChild(mk("span",null,(g.members_count||0)+" membres"));
+          var orgAlias=(g.users&&g.users.alias)||"Anonyme";
+          meta.appendChild(mk("span",null,"org: "+orgAlias));
+          if(isOrg)meta.appendChild(mk("span",{style:{color:"#6e72ff"}},"ORGANISATEUR"));
+          card.appendChild(meta);
+          var br=mk("div",{style:{display:"flex",gap:"7px"}});
+          if(!isOrg){
+            var jb=mk("button",{style:{flex:1,background:isMember?"#3ddc8418":"#6e72ff18",border:"1px solid "+(isMember?"#3ddc8430":"#6e72ff30"),color:isMember?"#3ddc84":"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.76rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"}});
+            jb.textContent=isMember?"Membre ✓":"Rejoindre";
+            jb.addEventListener("click",function(){
+              if(isMember){api.leaveGroup(g.id,uid).then(function(){delete S.revMyGroups[g.id];showToast("Groupe quitté");renderRevolution();});}
+              else{api.joinGroup({group_id:g.id,user_id:uid}).then(function(r){if(r&&r.__e){showToast(r.msg||"Erreur.",true);return;}S.revMyGroups[g.id]=true;showToast("Groupe rejoint ✓");renderRevolution();});}
+            });
+            br.appendChild(jb);
+          }
+          card.appendChild(br);
+          scroll.appendChild(card);
+        });
+      }
+    }
+  }
+  // --- EVENTS TAB ---
+  else if(tab==="events"){
+    var myOrgIds=S.revGroups.filter(function(g){return g.organizer_id===uid;}).map(function(g){return g.id;});
+    if(S.revCreateEvent&&myOrgGroups.length>0){
+      var evForm={title:"",type:"conférence",group_id:myOrgGroups[0]?myOrgGroups[0].id:"",lieu:"",date:""};
+      var evErr=mk("div",{cls:"err",style:{display:"none"}});scroll.appendChild(evErr);
+      var ef1=mk("div",{style:{marginBottom:"13px"}});ef1.appendChild(mk("label",{cls:"lbl"},"TITRE"));
+      var ef1i=mk("input",{cls:"inp",type:"text",placeholder:"Nom de l'événement"});
+      ef1i.addEventListener("input",function(){evForm.title=ef1i.value;});ef1.appendChild(ef1i);scroll.appendChild(ef1);
+      var ef2=mk("div",{style:{marginBottom:"13px"}});ef2.appendChild(mk("label",{cls:"lbl"},"TYPE"));
+      var ef2i=mk("select",{cls:"inp"});
+      ["conférence","manifestation","en ligne"].forEach(function(opt){var o=mk("option");o.value=opt;o.textContent=opt;o.style.background="#131420";ef2i.appendChild(o);});
+      ef2i.addEventListener("change",function(){evForm.type=ef2i.value;});ef2.appendChild(ef2i);scroll.appendChild(ef2);
+      var ef3=mk("div",{style:{marginBottom:"13px"}});ef3.appendChild(mk("label",{cls:"lbl"},"GROUPE"));
+      var ef3i=mk("select",{cls:"inp"});
+      myOrgGroups.forEach(function(g){var o=mk("option");o.value=g.id;o.textContent=san.t(g.name||"",40);o.style.background="#131420";ef3i.appendChild(o);});
+      ef3i.addEventListener("change",function(){evForm.group_id=ef3i.value;});ef3.appendChild(ef3i);scroll.appendChild(ef3);
+      var ef4=mk("div",{style:{marginBottom:"13px"}});ef4.appendChild(mk("label",{cls:"lbl"},"LIEU (OPTIONNEL)"));
+      var ef4i=mk("input",{cls:"inp",type:"text",placeholder:"Paris, en ligne..."});
+      ef4i.addEventListener("input",function(){evForm.lieu=ef4i.value;});ef4.appendChild(ef4i);scroll.appendChild(ef4);
+      var ef5=mk("div",{style:{marginBottom:"13px"}});ef5.appendChild(mk("label",{cls:"lbl"},"DATE ET HEURE"));
+      var ef5i=mk("input",{cls:"inp",type:"datetime-local"});
+      ef5i.addEventListener("input",function(){evForm.date=ef5i.value;});ef5.appendChild(ef5i);scroll.appendChild(ef5);
+      var evRow=mk("div",{style:{display:"flex",gap:"8px",marginTop:"4px"}});
+      var evCa=mk("button",{cls:"btn ghost",style:{flex:1,fontSize:"0.8rem",padding:"11px"},onClick:function(){S.revCreateEvent=false;renderRevolution();}});evCa.textContent="Annuler";
+      var evCr=mk("button",{cls:"btn",style:{flex:2,fontSize:"0.8rem",padding:"11px"},onClick:async function(){
+        var t=san.t(evForm.title,200);
+        if(!t||t.length<2){evErr.textContent="Titre requis.";evErr.style.display="block";return;}
+        if(!evForm.date){evErr.textContent="Date requise.";evErr.style.display="block";return;}
+        evCr.disabled=true;evCr.innerHTML="<div class='spin'></div>";
+        var res=await api.createEvent({title:t,type:evForm.type,group_id:evForm.group_id||null,location:san.t(evForm.lieu,200),event_date:new Date(evForm.date).toISOString(),organizer_id:uid,attendees_count:0,check_in_active:false});
+        if(res&&res.__e){evErr.textContent=res.msg||"Erreur création.";evErr.style.display="block";evCr.disabled=false;evCr.textContent="Créer";return;}
+        S.revCreateEvent=false;S.revLoaded=false;loadRevolution();showToast("Événement créé ✓");
+      }});evCr.textContent="Créer";
+      evRow.appendChild(evCa);evRow.appendChild(evCr);scroll.appendChild(evRow);
+    } else {
+      if(!S.revEvents.length){
+        var es2=mk("div",{cls:"empty-state"});es2.appendChild(mk("div",{cls:"ico"},"📅"));es2.appendChild(mk("div",{cls:"ttl"},"Aucun événement"));es2.appendChild(mk("div",{cls:"sub"},"Les événements organisés par les groupes apparaîtront ici."));scroll.appendChild(es2);
+      } else {
+        S.revEvents.forEach(function(ev){
+          var isOrgEv=ev.organizer_id===uid;var checkedIn=!!S.revMyCheckins[ev.id];
+          var card=mk("div",{style:{background:"#0d0e18",border:"1px solid #ffffff0a",borderRadius:"12px",padding:"13px",marginBottom:"10px"}});
+          var eh=mk("div",{style:{display:"flex",alignItems:"flex-start",gap:"7px",marginBottom:"7px"}});
+          var etitle=mk("div",{style:{flex:1}});
+          etitle.appendChild(mk("div",{style:{fontWeight:700,fontSize:"0.92rem",marginBottom:"3px"}},san.t(ev.title||"",80)));
+          var emeta=mk("div",{style:{display:"flex",gap:"6px",flexWrap:"wrap",alignItems:"center"}});
+          if(ev.type){var typCol=ev.type==="manifestation"?"#ff4d6d":ev.type==="en ligne"?"#00d2ff":"#6e72ff";emeta.appendChild(mk("span",{style:{fontSize:"0.56rem",color:typCol,background:typCol+"15",border:"1px solid "+typCol+"25",padding:"2px 7px",borderRadius:"20px",fontFamily:"Fira Code,monospace"}},ev.type));}
+          if(ev.groups&&ev.groups.name)emeta.appendChild(mk("span",{style:{fontSize:"0.6rem",color:"#7a7d9a",fontFamily:"Fira Code,monospace"}},san.t(ev.groups.name,30)));
+          etitle.appendChild(emeta);eh.appendChild(etitle);
+          if(ev.check_in_active){var badge=mk("span",{style:{fontSize:"0.52rem",color:"#3ddc84",background:"#3ddc8418",border:"1px solid #3ddc8430",padding:"2px 7px",borderRadius:"20px",fontFamily:"Fira Code,monospace",whiteSpace:"nowrap",flexShrink:0}});badge.textContent="POINTAGE ACTIF";eh.appendChild(badge);}
+          card.appendChild(eh);
+          if(ev.event_date){var df=new Date(ev.event_date);card.appendChild(mk("div",{style:{fontSize:"0.7rem",color:"#7a7d9a",fontFamily:"Fira Code,monospace",marginBottom:"4px"}},df.toLocaleDateString("fr-FR",{weekday:"short",year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})));}
+          if(ev.location){card.appendChild(mk("div",{style:{fontSize:"0.7rem",color:"#7a7d9a",marginBottom:"4px"}},"📍 "+san.t(ev.location,100)));}
+          card.appendChild(mk("div",{style:{fontSize:"0.66rem",color:"#383a52",fontFamily:"Fira Code,monospace",marginBottom:"10px"}},(ev.attendees_count||0)+" participant(s)"));
+          var ebr=mk("div",{style:{display:"flex",gap:"7px"}});
+          if(isOrgEv){
+            var actBtn=mk("button",{style:{flex:1,background:ev.check_in_active?"#ff4d6d18":"#3ddc8418",border:"1px solid "+(ev.check_in_active?"#ff4d6d30":"#3ddc8430"),color:ev.check_in_active?"#ff4d6d":"#3ddc84",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"}});
+            actBtn.textContent=ev.check_in_active?"Désactiver pointage":"Activer pointage";
+            var codeDisplay=null;
+            actBtn.addEventListener("click",function(){
+              if(ev.check_in_active){api.deactivateCheckin(ev.id).then(function(){ev.check_in_active=false;if(codeDisplay)codeDisplay.style.display="none";renderRevolution();});}
+              else{
+                var code=String(Math.floor(100000+Math.random()*900000));
+                api.activateCheckin(ev.id,code).then(function(){ev.check_in_active=true;ev.check_in_code=code;renderRevolution();showToast("Code: "+code);});
+              }
+            });
+            ebr.appendChild(actBtn);
+            if(ev.check_in_active&&ev.check_in_code){
+              var codeBox=mk("div",{style:{background:"#3ddc8418",border:"1px solid #3ddc8430",borderRadius:"10px",padding:"9px 13px",display:"flex",alignItems:"center",gap:"8px",marginTop:"8px",width:"100%"}});
+              codeBox.appendChild(mk("span",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.1rem",fontWeight:700,color:"#3ddc84",letterSpacing:"0.2em"}},ev.check_in_code));
+              codeBox.appendChild(mk("span",{style:{fontSize:"0.62rem",color:"#3ddc84"}},"— Code à partager"));
+              card.appendChild(codeBox);
+            }
+          } else {
+            if(checkedIn){
+              var pb=mk("button",{style:{flex:1,background:"#3ddc8418",border:"1px solid #3ddc8430",color:"#3ddc84",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"default",fontFamily:"Outfit,sans-serif"}});
+              pb.textContent="✓ Présent";pb.disabled=true;ebr.appendChild(pb);
+            } else if(ev.check_in_active){
+              var sb=mk("button",{style:{flex:1,background:"#6e72ff18",border:"1px solid #6e72ff30",color:"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"},onClick:function(){S.revTab="pointer";renderRevolution();}});
+              sb.textContent="Se pointer →";ebr.appendChild(sb);
+            }
+          }
+          card.appendChild(ebr);
+          scroll.appendChild(card);
+        });
+      }
+    }
+  }
+  // --- POINTER TAB ---
+  else if(tab==="pointer"){
+    var pBox=mk("div",{style:{background:"#0d0e18",border:"1px solid #ffffff0a",borderRadius:"12px",padding:"20px",marginBottom:"16px",textAlign:"center"}});
+    pBox.appendChild(mk("div",{style:{fontSize:"2rem",marginBottom:"8px"}},"⚡"));
+    pBox.appendChild(mk("div",{style:{fontWeight:700,fontSize:"1rem",marginBottom:"4px"}},"Pointer ma présence"));
+    pBox.appendChild(mk("div",{style:{fontSize:"0.76rem",color:"#7a7d9a",marginBottom:"16px"}},"Entrez le code à 6 chiffres de l'événement"));
+    var codeInp=mk("input",{cls:"inp",type:"text",inputmode:"numeric",maxlength:"6",placeholder:"000000",style:{textAlign:"center",fontFamily:"Fira Code,monospace",fontSize:"1.8rem",fontWeight:700,letterSpacing:"0.3em",marginBottom:"12px"}});
+    codeInp.value=S.revCheckinCode||"";
+    codeInp.addEventListener("input",function(){S.revCheckinCode=codeInp.value.replace(/\D/g,"").slice(0,6);codeInp.value=S.revCheckinCode;});
+    pBox.appendChild(codeInp);
+    var vBtn=mk("button",{cls:"btn",onClick:function(){doEventCheckin(codeInp.value);}});vBtn.textContent="Valider ma présence";pBox.appendChild(vBtn);
+    scroll.appendChild(pBox);
+    // Past check-ins
+    var myPast=S.revEvents.filter(function(ev){return !!S.revMyCheckins[ev.id];});
+    if(myPast.length){
+      scroll.appendChild(mk("div",{cls:"lbl",style:{marginBottom:"10px"}},"MES PRÉSENCES"));
+      myPast.forEach(function(ev){
+        var c=mk("div",{style:{background:"#0d0e18",border:"1px solid #3ddc8420",borderRadius:"12px",padding:"13px",marginBottom:"8px",display:"flex",gap:"10px",alignItems:"center"}});
+        var ico=mk("div",{style:{width:"36px",height:"36px",borderRadius:"50%",background:"#3ddc8418",border:"1px solid #3ddc8430",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1rem",flexShrink:0}});ico.textContent="✓";c.appendChild(ico);
+        var ci=mk("div",{style:{flex:1,minWidth:0}});ci.appendChild(mk("div",{style:{fontWeight:600,fontSize:"0.84rem",marginBottom:"2px",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},san.t(ev.title||"",60)));
+        if(ev.event_date)ci.appendChild(mk("div",{style:{fontSize:"0.64rem",color:"#7a7d9a",fontFamily:"Fira Code,monospace"}},new Date(ev.event_date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})));
+        c.appendChild(ci);
+        c.appendChild(mk("span",{style:{color:"#3ddc84",fontFamily:"Fira Code,monospace",fontSize:"0.72rem",fontWeight:700,whiteSpace:"nowrap"}},"+10 MJC"));
+        scroll.appendChild(c);
+      });
+    } else {
+      var noCheckin=mk("div",{style:{textAlign:"center",padding:"20px 0",color:"#7a7d9a",fontSize:"0.8rem"}});noCheckin.textContent="Aucune présence enregistrée.";scroll.appendChild(noCheckin);
+    }
+  }
+  scroll.appendChild(mk("div",{style:{height:"20px"}}));
+  scr.appendChild(scroll);
+}
 function loadTxs(){if(!S.user)return;api.txs(S.user.id).then(function(d){if(Array.isArray(d)){S.txs=d;renderProfile();}});}
 function renderProfile(){var scr=document.getElementById("s-profile");if(!scr)return;scr.innerHTML="";var u=S.user;var lb=mk("button",{style:{background:"#ff4d6d15",border:"1px solid #ff4d6d30",color:"#ff4d6d",padding:"5px 11px",borderRadius:"20px",cursor:"pointer",fontSize:"0.7rem",fontWeight:600},onClick:function(){api.logout();location.reload();}});lb.textContent="Déconnexion";scr.appendChild(TopBar("Profil",null,null,lb));var scroll=mk("div",{cls:"scroll"});var uh=mk("div",{style:{padding:"20px 16px 16px",background:"linear-gradient(180deg,#6e72ff06,transparent)"}});var ur=mk("div",{style:{display:"flex",gap:"14px",alignItems:"center",marginBottom:"16px"}});ur.appendChild(Ava(u.alias,u.level||"Nouveau",56));var ui=mk("div",{style:{flex:1}});ui.appendChild(mk("div",{style:{fontWeight:700,fontSize:"1.1rem",marginBottom:"5px"}},u.alias));ui.appendChild(Pill(u.level||"Nouveau"));var ub=mk("div",{style:{textAlign:"right"}});ub.appendChild(mk("div",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.3rem",fontWeight:600,color:"#ffb547"}},u.mojocoin_balance||0));ub.appendChild(mk("div",{style:{fontSize:"0.55rem",color:"#383a52",fontFamily:"Fira Code,monospace"}},"MJC"));ur.appendChild(ui);ur.appendChild(ub);uh.appendChild(ur);scroll.appendChild(uh);scroll.appendChild(hr());var rs=mk("div",{style:{padding:"14px 16px"}});rs.appendChild(mk("div",{cls:"lbl"},"CODE PARRAIN"));var rc=mk("div",{style:{background:"#0d0e18",border:"1px solid #ffffff14",borderRadius:"10px",padding:"11px 13px",display:"flex",alignItems:"center",gap:"9px"}});rc.appendChild(mk("span",{style:{fontFamily:"Fira Code,monospace",fontSize:"0.88rem",fontWeight:600,color:"#6e72ff",flex:1}},u.referral_code||"..."));var cpb=mk("button",{cls:"copy-btn",onClick:function(){try{navigator.clipboard.writeText(u.referral_code||"");}catch(e){var t=document.createElement("textarea");t.value=u.referral_code||"";document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);}cpb.textContent="Copié!";cpb.className="copy-btn ok";setTimeout(function(){cpb.textContent="Copier";cpb.className="copy-btn";},1800);}});cpb.textContent="Copier";rc.appendChild(cpb);rs.appendChild(rc);rs.appendChild(mk("p",{style:{fontSize:"0.66rem",color:"#383a52",marginTop:"7px"}},"50 MJC par filleul parrainé"));scroll.appendChild(rs);scroll.appendChild(hr());var bal=u.mojocoin_balance||0,months=u.months_active||0;
 var balOk=bal>=500,monthsOk=months>=5,eligible=balOk&&monthsOk;
