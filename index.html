@@ -339,7 +339,16 @@ function renderSubmit(){
       ch.appendChild(mk("span",{style:{fontSize:"0.54rem",color:"#383a52",fontFamily:"Fira Code,monospace",marginLeft:"auto"}},"par "+((art.users&&art.users.alias)||"Anonyme")));
       card.appendChild(ch);
       card.appendChild(mk("div",{style:{fontWeight:700,fontSize:"0.9rem",marginBottom:"4px"}},art.title));
-      card.appendChild(mk("p",{style:{fontSize:"0.74rem",color:"#7a7d9a",lineHeight:1.5,marginBottom:"10px"}},san.t(art.summary||"",120)));
+      card.appendChild(mk("p",{style:{fontSize:"0.74rem",color:"#7a7d9a",lineHeight:1.5,marginBottom:"6px"}},san.t(art.summary||"",200)));
+      if(art.content){
+        var expanded=false;
+        var fullDiv=mk("div",{style:{display:"none",background:"#07080e",borderRadius:"8px",padding:"10px 12px",marginBottom:"8px",borderLeft:"2px solid #6e72ff30"}});
+        fullDiv.appendChild(mk("p",{style:{fontFamily:"DM Serif Display,serif",fontSize:"0.82rem",lineHeight:1.7,color:"#9da0bb"}},(art.content||"")));
+        var togBtn=mk("button",{style:{background:"none",border:"none",color:"#6e72ff",fontSize:"0.68rem",fontFamily:"Fira Code,monospace",cursor:"pointer",padding:"0 0 8px 0",display:"block"},onClick:function(){expanded=!expanded;fullDiv.style.display=expanded?"block":"none";togBtn.textContent=expanded?"▲ Masquer le dossier":"▼ Voir le dossier complet";}});
+        togBtn.textContent="▼ Voir le dossier complet";
+        card.appendChild(togBtn);
+        card.appendChild(fullDiv);
+      }
       var prow=mk("div",{style:{display:"flex",justifyContent:"space-between",marginBottom:"3px"}});
       prow.appendChild(mk("span",{style:{fontSize:"0.58rem",fontFamily:"Fira Code,monospace",color:"#383a52"}},"VOTES"));
       prow.appendChild(mk("span",{style:{fontSize:"0.58rem",fontFamily:"Fira Code,monospace",color:pct>=100?"#3ddc84":"#ffb547"}},(art.votes_count||0)+" / 50"));
