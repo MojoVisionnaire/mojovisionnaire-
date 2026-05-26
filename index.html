@@ -584,7 +584,7 @@ function renderRevolution(){
   if(tab==="groups"){
     rightBtn=mk("button",{cls:"icon-btn"+(S.revCreateGroup?" active":""),onClick:function(){S.revCreateGroup=!S.revCreateGroup;S.revCreateEvent=false;renderRevolution();}});
     rightBtn.innerHTML=S.revCreateGroup?"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>":"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='12' y1='5' x2='12' y2='19'/><line x1='5' y1='12' x2='19' y2='12'/></svg>";
-  } else if(tab==="events"&&myOrgGroups.length>0){
+  } else if(tab==="events"){
     rightBtn=mk("button",{cls:"icon-btn"+(S.revCreateEvent?" active":""),onClick:function(){S.revCreateEvent=!S.revCreateEvent;S.revCreateGroup=false;renderRevolution();}});
     rightBtn.innerHTML=S.revCreateEvent?"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>":"<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='12' y1='5' x2='12' y2='19'/><line x1='5' y1='12' x2='19' y2='12'/></svg>";
   }
@@ -680,8 +680,8 @@ function renderRevolution(){
   // --- EVENTS TAB ---
   else if(tab==="events"){
     var myOrgIds=S.revGroups.filter(function(g){return g.organizer_id===uid;}).map(function(g){return g.id;});
-    if(S.revCreateEvent&&myOrgGroups.length>0){
-      var evForm={title:"",type:"conférence",group_id:myOrgGroups[0]?myOrgGroups[0].id:"",lieu:"",date:""};
+    if(S.revCreateEvent){
+      var evForm={title:"",type:"conférence",group_id:"",lieu:"",date:""};
       var evErr=mk("div",{cls:"err",style:{display:"none"}});scroll.appendChild(evErr);
       var ef1=mk("div",{style:{marginBottom:"13px"}});ef1.appendChild(mk("label",{cls:"lbl"},"TITRE"));
       var ef1i=mk("input",{cls:"inp",type:"text",placeholder:"Nom de l'événement"});
@@ -690,9 +690,10 @@ function renderRevolution(){
       var ef2i=mk("select",{cls:"inp"});
       ["conférence","manifestation","en ligne"].forEach(function(opt){var o=mk("option");o.value=opt;o.textContent=opt;o.style.background="#131420";ef2i.appendChild(o);});
       ef2i.addEventListener("change",function(){evForm.type=ef2i.value;});ef2.appendChild(ef2i);scroll.appendChild(ef2);
-      var ef3=mk("div",{style:{marginBottom:"13px"}});ef3.appendChild(mk("label",{cls:"lbl"},"GROUPE"));
+      var ef3=mk("div",{style:{marginBottom:"13px"}});ef3.appendChild(mk("label",{cls:"lbl"},"GROUPE (OPTIONNEL)"));
       var ef3i=mk("select",{cls:"inp"});
-      myOrgGroups.forEach(function(g){var o=mk("option");o.value=g.id;o.textContent=san.t(g.name||"",40);o.style.background="#131420";ef3i.appendChild(o);});
+      var ef3none=mk("option");ef3none.value="";ef3none.textContent="— Aucun groupe —";ef3none.style.background="#131420";ef3i.appendChild(ef3none);
+      S.revGroups.forEach(function(g){var o=mk("option");o.value=g.id;o.textContent=san.t(g.name||"",40);o.style.background="#131420";ef3i.appendChild(o);});
       ef3i.addEventListener("change",function(){evForm.group_id=ef3i.value;});ef3.appendChild(ef3i);scroll.appendChild(ef3);
       var ef4=mk("div",{style:{marginBottom:"13px"}});ef4.appendChild(mk("label",{cls:"lbl"},"LIEU (OPTIONNEL)"));
       var ef4i=mk("input",{cls:"inp",type:"text",placeholder:"Paris, en ligne..."});
@@ -714,7 +715,7 @@ function renderRevolution(){
       evRow.appendChild(evCa);evRow.appendChild(evCr);scroll.appendChild(evRow);
     } else {
       if(!S.revEvents.length){
-        var es2=mk("div",{cls:"empty-state"});es2.appendChild(mk("div",{cls:"ico"},"📅"));es2.appendChild(mk("div",{cls:"ttl"},"Aucun événement"));es2.appendChild(mk("div",{cls:"sub"},"Les événements organisés par les groupes apparaîtront ici."));scroll.appendChild(es2);
+        var es2=mk("div",{cls:"empty-state"});es2.appendChild(mk("div",{cls:"ico"},"📅"));es2.appendChild(mk("div",{cls:"ttl"},"Aucun événement"));es2.appendChild(mk("div",{cls:"sub"},"Créez le premier événement avec le bouton + ci-dessus."));scroll.appendChild(es2);
       } else {
         S.revEvents.forEach(function(ev){
           var isOrgEv=ev.organizer_id===uid;var checkedIn=!!S.revMyCheckins[ev.id];
@@ -731,26 +732,45 @@ function renderRevolution(){
           if(ev.event_date){var df=new Date(ev.event_date);card.appendChild(mk("div",{style:{fontSize:"0.7rem",color:"#7a7d9a",fontFamily:"Fira Code,monospace",marginBottom:"4px"}},df.toLocaleDateString("fr-FR",{weekday:"short",year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})));}
           if(ev.location){card.appendChild(mk("div",{style:{fontSize:"0.7rem",color:"#7a7d9a",marginBottom:"4px"}},"📍 "+san.t(ev.location,100)));}
           card.appendChild(mk("div",{style:{fontSize:"0.66rem",color:"#383a52",fontFamily:"Fira Code,monospace",marginBottom:"10px"}},(ev.attendees_count||0)+" participant(s)"));
-          var ebr=mk("div",{style:{display:"flex",gap:"7px"}});
+          var ebr=mk("div",{style:{display:"flex",gap:"7px",flexWrap:"wrap"}});
+          // Share button (all users)
+          (function(evCopy){
+            var shareBtn=mk("button",{style:{background:"#ffb54718",border:"1px solid #ffb54730",color:"#ffb547",padding:"9px 11px",borderRadius:"10px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif",display:"flex",alignItems:"center",gap:"5px"},onClick:function(){
+              var txt="Événement : "+san.t(evCopy.title||"",80)+"\n";
+              if(evCopy.event_date)txt+="Date : "+new Date(evCopy.event_date).toLocaleDateString("fr-FR",{weekday:"long",year:"numeric",month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"})+"\n";
+              if(evCopy.location)txt+="Lieu : "+san.t(evCopy.location||"",80)+"\n";
+              if(evCopy.check_in_active&&evCopy.check_in_code)txt+="Code de pointage : "+evCopy.check_in_code+"\n";
+              txt+="Réseau mojoVisionnaire";
+              try{navigator.clipboard.writeText(txt).then(function(){showToast("Info copiée !");}).catch(function(){var ta=document.createElement("textarea");ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);showToast("Info copiée !");});}
+              catch(e){showToast("Copie impossible.",true);}
+            }});
+            shareBtn.innerHTML="<svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><line x1='8.59' y1='13.51' x2='15.42' y2='17.49'/><line x1='15.41' y1='6.51' x2='8.59' y2='10.49'/></svg>Partager";
+            ebr.appendChild(shareBtn);
+          })(ev);
           if(isOrgEv){
             var actBtn=mk("button",{style:{flex:1,background:ev.check_in_active?"#ff4d6d18":"#3ddc8418",border:"1px solid "+(ev.check_in_active?"#ff4d6d30":"#3ddc8430"),color:ev.check_in_active?"#ff4d6d":"#3ddc84",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"}});
             actBtn.textContent=ev.check_in_active?"Désactiver pointage":"Activer pointage";
-            var codeDisplay=null;
             actBtn.addEventListener("click",function(){
-              if(ev.check_in_active){api.deactivateCheckin(ev.id).then(function(){ev.check_in_active=false;if(codeDisplay)codeDisplay.style.display="none";renderRevolution();});}
+              if(ev.check_in_active){api.deactivateCheckin(ev.id).then(function(){ev.check_in_active=false;renderRevolution();});}
               else{
                 var code=String(Math.floor(100000+Math.random()*900000));
-                api.activateCheckin(ev.id,code).then(function(){ev.check_in_active=true;ev.check_in_code=code;renderRevolution();showToast("Code: "+code);});
+                api.activateCheckin(ev.id,code).then(function(){ev.check_in_active=true;ev.check_in_code=code;renderRevolution();showToast("Pointage activé ! Code: "+code);});
               }
             });
             ebr.appendChild(actBtn);
             var delEvBtn=mk("button",{style:{background:"#ff4d6d12",border:"1px solid #ff4d6d25",color:"#ff4d6d",padding:"9px 13px",borderRadius:"10px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif"},onClick:async function(){if(!confirm("Supprimer cet événement ?"))return;await api.r("DELETE","/rest/v1/events?id=eq."+encodeURIComponent(ev.id));S.revEvents=S.revEvents.filter(function(x){return x.id!==ev.id;});renderRevolution();}});
             delEvBtn.innerHTML="<svg width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><polyline points='3,6 5,6 21,6'/><path d='M19,6l-1,14H6L5,6'/><path d='M9,6V4h6v2'/></svg>";
             ebr.appendChild(delEvBtn);
+            card.appendChild(ebr);
             if(ev.check_in_active&&ev.check_in_code){
-              var codeBox=mk("div",{style:{background:"#3ddc8418",border:"1px solid #3ddc8430",borderRadius:"10px",padding:"9px 13px",display:"flex",alignItems:"center",gap:"8px",marginTop:"8px",width:"100%"}});
-              codeBox.appendChild(mk("span",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.1rem",fontWeight:700,color:"#3ddc84",letterSpacing:"0.2em"}},ev.check_in_code));
-              codeBox.appendChild(mk("span",{style:{fontSize:"0.62rem",color:"#3ddc84"}},"— Code à partager"));
+              var codeBox=mk("div",{style:{background:"#3ddc8418",border:"1px solid #3ddc8430",borderRadius:"10px",padding:"10px 13px",display:"flex",alignItems:"center",justifyContent:"space-between",gap:"8px",marginTop:"8px"}});
+              var codeLeft=mk("div");
+              codeLeft.appendChild(mk("div",{style:{fontSize:"0.56rem",color:"#3ddc84",fontFamily:"Fira Code,monospace",letterSpacing:"0.08em",marginBottom:"3px"}},"CODE DE POINTAGE"));
+              codeLeft.appendChild(mk("div",{style:{fontFamily:"Fira Code,monospace",fontSize:"1.3rem",fontWeight:700,color:"#3ddc84",letterSpacing:"0.3em"}},ev.check_in_code));
+              codeBox.appendChild(codeLeft);
+              var copyCodeBtn=mk("button",{style:{background:"#3ddc8420",border:"1px solid #3ddc8440",color:"#3ddc84",padding:"7px 11px",borderRadius:"8px",cursor:"pointer",fontSize:"0.66rem",fontFamily:"Outfit,sans-serif",fontWeight:600,whiteSpace:"nowrap"},onClick:function(){try{navigator.clipboard.writeText(ev.check_in_code);}catch(e){}copyCodeBtn.textContent="Copié !";setTimeout(function(){copyCodeBtn.textContent="Copier";},1500);}});
+              copyCodeBtn.textContent="Copier";
+              codeBox.appendChild(copyCodeBtn);
               card.appendChild(codeBox);
             }
           } else {
@@ -758,11 +778,13 @@ function renderRevolution(){
               var pb=mk("button",{style:{flex:1,background:"#3ddc8418",border:"1px solid #3ddc8430",color:"#3ddc84",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"default",fontFamily:"Outfit,sans-serif"}});
               pb.textContent="✓ Présent";pb.disabled=true;ebr.appendChild(pb);
             } else if(ev.check_in_active){
-              var sb=mk("button",{style:{flex:1,background:"#6e72ff18",border:"1px solid #6e72ff30",color:"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"},onClick:function(){S.revTab="pointer";renderRevolution();}});
-              sb.textContent="Se pointer →";ebr.appendChild(sb);
+              (function(evCode){
+                var sb=mk("button",{style:{flex:1,background:"#6e72ff18",border:"1px solid #6e72ff30",color:"#6e72ff",padding:"9px",borderRadius:"10px",fontWeight:600,fontSize:"0.74rem",cursor:"pointer",fontFamily:"Outfit,sans-serif"},onClick:function(){S.revTab="pointer";S.revCheckinCode=evCode||"";renderRevolution();}});
+                sb.textContent="Se pointer →";ebr.appendChild(sb);
+              })(ev.check_in_code||"");
             }
+            card.appendChild(ebr);
           }
-          card.appendChild(ebr);
           scroll.appendChild(card);
         });
       }
