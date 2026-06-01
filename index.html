@@ -571,15 +571,25 @@ function renderGroupChat(){
   }
   wrap.appendChild(msgScroll);
   setTimeout(function(){msgScroll.scrollTop=msgScroll.scrollHeight;},60);
+  var pendingFile=null,previewURL=null;
+  var previewWrap=mk("div",{style:{display:"none",position:"fixed",bottom:"114px",left:"12px",right:"12px",zIndex:55,background:"#0d0e18",border:"1px solid #ffffff14",borderRadius:"12px",padding:"8px 8px 8px 8px"}});
+  var previewImg=mk("img",{style:{maxHeight:"130px",borderRadius:"8px",display:"block",maxWidth:"100%"}});
+  var previewClose=mk("button",{style:{position:"absolute",top:"6px",right:"6px",background:"#07080ecc",border:"1px solid #ffffff14",color:"#dde0ec",borderRadius:"50%",width:"22px",height:"22px",cursor:"pointer",fontSize:"12px",lineHeight:"20px",textAlign:"center",zIndex:1}});
+  previewClose.textContent="✕";previewWrap.appendChild(previewImg);previewWrap.appendChild(previewClose);
   var bar=mk("div",{style:{position:"fixed",bottom:"64px",left:0,right:0,padding:"8px 12px",background:"#07080eee",borderTop:"1px solid #ffffff0a",display:"flex",gap:"8px",alignItems:"flex-end",zIndex:50,backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)"}});
-  var fi=mk("input",{type:"file",accept:"image/*",style:{display:"none"}});
+  var fi=mk("input",{type:"file",accept:"image/*",capture:"environment",style:{display:"none"}});
   var imgB=mk("button",{style:{background:"#131420",border:"1px solid #ffffff14",color:"#7a7d9a",width:"42px",height:"42px",borderRadius:"10px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}});
   imgB.innerHTML="<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>";
   imgB.addEventListener("click",function(){fi.click();});
-  var ta=mk("textarea",{cls:"inp",rows:1,placeholder:"Message...",style:{flex:1,resize:"none",lineHeight:"1.5",padding:"10px 12px",fontSize:"0.83rem",maxHeight:"80px",overflowY:"auto",marginBottom:0}});
+  var ta=mk("textarea",{cls:"inp",rows:1,placeholder:"Message ou coller une capture (Ctrl+V)...",style:{flex:1,resize:"none",lineHeight:"1.5",padding:"10px 12px",fontSize:"0.83rem",maxHeight:"80px",overflowY:"auto",marginBottom:0}});
   ta.addEventListener("input",function(){ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,80)+"px";});
   var snd=mk("button",{style:{background:"#6e72ff",border:"none",color:"#fff",width:"42px",height:"42px",borderRadius:"10px",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}});
   snd.innerHTML="<svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><line x1='22' y1='2' x2='11' y2='13'/><polygon points='22,2 15,22 11,13 2,9 22,2'/></svg>";
+  function clearPending(){pendingFile=null;if(previewURL)URL.revokeObjectURL(previewURL);previewURL=null;previewWrap.style.display="none";fi.value="";imgB.style.background="#131420";imgB.style.borderColor="#ffffff14";imgB.style.color="#7a7d9a";}
+  function setPending(file){if(file.size>5*1024*1024){showToast("Image max 5MB.",true);return;}pendingFile=file;if(previewURL)URL.revokeObjectURL(previewURL);previewURL=URL.createObjectURL(file);previewImg.src=previewURL;previewWrap.style.display="block";imgB.style.background="#6e72ff20";imgB.style.borderColor="#6e72ff40";imgB.style.color="#6e72ff";}
+  previewClose.addEventListener("click",clearPending);
+  fi.addEventListener("change",function(){var f=fi.files[0];if(f)setPending(f);});
+  ta.addEventListener("paste",function(e){var items=e.clipboardData&&e.clipboardData.items;if(!items)return;for(var i=0;i<items.length;i++){if(items[i].type.indexOf("image")===0){e.preventDefault();var f=items[i].getAsFile();if(f)setPending(f);return;}}});
   async function sendMsg(content,imgUrl){
     var tmp={id:"tmp_"+Date.now(),group_id:g.id,author_id:uid,author_alias:S.user.alias,author_level:S.user.level||"Nouveau",content:content||null,image_url:imgUrl||null,created_at:new Date().toISOString()};
     S.revMessages.push(tmp);renderGroupChat();
@@ -587,21 +597,25 @@ function renderGroupChat(){
     if(r&&r.__e){showToast(r.msg||"Erreur.",true);S.revMessages=S.revMessages.filter(function(m){return m.id!==tmp.id;});renderGroupChat();}
     else if(Array.isArray(r)&&r[0]){S.revMessages=S.revMessages.map(function(m){return m.id===tmp.id?r[0]:m;});}
   }
-  snd.addEventListener("click",async function(){var c=san.t(ta.value,1000);if(!c)return;ta.value="";ta.style.height="auto";await sendMsg(c,null);});
-  ta.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();snd.click();}});
-  fi.addEventListener("change",async function(){
-    var file=fi.files[0];if(!file)return;
-    if(file.size>5*1024*1024){showToast("Image max 5MB.",true);return;}
-    imgB.innerHTML="<div class='spin'></div>";imgB.disabled=true;
-    var path=uid.replace(/-/g,"")+"/"+Date.now()+"_"+file.name.slice(0,30).replace(/[^a-zA-Z0-9._]/g,"_");
-    var up=await api.uploadGroupImage(file,path);
-    imgB.disabled=false;imgB.innerHTML="<svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round'><rect x='3' y='3' width='18' height='18' rx='2'/><circle cx='8.5' cy='8.5' r='1.5'/><polyline points='21,15 16,10 5,21'/></svg>";
-    if(up&&up.error){showToast("Erreur image.",true);fi.value="";return;}
-    var c=san.t(ta.value,1000);ta.value="";ta.style.height="auto";
-    await sendMsg(c||null,_U+"/storage/v1/object/public/group-images/"+path);fi.value="";
+  snd.addEventListener("click",async function(){
+    var c=san.t(ta.value,1000);
+    if(!c&&!pendingFile)return;
+    ta.value="";ta.style.height="auto";
+    var imgUrl=null;
+    if(pendingFile){
+      var file=pendingFile;clearPending();
+      snd.disabled=true;imgB.disabled=true;
+      var path=uid.replace(/-/g,"")+"/"+Date.now()+"_"+(file.name||"img").slice(0,30).replace(/[^a-zA-Z0-9._]/g,"_");
+      var up=await api.uploadGroupImage(file,path);
+      snd.disabled=false;imgB.disabled=false;
+      if(up&&up.error){showToast("Erreur upload image.",true);return;}
+      imgUrl=_U+"/storage/v1/object/public/group-images/"+path;
+    }
+    await sendMsg(c||null,imgUrl);
   });
+  ta.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();snd.click();}});
   bar.appendChild(fi);bar.appendChild(imgB);bar.appendChild(ta);bar.appendChild(snd);
-  wrap.appendChild(msgScroll);scr.appendChild(wrap);scr.appendChild(bar);
+  wrap.appendChild(msgScroll);scr.appendChild(wrap);scr.appendChild(previewWrap);scr.appendChild(bar);
   startMsgPoll(g.id);
 }
 function loadRevolution(){
