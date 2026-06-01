@@ -1112,18 +1112,18 @@ var ids=["s-timeline"];for(var xi=0;xi<ids.length;xi++){var scr=document.getElem
 {y:"2022",t:"Twitter Files",c:"#00d2ff",d:"Révèlent que le FBI payait Twitter pour censurer des comptes et que des agences gouvernementales modéraient le discours en ligne."},
 {y:"2023",t:"Hearings IA — Contrôle algorithmique",c:"#00d2ff",d:"Le Congrès américain révèle que des algorithmes d'IA sont utilisés par des agences pour surveiller et prédire les comportements."}
 ];var allEv=EV.map(function(e){return{y:e.y,t:e.t,c:e.c,d:e.d,rev:false};});S.tlRevs.forEach(function(r){if(!allEv.find(function(e){return e.postId===r.postId;}))allEv.push({y:r.year,t:r.title,c:"#c084fc",d:r.desc,rev:true,postId:r.postId});});allEv.sort(function(a,b){return parseInt(a.y)-parseInt(b.y);});var sc=mk("div",{cls:"scroll",style:{padding:"16px 0"}});for(var ei=0;ei<allEv.length;ei++){var ev=allEv[ei];var rw=mk("div",{cls:"fu",style:{display:"flex",padding:"0 16px",marginBottom:"2px",animationDelay:Math.min(ei,15)*0.05+"s"}});var lf=mk("div",{style:{width:"48px",flexShrink:0,paddingTop:"3px",textAlign:"right",paddingRight:"8px"}});var yr=mk("div",{style:{fontSize:"0.6rem",fontFamily:"Fira Code,monospace",color:ev.c,fontWeight:700}});yr.textContent=ev.y;lf.appendChild(yr);var md=mk("div",{style:{width:"18px",flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center"}});var dt=mk("div",{style:{width:"9px",height:"9px",borderRadius:"50%",background:ev.c,border:"2px solid #07080e",marginTop:"4px",flexShrink:0}});md.appendChild(dt);if(ei<allEv.length-1){var ln=mk("div",{style:{width:"2px",background:"#ffffff0a",flex:1,minHeight:"40px",marginTop:"2px"}});md.appendChild(ln);}var rt=mk("div",{style:{flex:1,paddingLeft:"10px",paddingBottom:"16px"}});var tt=mk("div",{style:{fontWeight:700,fontSize:"0.84rem",color:"#dde0ec",marginBottom:"3px"}});tt.textContent=ev.t;var vb=mk("span",{style:{fontSize:"0.5rem",color:ev.rev?"#c084fc":"#3ddc84",background:ev.rev?"#c084fc12":"#3ddc8412",border:"1px solid "+(ev.rev?"#c084fc28":"#3ddc8428"),padding:"1px 5px",borderRadius:"20px",fontFamily:"Fira Code,monospace"}});vb.textContent=ev.rev?"RÉVÉLATION":"VÉRIFIÉ";var dc=mk("p",{style:{fontSize:"0.74rem",color:"#7a7d9a",lineHeight:1.5,marginTop:"4px"}});dc.textContent=ev.d;rt.appendChild(tt);rt.appendChild(vb);rt.appendChild(dc);rw.appendChild(lf);rw.appendChild(md);rw.appendChild(rt);
-(function(evSnap,eiSnap){
-  rw.style.cursor="pointer";
-  rw.style.transition="background 0.15s";
-  rw.addEventListener("mouseenter",function(){rw.style.background=evSnap.c+"08";});
-  rw.addEventListener("mouseleave",function(){if(!document.getElementById("evp-"+eiSnap))rw.style.background="";});
-  rw.addEventListener("click",function(){
+(function(evSnap,eiSnap,rwSnap){
+  rwSnap.style.cursor="pointer";
+  rwSnap.style.transition="background 0.15s";
+  rwSnap.addEventListener("mouseenter",function(){rwSnap.style.background=evSnap.c+"08";});
+  rwSnap.addEventListener("mouseleave",function(){if(!document.getElementById("evp-"+eiSnap))rwSnap.style.background="";});
+  rwSnap.addEventListener("click",function(){
     var panelId="evp-"+eiSnap;
     var existing=document.getElementById(panelId);
-    if(existing){existing.remove();rw.style.background="";return;}
+    if(existing){existing.remove();rwSnap.style.background="";return;}
     var allPanels=sc.querySelectorAll("[id^='evp-']");
     for(var pi=0;pi<allPanels.length;pi++)allPanels[pi].remove();
-    rw.style.background=evSnap.c+"0d";
+    rwSnap.style.background=evSnap.c+"0d";
     var wikiArt=findEvWiki(evSnap.t,evSnap.d);
     var panel=mk("div",{id:panelId,style:{background:"#0d0e18",borderTop:"none",borderLeft:"3px solid "+evSnap.c,borderRight:"1px solid "+evSnap.c+"20",borderBottom:"1px solid "+evSnap.c+"20",borderRadius:"0 8px 8px 0",padding:"14px 14px 14px 16px",margin:"-4px 16px 10px 64px",animation:"fadeIn 0.18s ease"}});
     if(wikiArt){
@@ -1136,19 +1136,19 @@ var ids=["s-timeline"];for(var xi=0;xi<ids.length;xi++){var scr=document.getElem
       var openBtn=mk("button",{style:{background:evSnap.c+"18",border:"1px solid "+evSnap.c+"35",color:evSnap.c,padding:"8px 14px",borderRadius:"8px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif",fontWeight:600},onClick:function(){S.wikiSel=wikiArt;switchTab("wiki");}});
       openBtn.innerHTML="Voir le dossier complet <svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><line x1='5' y1='12' x2='19' y2='12'/><polyline points='12,5 19,12 12,19'/></svg>";
       row2.appendChild(openBtn);
-      var closeBtn=mk("button",{style:{background:"none",border:"1px solid #ffffff0a",color:"#7a7d9a",padding:"8px 10px",borderRadius:"8px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif"},onClick:function(){panel.remove();rw.style.background="";}});
+      var closeBtn=mk("button",{style:{background:"none",border:"1px solid #ffffff0a",color:"#7a7d9a",padding:"8px 10px",borderRadius:"8px",cursor:"pointer",fontSize:"0.72rem",fontFamily:"Outfit,sans-serif"},onClick:function(){panel.remove();rwSnap.style.background="";}});
       closeBtn.textContent="✕";
       row2.appendChild(closeBtn);
       panel.appendChild(row2);
     } else {
       panel.appendChild(mk("p",{style:{fontSize:"0.78rem",color:"#9da0bb",lineHeight:1.72,marginBottom:evSnap.rev?"10px":"0"}},evSnap.d));
       if(evSnap.rev){var rl=mk("div",{style:{fontSize:"0.64rem",color:"#c084fc",fontFamily:"Fira Code,monospace"}});rl.textContent="Révélation de la communauté";panel.appendChild(rl);}
-      var cl2=mk("button",{style:{marginTop:"10px",background:"none",border:"1px solid #ffffff0a",color:"#7a7d9a",padding:"6px 10px",borderRadius:"8px",cursor:"pointer",fontSize:"0.7rem",fontFamily:"Outfit,sans-serif"},onClick:function(){panel.remove();rw.style.background="";}});
+      var cl2=mk("button",{style:{marginTop:"10px",background:"none",border:"1px solid #ffffff0a",color:"#7a7d9a",padding:"6px 10px",borderRadius:"8px",cursor:"pointer",fontSize:"0.7rem",fontFamily:"Outfit,sans-serif"},onClick:function(){panel.remove();rwSnap.style.background="";}});
       cl2.textContent="✕ Fermer";panel.appendChild(cl2);
     }
-    rw.insertAdjacentElement("afterend",panel);
+    rwSnap.insertAdjacentElement("afterend",panel);
   });
-})(ev,ei);
+})(ev,ei,rw);
 sc.appendChild(rw);}sc.appendChild(mk("div",{style:{height:"20px"}}));scr.appendChild(sc);}}
 function showAuth(m){var app=document.getElementById("app");app.innerHTML="";app.appendChild(renderAuth(m||"register"));}
 function renderLanding(){var root=mk("div",{style:{minHeight:"100vh",background:"#07080e",color:"#dde0ec",fontFamily:"'Outfit',sans-serif"}});var nav=mk("nav",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"14px 20px",borderBottom:"1px solid #ffffff08",position:"sticky",top:0,background:"#07080eee",backdropFilter:"blur(20px)",zIndex:10}});var logo=mk("div",{style:{fontFamily:"'DM Serif Display',serif",fontSize:"1.15rem"}});logo.innerHTML="mojo<span style='color:#6e72ff'>Visionnaire</span>";var ln=mk("button",{style:{background:"none",border:"1px solid #ffffff14",color:"#7a7d9a",padding:"7px 14px",borderRadius:"20px",cursor:"pointer",fontSize:"0.76rem",fontFamily:"Outfit,sans-serif"},onClick:function(){showAuth("login");}});ln.textContent="Se connecter";nav.appendChild(logo);nav.appendChild(ln);root.appendChild(nav);
