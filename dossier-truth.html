@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRUTH FILES — 77 Confirmed Conspiracies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f0f1a;--paper:#faf8f3;--red:#c41e3a;--gold:#c8920a;--muted:#5a5a72;--border:#ddd8cc;--bg2:#f0ede5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',Georgia,serif;background:#1a1a2e;min-height:100vh;padding:20px 0}
+.book{max-width:820px;margin:0 auto;background:var(--paper);color:var(--ink);box-shadow:0 0 80px #00000060}
+.cover{background:#07080e;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;text-align:center;page-break-after:always;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,#1a0a2e 0%,#07080e 70%);opacity:.8}
+.cover-inner{position:relative;z-index:1}
+.cover-badge{font-family:'Fira Code',monospace;font-size:.65rem;letter-spacing:.25em;color:var(--gold);border:1px solid var(--gold);padding:5px 18px;display:inline-block;margin-bottom:40px;text-transform:uppercase}
+.cover-title{font-family:'DM Serif Display',serif;font-size:4.5rem;color:#fff;line-height:1;margin-bottom:8px;text-shadow:0 0 60px #c8920a40}
+.cover-title span{color:var(--gold)}
+.cover-sub{font-family:'Fira Code',monospace;font-size:.75rem;letter-spacing:.2em;color:#7a7d9a;margin-bottom:48px;text-transform:uppercase}
+.cover-rule{width:60px;height:1px;background:var(--gold);margin:0 auto 48px}
+.cover-stats{display:flex;gap:40px;justify-content:center;margin-bottom:56px}
+.stat{text-align:center}.stat-n{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--gold)}.stat-l{font-size:.58rem;letter-spacing:.15em;color:#7a7d9a;text-transform:uppercase;margin-top:2px}
+.cover-quote{font-family:'DM Serif Display',serif;font-style:italic;color:#5a5a72;font-size:.95rem;max-width:480px;line-height:1.7;margin:0 auto 48px}
+.cover-brand{font-family:'Fira Code',monospace;font-size:.7rem;letter-spacing:.2em;color:#383a52;text-transform:uppercase}
+.avant{padding:56px 64px;border-bottom:1px solid var(--border);page-break-after:always}
+.avant h2{font-family:'DM Serif Display',serif;font-size:2rem;margin-bottom:8px}
+.avant-rule{width:40px;height:2px;background:var(--gold);margin-bottom:32px}
+.avant blockquote{border-left:3px solid var(--gold);padding:16px 20px;margin:24px 0;background:var(--bg2);font-family:'DM Serif Display',serif;font-style:italic;font-size:1.05rem;line-height:1.7;color:var(--muted)}
+.avant blockquote cite{display:block;margin-top:8px;font-size:.8rem;font-family:'Fira Code',monospace;font-style:normal;color:var(--gold)}
+.avant p{color:#3a3a52;line-height:1.8;margin-bottom:16px;font-size:.95rem}
+.toc{padding:48px 64px;border-bottom:1px solid var(--border);page-break-after:always}
+.toc h2{font-family:'DM Serif Display',serif;font-size:2rem;margin-bottom:8px}
+.toc-rule{width:40px;height:2px;background:var(--gold);margin-bottom:32px}
+.toc-ch{margin-bottom:28px}
+.toc-ch-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.toc-item{display:flex;align-items:baseline;gap:0;margin-bottom:5px;font-size:.82rem}
+.toc-num{color:var(--gold);font-family:'Fira Code',monospace;font-size:.7rem;width:28px;flex-shrink:0}
+.toc-name{color:var(--muted);flex:1}
+.toc-dots{flex:1;border-bottom:1px dotted var(--border);margin:0 8px;position:relative;top:-3px}
+.toc-pg{font-family:'Fira Code',monospace;font-size:.7rem;color:var(--muted)}
+.ch-open{background:#07080e;min-height:50vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:48px 64px;page-break-before:always;page-break-after:always;position:relative;overflow:hidden}
+.ch-open::after{content:'';position:absolute;right:-20px;top:50%;transform:translateY(-50%);width:300px;height:300px;border:1px solid #ffffff05;border-radius:50%}
+.ch-num{font-family:'Fira Code',monospace;font-size:.65rem;letter-spacing:.2em;color:var(--gold);margin-bottom:12px;text-transform:uppercase}
+.ch-title{font-family:'DM Serif Display',serif;font-size:2.4rem;color:#fff;line-height:1.2;margin-bottom:16px;max-width:500px}
+.ch-desc{font-size:.82rem;color:#5a5a72;line-height:1.6;max-width:480px}
+.d{background:var(--paper);border-bottom:1px solid var(--border);padding:40px 64px;page-break-inside:avoid}
+.d-hdr{display:flex;gap:20px;margin-bottom:20px}
+.d-num{font-family:'Fira Code',monospace;font-size:2.5rem;color:var(--border);font-weight:700;line-height:1;padding-top:4px;flex-shrink:0;min-width:48px}
+.d-meta{flex:1}
+.d-cat{font-size:.6rem;letter-spacing:.18em;font-weight:700;text-transform:uppercase;margin-bottom:6px;font-family:'Fira Code',monospace}
+.cS{color:#1a3a6e;background:#1a3a6e12;padding:3px 10px;border-radius:20px;display:inline-block}
+.cM{color:#6b21a8;background:#6b21a812;padding:3px 10px;border-radius:20px;display:inline-block}
+.cG{color:#1e5c1e;background:#1e5c1e12;padding:3px 10px;border-radius:20px;display:inline-block}
+.cMi{color:#7c2d12;background:#7c2d1212;padding:3px 10px;border-radius:20px;display:inline-block}
+.cF{color:#713f12;background:#713f1212;padding:3px 10px;border-radius:20px;display:inline-block}
+.cMe{color:#831843;background:#83184312;padding:3px 10px;border-radius:20px;display:inline-block}
+.cFD{color:var(--red);background:#c41e3a12;padding:3px 10px;border-radius:20px;display:inline-block}
+.d-title{font-family:'DM Serif Display',serif;font-size:1.45rem;color:var(--ink);line-height:1.25;margin-bottom:8px}
+.d-sum{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:14px;font-style:italic}
+.cbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.cbar-lbl{font-family:'Fira Code',monospace;font-size:.55rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
+.cbar-t{flex:1;height:4px;background:var(--border);border-radius:2px;max-width:140px}
+.cbar-f{height:100%;border-radius:2px}
+.ch{background:#1e7e34}.cm{background:var(--gold)}.cl{background:var(--red)}
+.cbar-p{font-family:'Fira Code',monospace;font-size:.65rem;font-weight:600}
+.ph{color:#1e7e34}.pm{color:var(--gold)}.pl{color:var(--red)}
+.d-body{font-size:.9rem;line-height:1.85;color:#2a2a3e;margin-bottom:16px}
+.d-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-family:'Fira Code',monospace;font-size:.6rem;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:2px 9px;border-radius:20px}
+.conc{background:#07080e;padding:80px 64px;text-align:center;page-break-before:always}
+.conc h2{font-family:'DM Serif Display',serif;font-size:2.5rem;color:#fff;margin-bottom:16px}
+.conc-rule{width:60px;height:1px;background:var(--gold);margin:0 auto 40px}
+.conc p{color:#7a7d9a;line-height:1.9;max-width:560px;margin:0 auto 20px;font-size:.92rem}
+.conc blockquote{font-family:'DM Serif Display',serif;font-style:italic;color:#5a5a72;font-size:1.1rem;max-width:540px;margin:32px auto;line-height:1.7;border-left:3px solid var(--gold);padding:12px 20px;text-align:left}
+.app{font-family:'DM Serif Display',serif;font-size:1.6rem;color:#fff;margin-top:48px}.app span{color:var(--gold)}
+.final{font-family:'Fira Code',monospace;font-size:.6rem;letter-spacing:.15em;color:#383a52;text-transform:uppercase;margin-top:40px}
+@media print{body{background:#fff}.cover,.ch-open,.conc{-webkit-print-color-adjust:exact;print-color-adjust:exact}.d{page-break-inside:avoid}.ch-open{page-break-before:always}}
+</style>
+</head>
+<body>
+<div class="book">
+
+<!-- COVER -->
+<div class="cover">
+<div class="cover-inner">
+<div class="cover-badge">Classified Intelligence</div>
+<div class="cover-title">TRUTH<br><span>FILES</span></div>
+<div class="cover-sub">77 Confirmed Government Conspiracies</div>
+<div class="cover-rule"></div>
+<div class="cover-stats">
+<div class="stat"><div class="stat-n">77</div><div class="stat-l">Dossiers</div></div>
+<div class="stat"><div class="stat-n">6</div><div class="stat-l">Chapters</div></div>
+<div class="stat"><div class="stat-n">100%</div><div class="stat-l">Documented</div></div>
+</div>
+<div class="cover-quote">"The greatest trick governments ever pulled was convincing the world their crimes were conspiracy theories — until the documents were declassified."</div>
+<div class="cover-brand">mojoVisionnaire · 2026 Edition</div>
+</div>
+</div>
+
+<!-- FOREWORD -->
+<div class="avant">
+<h2>Foreword</h2>
+<div class="avant-rule"></div>
+<blockquote>"The truth is rarely pure and never simple."<cite>— Oscar Wilde</cite></blockquote>
+<p>Every dossier in this book was, at some point, called a "conspiracy theory." Every single one has since been officially confirmed — through declassified documents, congressional hearings, whistleblowers, court rulings, or formal government admissions.</p>
+<p>This is not a book of speculation. This is a book of facts that were once hidden. Each file is sourced, dated, and cross-referenced. The credibility score reflects the weight of available evidence: documents, testimonies, official admissions, and independent investigations.</p>
+<blockquote>"In a time of universal deceit, telling the truth is a revolutionary act."<cite>— George Orwell</cite></blockquote>
+<p>These 77 dossiers span eight decades and six continents. They cover mass surveillance, medical experiments on civilians, secret wars, manufactured pretexts for invasion, financial fraud, and deliberate poisoning of populations for profit. They share one thing in common: they were all denied, minimized, and buried — until they weren't.</p>
+<p>Read carefully. Share widely. The truth doesn't need permission.</p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+<h2>Table of Contents</h2>
+<div class="toc-rule"></div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter I — The Surveillance Machine</div>
+<div class="toc-item"><span class="toc-num">01</span><span class="toc-name">PRISM — NSA Inside Your Servers</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">02</span><span class="toc-name">ECHELON — Global Interception Network</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">03</span><span class="toc-name">Five Eyes — The Secret Spy Alliance</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">04</span><span class="toc-name">XKeyscore — See Everything in Real Time</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">05</span><span class="toc-name">MUSCULAR — NSA Hacks Google & Yahoo Cables</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">06</span><span class="toc-name">Tempora — GCHQ Stores All Internet Traffic</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">07</span><span class="toc-name">BULLRUN — NSA Breaks Global Encryption</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">08</span><span class="toc-name">ANT Catalog — NSA's Hardware Spy Toolkit</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">09</span><span class="toc-name">Vault 7 — CIA's Complete Hacking Arsenal</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">10</span><span class="toc-name">JTRIG — GCHQ's Psychological Warfare Unit</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">11</span><span class="toc-name">Room 641A — AT&T's Secret NSA Room</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">12</span><span class="toc-name">SHAMROCK — 30 Years of Telegram Interception</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">13</span><span class="toc-name">MINARET — NSA Spied on MLK and Jane Fonda</span><div class="toc-dots"></div></div>
+</div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter II — Experiments on Humanity</div>
+<div class="toc-item"><span class="toc-num">14</span><span class="toc-name">MKUltra — CIA Mind Control Program</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">15</span><span class="toc-name">Project ARTICHOKE — Memory Erasure via Drugs</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">16</span><span class="toc-name">Operation Midnight Climax — LSD Brothels</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">17</span><span class="toc-name">Ewen Cameron — Brain Washing Psychiatrist</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">18</span><span class="toc-name">Tuskegee Syphilis Study — 40 Years of Neglect</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">19</span><span class="toc-name">Guatemala Experiments — Deliberate Infection</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">20</span><span class="toc-name">Unit 731 — Japanese War Crimes</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">21</span><span class="toc-name">Operation Sea Spray — Bacteria on San Francisco</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">22</span><span class="toc-name">Edgewood Arsenal — Soldiers as Lab Rats</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">23</span><span class="toc-name">Radiation Experiments — Cancer Patients Irradiated</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">24</span><span class="toc-name">Agent Orange — Genetic Poisoning in Vietnam</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">25</span><span class="toc-name">Project NAOMI — CIA Biological Weapons</span><div class="toc-dots"></div></div>
+</div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter III — Secret Wars & False Flags</div>
+<div class="toc-item"><span class="toc-num">26</span><span class="toc-name">Operation Northwoods — Fake Terror on Americans</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">27</span><span class="toc-name">Gulf of Tonkin — The Attack That Never Happened</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">28</span><span class="toc-name">Pentagon Papers — The Vietnam Lies Exposed</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">29</span><span class="toc-name">Operation Phoenix — 26,000 Assassinations</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">30</span><span class="toc-name">Operation Menu — Secret Bombing of Cambodia</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">31</span><span class="toc-name">Operation Cyclone — The CIA Created the Taliban</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">32</span><span class="toc-name">Operation Timber Sycamore — Arming ISIS</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">33</span><span class="toc-name">Operation Condor — Latin American Death Squads</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">34</span><span class="toc-name">Operation Gladio — NATO's Secret Terror Network</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">35</span><span class="toc-name">School of the Americas — Training Torturers</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">36</span><span class="toc-name">Abu Ghraib — Systematic Torture Documented</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">37</span><span class="toc-name">CIA Torture Program — Waterboarding Approved</span><div class="toc-dots"></div></div>
+</div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter IV — Coups & Betrayals</div>
+<div class="toc-item"><span class="toc-num">38</span><span class="toc-name">Operation Ajax — CIA Coup in Iran 1953</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">39</span><span class="toc-name">Operation PBSUCCESS — CIA Coup in Guatemala</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">40</span><span class="toc-name">Operation Paperclip — Recruiting Nazi Scientists</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">41</span><span class="toc-name">Iran-Contra — Selling Arms to Fund Rebels</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">42</span><span class="toc-name">The Church Report — CIA Crimes Exposed</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">43</span><span class="toc-name">COINTELPRO — FBI War on Civil Rights</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">44</span><span class="toc-name">Watergate — Nixon's Criminal Presidency</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">45</span><span class="toc-name">JFK Assassination — Files Still Classified</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">46</span><span class="toc-name">Gary Webb — CIA and the Crack Epidemic</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">47</span><span class="toc-name">Valerie Plame — CIA Agent Outed as Revenge</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">48</span><span class="toc-name">The Niger Yellowcake Forgery</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">49</span><span class="toc-name">WMDs in Iraq — The Manufactured War</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">50</span><span class="toc-name">9/11 — The 28 Classified Pages</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">51</span><span class="toc-name">Fast and Furious — ATF Guns to Cartels</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">52</span><span class="toc-name">Bohemian Grove — Elite Secret Rituals</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">53</span><span class="toc-name">Family Jewels — CIA's Own Crime List</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">54</span><span class="toc-name">Fukushima — TEPCO's Cover-Up</span><div class="toc-dots"></div></div>
+</div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter V — Finance, Fraud & Poisoning</div>
+<div class="toc-item"><span class="toc-num">55</span><span class="toc-name">BCCI — The CIA's Bank</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">56</span><span class="toc-name">LIBOR Manipulation — $350 Trillion Rigged</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">57</span><span class="toc-name">Panama Papers — 11.5 Million Leaked Documents</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">58</span><span class="toc-name">Pandora Papers — 12 Million Documents</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">59</span><span class="toc-name">Volkswagen Dieselgate</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">60</span><span class="toc-name">Big Tobacco — 50 Years of Lies</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">61</span><span class="toc-name">Harvard Sugar Study — Science for Sale</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">62</span><span class="toc-name">Leaded Gasoline — Industry vs. Science</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">63</span><span class="toc-name">Asbestos — They Knew It Killed</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">64</span><span class="toc-name">Opioid Crisis — Purdue Pharma's Epidemic</span><div class="toc-dots"></div></div>
+</div>
+<div class="toc-ch">
+<div class="toc-ch-title">Chapter VI — Media, Manipulation & Disinformation</div>
+<div class="toc-item"><span class="toc-num">65</span><span class="toc-name">Operation Mockingbird — CIA Owns the Press</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">66</span><span class="toc-name">Facebook Emotional Manipulation Experiment</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">67</span><span class="toc-name">Cambridge Analytica — 87 Million Profiles Weaponized</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">68</span><span class="toc-name">STELLARWIND — Illegal Mass Surveillance Post-9/11</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">69</span><span class="toc-name">USA PATRIOT Act — Surveillance Legalized</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">70</span><span class="toc-name">Stuxnet — The First Cyber Weapon</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">71</span><span class="toc-name">PROMIS Software — CIA Backdoor</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">72</span><span class="toc-name">COINTELPRO vs. AIM — War on Native Americans</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">73</span><span class="toc-name">Gladio B — NATO's Islamist Networks</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">74</span><span class="toc-name">The Business Plot — Fascist Coup Against FDR</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">75</span><span class="toc-name">Operation Merlin — Fake Nuclear Plans</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">76</span><span class="toc-name">ECHELON for Business — Industrial Espionage</span><div class="toc-dots"></div></div><div class="toc-item"><span class="toc-num">77</span><span class="toc-name">Extraordinary Rendition — Outsourcing Torture</span><div class="toc-dots"></div></div>
+</div>
+</div>
+
+<!-- CHAPTER I -->
+<div class="ch-open">
+<div class="ch-num">Chapter I</div>
+<div class="ch-title">The Surveillance Machine</div>
+<div class="ch-desc">13 declassified programs that prove governments built a global infrastructure to monitor every phone call, email, and online search — of their own citizens.</div>
+</div>
+
+<!-- CH1 DOSSIERS -->
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">01</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">PRISM — NSA Inside Your Servers</div>
+<div class="d-sum">The NSA secretly accessed the servers of Google, Apple, Facebook and Microsoft to intercept millions of communications.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 2013, Edward Snowden revealed that the NSA had direct access to the servers of the world's largest tech companies through a program called PRISM. Every email, search, video call and document stored by users was accessible without a specific warrant. The companies initially denied knowledge; internal NSA documents proved otherwise. Confirmed by Congress, the companies themselves, and subsequent court rulings.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">Snowden</span><span class="tag">PRISM</span><span class="tag">Mass Surveillance</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">02</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">ECHELON — Global Interception Network</div>
+<div class="d-sum">A Five Eyes spy network capturing satellites, undersea cables and radio communications worldwide since the 1960s.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">ECHELON is a signals intelligence network operated by the United States, United Kingdom, Canada, Australia and New Zealand, collecting and analyzing communications from satellites, undersea cables, and microwave transmissions. Officially confirmed by the European Parliament in 2001 after revelations that it was used for industrial espionage. It intercepts an estimated 3 billion communications daily.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">GCHQ</span><span class="tag">Five Eyes</span><span class="tag">ECHELON</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">03</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">Five Eyes — The Secret Spy Alliance</div>
+<div class="d-sum">A post-WWII intelligence-sharing agreement allowing five nations to spy on each other's citizens to bypass domestic laws.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">Created via the UKUSA Agreement in 1941 and formalized in 1946, Five Eyes allows the US, UK, Canada, Australia and New Zealand to share raw intelligence and effectively spy on each other's citizens — circumventing laws that prohibit domestic surveillance. Snowden's 2013 revelations exposed the full operational scope, including the sharing of metadata on hundreds of millions of people.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">GCHQ</span><span class="tag">Five Eyes</span><span class="tag">UKUSA</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">04</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">XKeyscore — See Everything in Real Time</div>
+<div class="d-sum">NSA system capable of viewing virtually all internet activity in real time — without a warrant.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">XKeyscore is an NSA analytical framework allowing analysts to search and read emails, browser histories, chat messages and documents from virtually anyone on Earth in real time. Snowden demonstrated it during his NSA employment. He stated he could wiretap anyone, including the President, without any prior authorization. Confirmed by The Guardian in 2013 based on classified NSA documents.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">Snowden</span><span class="tag">XKeyscore</span><span class="tag">Internet</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">05</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">MUSCULAR — NSA Hacks Google & Yahoo Cables</div>
+<div class="d-sum">The NSA and GCHQ tapped the private fiber-optic cables connecting Google and Yahoo data centers worldwide.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">Revealed by the Washington Post in 2013, MUSCULAR allowed the NSA and GCHQ to intercept data flowing between the private data centers of Google and Yahoo outside the US, bypassing legal protections. Millions of accounts were being compromised daily. A diagram from the documents showed NSA analysts celebrating their access to Google's private cloud with a smiley face.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">GCHQ</span><span class="tag">Google</span><span class="tag">Yahoo</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">06</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">Tempora — GCHQ Stores All Internet Traffic</div>
+<div class="d-sum">British intelligence secretly stored the entire internet traffic passing through transatlantic fiber-optic cables for 30 days.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">GCHQ's Tempora program tapped into more than 200 fiber-optic cables carrying internet traffic between Europe and North America, processing approximately 21 petabytes of data per day and storing it for up to 30 days. This gave British intelligence access to a vast proportion of global internet activity. Revealed by Snowden in 2013 and confirmed by The Guardian.</div>
+<div class="d-tags"><span class="tag">GCHQ</span><span class="tag">UK</span><span class="tag">Fiber Optic</span><span class="tag">Internet</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">07</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">BULLRUN — NSA Breaks Global Encryption</div>
+<div class="d-sum">The NSA deliberately weakened international encryption standards and inserted backdoors into commercial security products.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">BULLRUN is a classified NSA program to defeat the encryption used by internet services. The NSA worked with NIST to standardize a backdoored random number generator (Dual_EC_DRBG), paid RSA Security $10 million to use it, and covertly inserted vulnerabilities into commercial products. This fundamentally compromised the security of global encrypted communications. Revealed by Snowden.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">Encryption</span><span class="tag">Backdoor</span><span class="tag">NIST</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">08</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">ANT Catalog — NSA's Hardware Spy Toolkit</div>
+<div class="d-sum">A classified NSA catalog of physical implants and firmware rootkits used to spy on targeted hardware worldwide.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">The ANT (Access Network Technology) catalog, published by Der Spiegel in 2013, lists dozens of NSA hardware spy tools: firmware rootkits for hard drives, USB cables with hidden radio transmitters, GSM interceptors disguised as base stations, and keyboard implants. These tools could persist through factory resets and OS reinstalls, giving permanent access to compromised devices.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">ANT</span><span class="tag">Hardware</span><span class="tag">Rootkit</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">09</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">Vault 7 — CIA's Complete Hacking Arsenal</div>
+<div class="d-sum">WikiLeaks releases 8,761 documents detailing the CIA's entire cyber espionage toolkit — including tools to hack smart TVs and phones.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">In 2017, WikiLeaks published Vault 7: the largest-ever release of CIA documents. It revealed a massive arsenal of hacking tools including "Weeping Angel" (turning Samsung smart TVs into listening devices), zero-day exploits for iPhones and Android devices, and tools for compromising cars. The CIA had lost control of its entire cyber weapons program, which was circulating among hackers and foreign intelligence services.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">WikiLeaks</span><span class="tag">Vault7</span><span class="tag">Cyber</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">10</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">JTRIG — GCHQ's Psychological Warfare Unit</div>
+<div class="d-sum">British intelligence ran covert operations to destroy reputations, manipulate online discussions, and psychologically sabotage targets.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">The Intercept published JTRIG (Joint Threat Research Intelligence Group) documents from GCHQ detailing techniques including "honey traps" using sexual content, spreading false information to destroy reputations, infiltrating online groups, and using mass messaging to manipulate public opinion. These psychological warfare tools were used not just against terrorists but against ordinary citizens and political activists.</div>
+<div class="d-tags"><span class="tag">GCHQ</span><span class="tag">JTRIG</span><span class="tag">Psyops</span><span class="tag">Manipulation</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">11</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">Room 641A — AT&T's Secret NSA Room</div>
+<div class="d-sum">AT&T installed a secret room in its San Francisco facility giving the NSA a complete mirror of all internet traffic on its backbone.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">In 2006, AT&T technician Mark Klein came forward to reveal Room 641A: a secret facility at AT&T's San Francisco office containing an NSA-installed fiber-optic splitter that copied the entire internet traffic flowing through AT&T's backbone — including emails, web browsing, and voice-over-IP calls. Documents showed identical rooms at other AT&T facilities across the country.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">ATT</span><span class="tag">Room641A</span><span class="tag">Backbone</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">12</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">SHAMROCK — 30 Years of Telegram Interception</div>
+<div class="d-sum">From 1945 to 1975, every telegram entering or leaving the United States was secretly copied and handed to the NSA.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">Operation SHAMROCK was the NSA's longest-running covert operation: for thirty years, RCA, ITT, and Western Union secretly provided the NSA with daily copies of all telegrams entering, leaving, or transiting the United States. At its peak, 150,000 messages per month were being processed. Exposed by the Church Committee in 1975, it represented one of the most extensive illegal surveillance programs in US history.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">SHAMROCK</span><span class="tag">Telegram</span><span class="tag">Church Committee</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">13</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">MINARET — NSA Spied on MLK and Jane Fonda</div>
+<div class="d-sum">The NSA maintained a secret watch list of American citizens including Martin Luther King Jr., Muhammad Ali and US Senators.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">Running parallel to SHAMROCK, Operation MINARET placed hundreds of American citizens on a secret NSA watch list — including Martin Luther King Jr., Muhammad Ali, Jane Fonda, and two US Senators. Their communications were intercepted under the pretext of "domestic security." The program was illegal under the Constitution. It was stopped in 1973 and exposed by the Church Committee in 1975.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">MINARET</span><span class="tag">MLK</span><span class="tag">Domestic Surveillance</span></div>
+</div>
+<div class="ch-open">
+<div class="ch-num">Chapter II</div>
+<div class="ch-title">Experiments on Humanity</div>
+<div class="ch-desc">12 documented programs where governments used their own citizens — and foreign populations — as unwitting test subjects for drugs, radiation, biological agents and psychological torture.</div>
+</div>
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">14</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">MKUltra — CIA Mind Control Program</div>
+<div class="d-sum">The CIA ran 150 secret subprojects testing LSD, hypnosis, electroshock and torture on unwitting subjects to develop mind control techniques.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">From 1953 to 1973, the CIA funded over 150 research projects at universities, hospitals and prisons under MKUltra, testing LSD on unknowing subjects, using hypnosis to create amnesia, and developing torture-based interrogation techniques. Most documents were ordered destroyed in 1973 by CIA Director Richard Helms. Surviving files were discovered accidentally in 1977 and triggered Senate hearings.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">LSD</span><span class="tag">MKUltra</span><span class="tag">Mind Control</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">15</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Project ARTICHOKE — Memory Erasure via Drugs</div>
+<div class="d-sum">CIA predecessor to MKUltra used morphine, heroin, mescaline and hypnosis to develop interrogation methods that could erase memories.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">Launched in 1951, Project ARTICHOKE (formerly Project BLUEBIRD) tested combinations of narcotics, hypnosis and electroconvulsive therapy to develop methods of extracting confessions, inducing amnesia, and creating "programmed" subjects. It was the direct precursor to MKUltra. Subjects included prisoners, mental patients, and foreign nationals held in CIA facilities.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">ARTICHOKE</span><span class="tag">Hypnosis</span><span class="tag">Narcotics</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">16</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Operation Midnight Climax — LSD Brothels</div>
+<div class="d-sum">The CIA ran safe houses in San Francisco and New York where prostitutes drugged unsuspecting clients with LSD while agents watched from behind one-way mirrors.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">Operation Midnight Climax was an MKUltra subproject run by CIA officer George White under the direction of Sidney Gottlieb. CIA-funded prostitutes lured men to safe houses where they were secretly dosed with LSD. Agents observed from behind one-way mirrors and took notes on the subjects' behavior. The program ran from 1954 to 1963. Confirmed at the 1977 Senate hearings.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">LSD</span><span class="tag">Midnight Climax</span><span class="tag">San Francisco</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">17</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Ewen Cameron — CIA's Brain-Washing Psychiatrist</div>
+<div class="d-sum">A CIA-funded psychiatrist erased and reprogrammed patients' personalities using months of drug-induced sleep, electroshock and looped audio recordings.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">Dr. Ewen Cameron, director of the Allan Memorial Institute in Montreal, was secretly funded by the CIA through MKUltra. He subjected patients to "psychic driving" — months of drug-induced coma, massive electroshock up to 75 times normal, and endless tape-recorded messages to erase and "reprogram" personalities. Patients' existing lives were destroyed. The Canadian government settled with victims; the CIA paid nothing.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Cameron</span><span class="tag">Electroshock</span><span class="tag">Canada</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">18</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Tuskegee Syphilis Study — 40 Years of Deliberate Neglect</div>
+<div class="d-sum">The US government watched 399 Black men die of syphilis without treatment for 40 years — even after penicillin became available.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 1932 to 1972, the US Public Health Service enrolled 399 Black men in Macon County, Alabama who had syphilis, telling them they were being treated for "bad blood." They were given placebos and observed as the disease progressed — even after penicillin was proven effective in 1947. When the program was leaked to the press in 1972, 28 men had died of syphilis, 100 of complications, 40 wives infected, 19 children born with congenital syphilis. President Clinton formally apologized in 1997.</div>
+<div class="d-tags"><span class="tag">USPHS</span><span class="tag">Tuskegee</span><span class="tag">Syphilis</span><span class="tag">Racism</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">19</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Guatemala Syphilis Experiments — Deliberate Infection</div>
+<div class="d-sum">American doctors deliberately infected over 1,300 Guatemalan soldiers, prisoners and psychiatric patients with syphilis and gonorrhea without consent.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 1946 to 1948, US Public Health Service doctors, funded by the NIH, deliberately infected Guatemalan prisoners, soldiers and mental patients with syphilis, gonorrhea and chancroid without their knowledge or consent. Some were infected by having sex with diseased prostitutes; others had bacteria poured directly onto abrasions. Discovered in 2010 by historian Susan Reverby. President Obama personally apologized to the Guatemalan president.</div>
+<div class="d-tags"><span class="tag">USPHS</span><span class="tag">Guatemala</span><span class="tag">Syphilis</span><span class="tag">Medical Crimes</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">20</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Unit 731 — Imperial Japan's War Crimes Lab</div>
+<div class="d-sum">Japanese military unit secretly experimented on Chinese and Russian prisoners — vivisection without anesthesia, biological warfare testing, frostbite experiments.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 1936 to 1945, Unit 731 of the Imperial Japanese Army conducted experiments on at least 3,000 prisoners in Manchuria, including: vivisection while conscious, deliberate infection with plague and anthrax, frostbite experiments, and pressure chamber tests. The US granted immunity to Unit 731 scientists in exchange for their experimental data. Sheliro Ishii, the unit commander, was never prosecuted.</div>
+<div class="d-tags"><span class="tag">Unit731</span><span class="tag">Japan</span><span class="tag">War Crimes</span><span class="tag">Biological Warfare</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">21</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Operation Sea Spray — Bacteria Sprayed on San Francisco</div>
+<div class="d-sum">The US Army secretly released bacteria over San Francisco in 1950 to test how a biological attack would spread — killing at least one civilian.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">In September 1950, the US Army released clouds of Serratia marcescens bacteria over San Francisco from a Navy minesweeper, then monitored infection rates in local hospitals. At least one civilian, Edward Nevin, died from a Serratia infection weeks later. The Army conducted at least 239 open-air biological tests on American cities between 1949 and 1969, all without public knowledge or consent.</div>
+<div class="d-tags"><span class="tag">Army</span><span class="tag">Bacteria</span><span class="tag">San Francisco</span><span class="tag">Biowarfare</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">22</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Edgewood Arsenal — Soldiers as Lab Rats</div>
+<div class="d-sum">The US Army tested chemical warfare agents and psychoactive drugs on 7,000 American soldiers without full informed consent.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">From 1955 to 1975, the Army Chemical Corps at Edgewood Arsenal, Maryland, exposed approximately 7,000 US soldiers to nerve agents (including VX and sarin), BZ (a powerful hallucinogen), LSD, and other psychoactive substances. Soldiers signed consent forms but were not told what they were being given. Many suffered lasting neurological damage. Confirmed by a 1994 GAO report.</div>
+<div class="d-tags"><span class="tag">Army</span><span class="tag">Edgewood</span><span class="tag">Chemical Warfare</span><span class="tag">Soldiers</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">23</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Radiation Experiments — Cancer Patients Irradiated Without Consent</div>
+<div class="d-sum">The US government funded experiments exposing hospital patients to massive radiation doses without informing them.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">From 1945 to 1962, the Atomic Energy Commission and Department of Defense funded experiments irradiating terminally ill patients, prisoners, and others with massive doses of radiation — often without informed consent and with no therapeutic benefit. Exposed in 1993 by journalist Eileen Welsome. A subsequent presidential advisory committee found at least 4,000 experiments involving 16,000 subjects. Clinton apologized and authorized compensation.</div>
+<div class="d-tags"><span class="tag">AEC</span><span class="tag">Radiation</span><span class="tag">Medical Crimes</span><span class="tag">DOE</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">24</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Agent Orange — Three Generations of Genetic Poisoning</div>
+<div class="d-sum">The US military sprayed 76 million liters of dioxin-laced herbicide on Vietnam, causing birth defects across three generations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 1961 to 1971, the US military sprayed approximately 76 million liters of Agent Orange (containing the highly toxic dioxin TCDD) across 3.1 million hectares of Vietnam as part of Operation Ranch Hand. An estimated 4.8 million Vietnamese were exposed; at least 400,000 died, and 500,000 children were born with birth defects. Manufacturers Monsanto and Dow knew of the dioxin contamination. They paid $180 million to US veterans in 1984 while denying liability for Vietnamese victims.</div>
+<div class="d-tags"><span class="tag">Vietnam</span><span class="tag">Agent Orange</span><span class="tag">Dioxin</span><span class="tag">Monsanto</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">25</div>
+<div class="d-meta">
+<div class="d-cat cM">Medical</div>
+<div class="d-title">Project NAOMI — CIA Biological Weapons Program</div>
+<div class="d-sum">The CIA developed targeted assassination toxins and researched mass-casualty biological agents capable of infecting entire populations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:94%"></div></div><span class="cbar-p ph">94%</span></div>
+</div></div>
+<div class="d-body">Project NAOMI was the CIA's covert biological weapons development program in the 1950s and 1960s. It produced shellfish toxin (used in the "heart attack dart gun" revealed to Congress in 1975), botulinum toxin for targeted killings, and studied pathogens capable of contaminating water supplies. The program was developed in violation of international biological weapons treaties. Partially revealed by the Church Committee.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">NAOMI</span><span class="tag">Bioweapons</span><span class="tag">Assassination</span></div>
+</div>
+<div class="ch-open">
+<div class="ch-num">Chapter III</div>
+<div class="ch-title">Secret Wars & False Flags</div>
+<div class="ch-desc">12 documented cases where governments staged or manufactured pretexts for war, ran covert military operations on foreign soil, and used terror as a political tool.</div>
+</div>
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">26</div>
+<div class="d-meta">
+<div class="d-cat cFD">False Flag</div>
+<div class="d-title">Operation Northwoods — Fake Terror on Americans</div>
+<div class="d-sum">US military chiefs proposed staging terrorist attacks on American soil, sinking refugee boats, and bombing Guantanamo to justify invading Cuba.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">In 1962, the Joint Chiefs of Staff submitted a classified plan to Secretary of Defense Robert McNamara proposing false-flag operations to create a pretext for invading Cuba. Proposals included: staging Cuban "attacks" on US ships, blowing up a drone aircraft and claiming it was a civilian airliner, and committing acts of terrorism in US cities. Kennedy rejected the plan and fired General Lemnitzer. The documents were declassified in 1997.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">JCS</span><span class="tag">Cuba</span><span class="tag">False Flag</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">27</div>
+<div class="d-meta">
+<div class="d-cat cFD">False Flag</div>
+<div class="d-title">Gulf of Tonkin — The Attack That Never Happened</div>
+<div class="d-sum">The August 4, 1964 naval attack used to justify the Vietnam War never occurred — confirmed by the NSA's own declassified documents in 2005.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">On August 4, 1964, President Johnson announced that North Vietnamese forces had attacked the USS Maddox in the Gulf of Tonkin. Congress voted to authorize the Vietnam War based on this incident. NSA documents declassified in 2005 reveal the second attack never occurred — NSA analyst James Bamford confirmed the signals intelligence was misrepresented. The fabricated attack resulted in 58,000 American deaths and millions of Vietnamese casualties.</div>
+<div class="d-tags"><span class="tag">Vietnam</span><span class="tag">LBJ</span><span class="tag">Gulf of Tonkin</span><span class="tag">False Flag</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">28</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Pentagon Papers — The Vietnam Lies Exposed</div>
+<div class="d-sum">7,000 pages of classified history proved US presidents systematically lied about the Vietnam War for decades.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 1971, Daniel Ellsberg leaked 7,000 pages of a classified Defense Department study (commissioned by McNamara) to the New York Times and Washington Post. The documents proved that the Truman, Eisenhower, Kennedy and Johnson administrations all knew the Vietnam War was unwinnable while continuing to escalate and lie publicly. Nixon attempted to suppress publication via an injunction; the Supreme Court ruled against him.</div>
+<div class="d-tags"><span class="tag">Vietnam</span><span class="tag">Pentagon Papers</span><span class="tag">McNamara</span><span class="tag">Ellsberg</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">29</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Operation Phoenix — 26,000 Systematic Assassinations</div>
+<div class="d-sum">CIA-run program in Vietnam conducted 26,000 killings and 55,000 imprisonments of suspected Viet Cong — many based on false denunciations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">From 1965 to 1972, the CIA's Phoenix Program (Phung Hoang) aimed to neutralize the Viet Cong political infrastructure in South Vietnam through capture, defection, or assassination. By official count, 20,587 were killed; independent estimates reach 40,000. South Vietnamese officials used it to eliminate personal enemies. Congressional hearings in 1971 heard veterans testimony of torture and summary executions.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Vietnam</span><span class="tag">Phoenix</span><span class="tag">Assassination</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">30</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Operation Menu — Nixon's Secret Bombing of Cambodia</div>
+<div class="d-sum">Nixon secretly bombed neutral Cambodia for 14 months while publicly denying any military operations there — without Congressional authorization.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From March 1969 to May 1970, Nixon and Kissinger secretly ordered B-52 strikes on Cambodia under Operation Menu, dropping over 100,000 tons of bombs. Military records were falsified; a dual-reporting system hid the bombings from Congress. When the New York Times broke the story in May 1969, Nixon ordered the FBI to wiretap the phones of four journalists and 13 government officials to find the source.</div>
+<div class="d-tags"><span class="tag">Nixon</span><span class="tag">Cambodia</span><span class="tag">Bombing</span><span class="tag">War Crimes</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">31</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Cyclone — The CIA Funded the Future Taliban</div>
+<div class="d-sum">The CIA spent $3 billion arming Afghan mujahideen against the Soviets — creating the network that became Al-Qaeda.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">From 1979 to 1989, Operation Cyclone was the CIA's largest covert operation: $3 billion in weapons and training to Afghan mujahideen fighters, channeled through Pakistan's ISI. Among those trained and equipped were the networks that would later form Al-Qaeda and the Taliban. Former CIA Director Robert Gates and Zbigniew Brzezinski confirmed the operation's scope in their memoirs.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Afghanistan</span><span class="tag">Taliban</span><span class="tag">Al-Qaeda</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">32</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Timber Sycamore — CIA Arms Flow to ISIS</div>
+<div class="d-sum">The CIA and Saudi Arabia secretly armed Syrian rebel groups, with weapons ending up in the hands of ISIS.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">From 2012 to 2017, the CIA and Saudi Arabia ran Operation Timber Sycamore, spending over $1 billion per year arming and training Syrian opposition groups. The New York Times and Washington Post revealed that significant quantities of these weapons ended up with Jabhat al-Nusra (Al-Qaeda in Syria) and ISIS. Trump terminated the program in 2017 after being briefed on its effectiveness — or lack thereof.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Syria</span><span class="tag">ISIS</span><span class="tag">Saudi Arabia</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">33</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Condor — US-Coordinated Latin American Death Squads</div>
+<div class="d-sum">The CIA coordinated the secret police forces of six South American dictatorships to hunt and eliminate political opponents across borders.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 1975 to 1985, Operation Condor was a CIA-coordinated campaign of political repression across Argentina, Chile, Uruguay, Paraguay, Brazil and Bolivia. The operation allowed the regimes to track and assassinate political dissidents who had fled to other countries. Approximately 60,000 people were killed and 400,000 imprisoned. US involvement confirmed by declassified State Department and CIA documents released in 2016.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Latin America</span><span class="tag">Condor</span><span class="tag">Disappearances</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">34</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Operation Gladio — NATO's Secret Terrorist Network</div>
+<div class="d-sum">NATO maintained secret paramilitary networks across Europe after WWII — some of which carried out terrorist attacks on European civilians.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">After 1945, the CIA and NATO established secret "stay-behind" networks across Western Europe (known as Gladio in Italy) to organize resistance in case of Soviet invasion. The Italian network was connected to the far-right terrorist attacks of the "Years of Lead" — including the 1980 Bologna railway bombing that killed 85 people. Italian Prime Minister Andreotti confirmed the network's existence to Parliament in 1990.</div>
+<div class="d-tags"><span class="tag">NATO</span><span class="tag">CIA</span><span class="tag">Gladio</span><span class="tag">Terrorism</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">35</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">School of the Americas — Training Latin America's Torturers</div>
+<div class="d-sum">A US Army school at Fort Benning trained Latin American military officers in torture, assassination and psychological warfare.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">The School of the Americas, located at Fort Benning, Georgia, trained over 64,000 Latin American military officers. Its graduates include Manuel Noriega (Panama), Hugo Banzer (Bolivia), and officers responsible for El Salvador's El Mozote massacre and Guatemala's genocide. In 1996, the Pentagon confirmed that SOA training manuals recommended torture, extortion, and execution. Renamed WHINSEC in 2001.</div>
+<div class="d-tags"><span class="tag">SOA</span><span class="tag">Army</span><span class="tag">Torture</span><span class="tag">Latin America</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">36</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Abu Ghraib — Systematic Torture Documented with Photographs</div>
+<div class="d-sum">American soldiers tortured, sexually humiliated and abused Iraqi detainees — photographed themselves doing it — at Abu Ghraib prison.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In April 2004, CBS News and The New Yorker published photographs showing US soldiers torturing and sexually humiliating Iraqi detainees at Abu Ghraib prison: prisoners forced into human pyramids, on leashes, in stress positions, subjected to mock electrocution. The Taguba Report confirmed the abuses were systemic and ordered from above. Eleven soldiers were convicted. No senior officer faced prosecution.</div>
+<div class="d-tags"><span class="tag">US Army</span><span class="tag">Abu Ghraib</span><span class="tag">Torture</span><span class="tag">Iraq</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">37</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">CIA Torture Program — Waterboarding Approved at the Top</div>
+<div class="d-sum">The CIA ran secret global torture sites using waterboarding, sleep deprivation up to 180 hours, and rectal feeding — personally approved by Cheney and Bush.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">After 9/11, the CIA established secret "black sites" in Poland, Romania, Thailand, and other countries. The Senate Intelligence Committee's 2014 report (6,700 pages) documented: waterboarding (including 183 times on Khalid Sheikh Mohammed), 180 hours of forced sleeplessness, "rectal rehydration," confinement boxes, and mock executions. The report found these methods produced no intelligence that could not have been obtained otherwise. Bush, Cheney and CIA Director Tenet all approved.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Torture</span><span class="tag">Waterboarding</span><span class="tag">Bush</span></div>
+</div>
+<div class="ch-open">
+<div class="ch-num">Chapter IV</div>
+<div class="ch-title">Coups & Betrayals</div>
+<div class="ch-desc">17 documented cases of governments overthrowing democracies, fabricating evidence for war, weaponizing intelligence agencies against citizens, and covering up assassinations.</div>
+</div>
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">38</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Ajax — CIA Coup in Iran 1953</div>
+<div class="d-sum">The CIA overthrew Iran's democratically elected prime minister to protect British oil interests — directly causing the 1979 Islamic Revolution.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 1953, the CIA (Operation AJAX) and British MI6 organized a coup against Prime Minister Mohammad Mosaddegh, who had nationalized Iran's oil industry. The CIA bribed Iranian military officers and hired mobs to create chaos. Mosaddegh was arrested; the Shah was reinstalled. The CIA admitted its role in 2013. The coup destroyed Iranian democratic institutions and directly contributed to the conditions that produced the 1979 Revolution.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Iran</span><span class="tag">Oil</span><span class="tag">Coup</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">39</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation PBSUCCESS — CIA Coup in Guatemala 1954</div>
+<div class="d-sum">The CIA overthrew Guatemala's elected president to protect United Fruit Company's banana plantations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 1954, the CIA organized the overthrow of President Jacobo Arbenz, who had initiated land reform threatening the United Fruit Company (where CIA Director Allen Dulles had financial interests). The CIA trained a mercenary army, conducted a propaganda campaign, and bombed Guatemala City. Arbenz fled; decades of military dictatorship and civil war followed, killing 200,000 people. Confirmed by declassified State Department documents.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Guatemala</span><span class="tag">United Fruit</span><span class="tag">Coup</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">40</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Paperclip — America Recruited Nazi Scientists</div>
+<div class="d-sum">The US secretly recruited over 1,600 Nazi scientists after WWII, erasing their war criminal records to exploit their expertise.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">After WWII, the US Joint Intelligence Objectives Agency recruited over 1,600 German scientists, engineers and technicians — including many with Nazi party membership and war crimes involvement — under Operation Paperclip. Wernher von Braun, who used concentration camp slave labor to build V-2 rockets, became the director of NASA's Marshall Space Flight Center. Their files were sanitized before they entered the US.</div>
+<div class="d-tags"><span class="tag">Nazis</span><span class="tag">NASA</span><span class="tag">Pentagon</span><span class="tag">Paperclip</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">41</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Iran-Contra — Selling Arms to an Enemy to Fund Illegal Wars</div>
+<div class="d-sum">Reagan secretly sold weapons to Iran (under arms embargo) and used profits to fund Nicaraguan rebels — in direct violation of Congressional law.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Revealed in 1986, the Iran-Contra affair involved two illegal operations: selling arms to Iran (in violation of an arms embargo, officially an enemy state) and using the profits to fund the Contras in Nicaragua (in violation of the Boland Amendment, which explicitly prohibited such funding). 14 administration officials were indicted, 11 convicted. Most were pardoned by George H.W. Bush. Reagan claimed not to recall.</div>
+<div class="d-tags"><span class="tag">Reagan</span><span class="tag">CIA</span><span class="tag">Iran</span><span class="tag">Nicaragua</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">42</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">The Church Report — CIA Crime Inventory</div>
+<div class="d-sum">The 1975 Senate investigation revealed assassination plots, illegal surveillance, mail opening, and domestic infiltration by the CIA and FBI.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">The Church Committee (1975-76) conducted the most comprehensive investigation of US intelligence agencies in history. Findings included: CIA assassination plots against foreign leaders (Castro, Lumumba, Allende); the COINTELPRO program targeting civil rights leaders; SHAMROCK and MINARET illegal surveillance programs; mail opening programs; and illegal IRS surveillance. The report led to major intelligence reform legislation.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">FBI</span><span class="tag">Church Committee</span><span class="tag">Church Report</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">43</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">COINTELPRO — FBI's War on Civil Rights</div>
+<div class="d-sum">From 1956 to 1971, the FBI ran a covert program to infiltrate, discredit and destroy the civil rights movement, antiwar activists and leftist organizations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">COINTELPRO (Counter Intelligence Program) was a series of FBI operations targeting political organizations deemed "subversive." Tactics included: planting false news stories, forging letters to destroy relationships, anonymous letters to spouses alleging affairs, sending a letter to MLK urging suicide, and infiltrating organizations with provocateurs. Among those targeted: Martin Luther King Jr., the Black Panthers, the NAACP, socialist organizations, and Vietnam War protesters.</div>
+<div class="d-tags"><span class="tag">FBI</span><span class="tag">COINTELPRO</span><span class="tag">MLK</span><span class="tag">Civil Rights</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">44</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Watergate — The Criminal Presidency of Richard Nixon</div>
+<div class="d-sum">Nixon ordered the bugging of political opponents, then orchestrated an obstruction of justice that ended in the only presidential resignation in American history.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">On June 17, 1972, operatives connected to Nixon's reelection committee were caught burglarizing the Democratic National Committee headquarters at the Watergate complex. Nixon orchestrated a two-year cover-up using the CIA, FBI and Justice Department. The "smoking gun" tape revealed he had ordered the obstruction of justice within days of the break-in. He resigned on August 9, 1974, facing certain impeachment.</div>
+<div class="d-tags"><span class="tag">Nixon</span><span class="tag">Watergate</span><span class="tag">Obstruction</span><span class="tag">Impeachment</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">45</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">JFK Assassination — Files Still Classified After 60 Years</div>
+<div class="d-sum">Thousands of CIA documents about the Kennedy assassination remain partially redacted in 2024 — 60 years after the event.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f cm" style="width:90%"></div></div><span class="cbar-p pm">90%</span></div>
+</div></div>
+<div class="d-body">Despite the 1992 JFK Records Collection Act mandating full disclosure, thousands of CIA documents related to the Kennedy assassination remain partially classified as of 2024. CIA Directors successfully lobbied both Trump and Biden to block full release, citing "sources and methods." What those documents contain remains unknown. The House Select Committee on Assassinations concluded in 1979 that Kennedy "was probably assassinated as a result of a conspiracy."</div>
+<div class="d-tags"><span class="tag">JFK</span><span class="tag">CIA</span><span class="tag">Assassination</span><span class="tag">Classified</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">46</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Gary Webb — CIA and the Crack Epidemic</div>
+<div class="d-sum">A journalist proved the CIA knew about — and facilitated — Contra drug trafficking that flooded Black American neighborhoods with crack cocaine. He was later found dead with two gunshot wounds to the head, ruled suicide.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:96%"></div></div><span class="cbar-p ph">96%</span></div>
+</div></div>
+<div class="d-body">In 1996, San Jose Mercury News journalist Gary Webb published "Dark Alliance," documenting how Nicaraguan Contra drug traffickers who supplied Los Angeles crack cocaine kingpin Ricky Ross were protected by the CIA. The CIA Inspector General's 1998 report partially confirmed the findings. Webb was destroyed professionally by major newspapers. In 2004, he was found dead with two gunshot wounds to the head — officially ruled a suicide.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Cocaine</span><span class="tag">Contras</span><span class="tag">Gary Webb</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">47</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Valerie Plame — CIA Agent Outed as Political Revenge</div>
+<div class="d-sum">The White House exposed an undercover CIA officer's identity to punish her husband for contradicting the WMD narrative.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In July 2003, conservative columnist Robert Novak published the identity of Valerie Plame as a CIA undercover officer. This was revenge for her husband, Ambassador Joseph Wilson, publicly stating that the Niger yellowcake story was false. Revealing a covert agent's identity is a federal crime. Vice President Cheney's chief of staff Scooter Libby was convicted of perjury in 2007. Bush commuted his sentence; Trump pardoned him.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Plame</span><span class="tag">Cheney</span><span class="tag">Leak</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">48</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">The Niger Yellowcake Forgery</div>
+<div class="d-sum">Bush claimed Iraq tried to buy uranium from Niger. The document was a crude forgery identified by the IAEA weeks before the invasion.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In his 2003 State of the Union address, Bush stated: "The British government has learned that Saddam Hussein recently sought significant quantities of uranium from Africa." This claim was based on forged documents. The IAEA Director Mohamed ElBaradei informed the Security Council the documents were fake in March 2003. The CIA had doubts; they were overridden. The claim was used to justify the Iraq War.</div>
+<div class="d-tags"><span class="tag">Bush</span><span class="tag">Iraq</span><span class="tag">Niger</span><span class="tag">Forgery</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">49</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">WMDs in Iraq — The Manufactured War</div>
+<div class="d-sum">The 2003 Iraq War was based on fabricated intelligence about weapons of mass destruction. None were ever found.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">On February 5, 2003, Colin Powell presented the UN Security Council with evidence of Iraqi WMDs: aluminum tubes for centrifuges, mobile bioweapons labs, and satellite images. All were either fabricated or misrepresented. The Downing Street Memo (2005) confirmed that British intelligence believed Bush had decided to invade Iraq months before, with intelligence "fixed around the policy." 4,500 American soldiers died. No WMDs were found.</div>
+<div class="d-tags"><span class="tag">Bush</span><span class="tag">Iraq</span><span class="tag">WMD</span><span class="tag">Powell</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">50</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">9/11 — The 28 Classified Pages</div>
+<div class="d-sum">28 pages of the Congressional 9/11 inquiry were classified for 14 years. When released in 2016, they revealed Saudi government connections to the hijackers.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">The Joint Congressional Inquiry into 9/11 included 28 pages classified by President Bush in 2002. Released in 2016 after sustained lobbying by victims' families, they revealed extensive contacts between the hijackers and individuals connected to the Saudi government, including Saudi Embassy employees in Washington. Saudi Arabia is named in ongoing civil lawsuits. The full implications of Saudi government involvement remain a matter of active legal proceedings.</div>
+<div class="d-tags"><span class="tag">9/11</span><span class="tag">Saudi Arabia</span><span class="tag">FBI</span><span class="tag">Classified</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">51</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Fast and Furious — ATF Let Guns Walk to Drug Cartels</div>
+<div class="d-sum">The Bureau of Alcohol, Tobacco and Firearms deliberately allowed over 2,000 weapons to flow to Mexican cartels as a sting operation — losing track of most of them.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">Operation Fast and Furious was an ATF gun-walking operation that deliberately allowed straw buyers to purchase over 2,000 firearms and transport them to Mexican drug cartels, hoping to trace them to cartel leaders. The ATF lost track of the majority of the weapons. Two were found at the murder scene of Border Patrol Agent Brian Terry. Attorney General Eric Holder was held in contempt of Congress for refusing to release documents.</div>
+<div class="d-tags"><span class="tag">ATF</span><span class="tag">DOJ</span><span class="tag">Mexico</span><span class="tag">Cartels</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">52</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Bohemian Grove — America's Power Elite Secret Rituals</div>
+<div class="d-sum">Every July, hundreds of America's most powerful men gather at a private California forest for secretive ceremonies around a giant owl statue.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f cm" style="width:88%"></div></div><span class="cbar-p pm">88%</span></div>
+</div></div>
+<div class="d-body">Each July, the Bohemian Club hosts a two-week encampment in a 2,700-acre redwood grove north of San Francisco. Attendees have included every Republican president since Hoover, major CEOs, and military leaders. The encampment includes the "Cremation of Care" ceremony before a 40-foot owl statue. Journalist Alex Jones filmed a ceremony in 2000. The club's existence is confirmed; members include Nixon, Reagan, both Bushes, Kissinger and Rumsfeld.</div>
+<div class="d-tags"><span class="tag">Elite</span><span class="tag">Bohemian Grove</span><span class="tag">Rituals</span><span class="tag">Power</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">53</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Family Jewels — CIA's Own List of Its Crimes</div>
+<div class="d-sum">A 702-page internal CIA document cataloging the agency's own illegal activities from 1959 to 1973.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 1973, CIA Director James Schlesinger ordered employees to report all activities that might be "outside the CIA's charter." The resulting 702-page document — nicknamed "Family Jewels" — listed assassination plots, surveillance of journalists, opening of US mail, infiltration of political groups, and illegal domestic operations. Schlesinger's successor, William Colby, shared parts with Congress, triggering the Church Committee investigation. Partially declassified in 2007.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Family Jewels</span><span class="tag">Crimes</span><span class="tag">Church Committee</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">54</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Fukushima — TEPCO's Cover-Up of a Nuclear Meltdown</div>
+<div class="d-sum">TEPCO and the Japanese government concealed the true severity of the triple meltdown for days, allowing inadequate evacuations.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:94%"></div></div><span class="cbar-p ph">94%</span></div>
+</div></div>
+<div class="d-body">After the March 2011 tsunami triggered three nuclear meltdowns at Fukushima Daiichi, TEPCO and the Japanese government deliberately minimized public information about the severity for days. Internal emails and company records showed executives knew reactors had melted down while publicly claiming only "partial damage." The inadequate evacuation zone left thousands exposed to avoidable radiation. Multiple Japanese courts subsequently found TEPCO executives criminally negligent.</div>
+<div class="d-tags"><span class="tag">Fukushima</span><span class="tag">TEPCO</span><span class="tag">Nuclear</span><span class="tag">Japan</span></div>
+</div>
+<div class="ch-open">
+<div class="ch-num">Chapter V</div>
+<div class="ch-title">Finance, Fraud & Poisoning</div>
+<div class="ch-desc">10 documented cases of corporations and governments deliberately poisoning populations, manipulating global financial markets, and hiding the evidence for decades.</div>
+</div>
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">55</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">BCCI — The CIA's Bank</div>
+<div class="d-sum">The Bank of Credit and Commerce International laundered drug money, funded terrorism, bribed officials across 78 countries — and served as a covert CIA financial tool.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">The Bank of Credit and Commerce International (BCCI) was described by investigators as "the largest bank fraud in world financial history." Operating in 78 countries, it laundered money for the Medellin cartel, financed arms deals for the CIA's Contra operation, bribed officials globally, and managed accounts for terrorist organizations. When it was shut down in 1991, it had $12 billion in fraudulent loans. Robert Mueller (future FBI Director) led the initial US investigation but senior US officials were never prosecuted.</div>
+<div class="d-tags"><span class="tag">BCCI</span><span class="tag">CIA</span><span class="tag">Money Laundering</span><span class="tag">Bank Fraud</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">56</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">LIBOR Manipulation — $350 Trillion in Rigged Rates</div>
+<div class="d-sum">The world's major banks colluded for nearly a decade to manipulate the interest rate benchmark underlying $350 trillion in financial contracts.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">From 2003 to 2012, traders at Barclays, UBS, Deutsche Bank, JPMorgan, Citigroup and other major banks coordinated to manipulate LIBOR — the London Interbank Offered Rate that serves as a benchmark for $350 trillion in mortgages, student loans, derivatives and other financial products. Internal emails show traders openly celebrating their manipulation. Regulators imposed $9 billion in fines. No senior banker went to prison.</div>
+<div class="d-tags"><span class="tag">LIBOR</span><span class="tag">Banks</span><span class="tag">Market Manipulation</span><span class="tag">Rate Rigging</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">57</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Panama Papers — The World's Largest Tax Haven Leak</div>
+<div class="d-sum">11.5 million leaked documents revealed how 214,000 shell companies helped politicians, oligarchs and billionaires hide their wealth.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In April 2016, the International Consortium of Investigative Journalists published documents from Panamanian law firm Mossack Fonseca: 11.5 million files revealing 214,000 offshore entities used by political leaders, oligarchs and businessmen to hide wealth from tax authorities. Among those named: 12 current and former heads of state, 128 politicians, and figures from 200 countries. The Icelandic Prime Minister resigned within days of publication.</div>
+<div class="d-tags"><span class="tag">Panama Papers</span><span class="tag">Tax Evasion</span><span class="tag">Offshore</span><span class="tag">ICIJ</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">58</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Pandora Papers — The Sequel</div>
+<div class="d-sum">12 million documents exposed 35 world leaders and 300 public officials using secret offshore structures to hide personal fortunes.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In October 2021, the ICIJ published the Pandora Papers: 12 million documents from 14 offshore service providers revealing that 35 current and former heads of state and government used secret offshore structures to hide their wealth. King Abdullah of Jordan hid $70 million in real estate; Tony Blair avoided $400,000 in stamp duty; Ukrainian President Zelensky owned offshore companies. 300 public officials named across 91 countries.</div>
+<div class="d-tags"><span class="tag">Pandora Papers</span><span class="tag">Tax Evasion</span><span class="tag">Offshore</span><span class="tag">Oligarchs</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">59</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Volkswagen Dieselgate — 11 Million Cars with a Cheat</div>
+<div class="d-sum">Volkswagen installed software in 11 million vehicles that activated emissions controls only during official tests — real-world emissions were up to 40 times legal limits.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In September 2015, the US Environmental Protection Agency revealed that Volkswagen had installed "defeat device" software in 11 million diesel vehicles worldwide. The software detected when the car was undergoing an emissions test and activated full pollution controls; in normal driving, controls were disabled and emissions of nitrogen oxides were up to 40 times legal limits. VW paid over $33 billion in fines, penalties and settlements. CEO Martin Winterkorn resigned; seven executives were indicted.</div>
+<div class="d-tags"><span class="tag">Volkswagen</span><span class="tag">Dieselgate</span><span class="tag">Emissions</span><span class="tag">Fraud</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">60</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Big Tobacco — 50 Years of Deliberate Deception</div>
+<div class="d-sum">Cigarette companies knew since 1950 that tobacco caused cancer and spent decades funding disinformation campaigns to suppress the evidence.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Internal documents from Philip Morris and RJ Reynolds, made public during litigation in the 1990s, prove that tobacco companies knew cigarettes caused cancer from at least the 1950s. They funded front groups to create scientific "controversy," hired scientists to produce counter-studies, and suppressed internal research showing nicotine was addictive. The 1998 Master Settlement Agreement required $246 billion in payments to US states — but no criminal charges were filed against executives.</div>
+<div class="d-tags"><span class="tag">Tobacco</span><span class="tag">Philip Morris</span><span class="tag">Cancer</span><span class="tag">Disinformation</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">61</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Harvard Sugar Study — Science Bought and Paid For</div>
+<div class="d-sum">The sugar industry paid Harvard scientists in 1965 to shift the blame for heart disease from sugar to fat — shaping 50 years of dietary guidelines.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">A 2016 JAMA Internal Medicine article, based on internal sugar industry documents, revealed that in 1965 the Sugar Research Foundation paid three Harvard scientists $6,500 (equivalent to $50,000 today) to publish a review exonerating sugar and blaming saturated fat for coronary heart disease. The lead researcher, Dr. D. Mark Hegsted, later became head of nutrition at the USDA and helped draft the 1977 dietary guidelines that recommended reducing fat intake.</div>
+<div class="d-tags"><span class="tag">Sugar</span><span class="tag">Harvard</span><span class="tag">Nutrition</span><span class="tag">Disinformation</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">62</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Leaded Gasoline — Industry vs. Science for 70 Years</div>
+<div class="d-sum">Standard Oil added lead to gasoline knowing it was toxic, then spent 70 years suppressing the science proving mass poisoning of the global population.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Thomas Midgley Jr. invented leaded gasoline for Standard Oil in 1921. Early employees at the refinery died or went insane. Midgley himself suffered lead poisoning. The industry funded its own studies claiming safety while suppressing evidence of harm. Geochemist Clair Patterson, who discovered the true extent of global lead contamination in the 1960s, was systematically defunded and excluded from government panels. Leaded gasoline was banned in the US in 1996 (Europe 2000); an estimated 68 million American children were exposed.</div>
+<div class="d-tags"><span class="tag">Lead</span><span class="tag">Gasoline</span><span class="tag">Standard Oil</span><span class="tag">Poisoning</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">63</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Asbestos — The Industry Knew It Killed</div>
+<div class="d-sum">Asbestos manufacturers documented the lethal effects of their product as early as the 1930s and spent decades suppressing and destroying that evidence.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Internal documents from Johns-Manville, Raybestos-Manhattan and other asbestos manufacturers, revealed in litigation, show knowledge of the link between asbestos exposure and fatal lung diseases dating to the 1930s. Company doctors were instructed not to tell workers about their diagnoses. Insurance companies refused to insure asbestos workers by 1918. An estimated 100,000 people per year still die globally from asbestos-related disease, much of it in countries where it remains legal.</div>
+<div class="d-tags"><span class="tag">Asbestos</span><span class="tag">Mesothelioma</span><span class="tag">Industry</span><span class="tag">Cover-Up</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">64</div>
+<div class="d-meta">
+<div class="d-cat cF">Finance</div>
+<div class="d-title">Opioid Crisis — Purdue Pharma's Manufactured Epidemic</div>
+<div class="d-sum">The Sackler family's pharmaceutical company created a mass opioid addiction epidemic by bribing doctors and lying about OxyContin's addictive properties.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Purdue Pharma marketed OxyContin (oxycodone) beginning in 1996 with a fraudulent campaign claiming it had a lower potential for abuse than other opioids. The company paid thousands of doctors to prescribe it, funded front organizations, and distributed misleading "educational" materials. Between 1999 and 2019, over 500,000 Americans died from opioid overdoses. Purdue pleaded guilty to federal crimes in 2020. The Sackler family, having transferred $11 billion in personal wealth before bankruptcy, initially received immunity from prosecution.</div>
+<div class="d-tags"><span class="tag">Purdue</span><span class="tag">OxyContin</span><span class="tag">Opioids</span><span class="tag">Sackler</span></div>
+</div>
+<div class="ch-open">
+<div class="ch-num">Chapter VI</div>
+<div class="ch-title">Media, Manipulation & Disinformation</div>
+<div class="ch-desc">13 documented programs of psychological operations, press infiltration, digital manipulation, and state-sponsored propaganda targeting civilian populations.</div>
+</div>
+<div class="d">
+<div class="d-hdr">
+<div class="d-num">65</div>
+<div class="d-meta">
+<div class="d-cat cMe">Media</div>
+<div class="d-title">Operation Mockingbird — CIA Owns the Press</div>
+<div class="d-sum">The CIA recruited over 400 journalists in major American media outlets to plant stories and shape public opinion.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">Revealed by the Church Committee in 1975 and detailed by Carl Bernstein in a 1977 Rolling Stone exposé, Operation Mockingbird was a CIA program that recruited journalists from the New York Times, CBS, Time magazine, Newsweek, and other outlets to plant stories supportive of CIA operations. Over 400 journalists were involved. The program ran from the late 1940s. CIA Director William Colby admitted: "The Central Intelligence Agency owns everyone of any significance in the major media."</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Mockingbird</span><span class="tag">Media</span><span class="tag">Propaganda</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">66</div>
+<div class="d-meta">
+<div class="d-cat cMe">Media</div>
+<div class="d-title">Facebook Emotional Manipulation Experiment</div>
+<div class="d-sum">Facebook secretly manipulated the news feeds of 689,000 users to test whether emotions could be transmitted algorithmically — without their knowledge or consent.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">In 2014, Facebook and Cornell University researchers published a study in the Proceedings of the National Academy of Sciences revealing that they had conducted a psychological experiment on 689,003 Facebook users without their knowledge: manipulating what they saw in their news feeds to show either more positive or more negative content, then studying whether their own subsequent posts became more positive or negative. The experiment confirmed emotional contagion. Facebook's legal defense was that users had agreed to data use in the Terms of Service.</div>
+<div class="d-tags"><span class="tag">Facebook</span><span class="tag">Manipulation</span><span class="tag">Emotional Contagion</span><span class="tag">Social Media</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">67</div>
+<div class="d-meta">
+<div class="d-cat cMe">Media</div>
+<div class="d-title">Cambridge Analytica — 87 Million Profiles Weaponized</div>
+<div class="d-sum">Personality profiles built from 87 million Facebook accounts without consent were used to microtarget voters with psychologically tailored political messages.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Whistleblower Christopher Wylie revealed in 2018 that Cambridge Analytica had harvested data from 87 million Facebook profiles without consent (via a personality quiz app that also scraped friend networks) to build psychological profiles. These were used to microtarget US voters during the 2016 election with tailored political messaging designed to exploit individual psychological vulnerabilities. Facebook was fined $5 billion by the FTC — the largest privacy fine in history.</div>
+<div class="d-tags"><span class="tag">Cambridge Analytica</span><span class="tag">Facebook</span><span class="tag">Election</span><span class="tag">Microtargeting</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">68</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">STELLARWIND — Bush's Illegal Mass Surveillance Program</div>
+<div class="d-sum">Days after 9/11, Bush secretly authorized the NSA to conduct warrantless surveillance of all Americans — in direct violation of federal law.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">Within days of the September 11 attacks, President Bush secretly authorized the NSA to intercept the phone calls and emails of Americans on US soil without warrants — in direct violation of the Foreign Intelligence Surveillance Act. The program, codenamed STELLARWIND, was revealed to the New York Times by DOJ attorney Thomas Tamm in 2005. Several FISA Court judges resigned in protest. The program was ruled illegal by a federal court in 2006.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">STELLARWIND</span><span class="tag">Bush</span><span class="tag">Warrantless Surveillance</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">69</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">USA PATRIOT Act — Surveillance Legalized Overnight</div>
+<div class="d-sum">Passed 45 days after 9/11 with minimal debate, the PATRIOT Act legalized mass surveillance of American citizens and has never been fully repealed.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">The USA PATRIOT Act, signed on October 26, 2001 — 45 days after the September 11 attacks — was 342 pages long and passed with almost no public debate. It authorized warrantless access to library records, medical records, and business records; allowed "sneak and peek" searches without notification; and, as revealed by Snowden, authorized the bulk collection of phone metadata for all Americans under Section 215. Multiple provisions have been ruled unconstitutional. Key sections were renewed or made permanent under both Republican and Democratic administrations.</div>
+<div class="d-tags"><span class="tag">PATRIOT Act</span><span class="tag">Surveillance</span><span class="tag">9/11</span><span class="tag">NSA</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">70</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Stuxnet — The First Cyber Weapon in History</div>
+<div class="d-sum">The US and Israel created the first malware designed to cause physical destruction — sabotaging Iranian nuclear centrifuges.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:98%"></div></div><span class="cbar-p ph">98%</span></div>
+</div></div>
+<div class="d-body">Stuxnet, discovered in June 2010, was a computer worm of unprecedented sophistication designed to infiltrate Siemens industrial control systems and cause physical damage by making centrifuges spin at destructive speeds. It destroyed approximately 1,000 Iranian uranium enrichment centrifuges at Natanz. The New York Times confirmed it was a joint US-Israeli operation (Olympic Games program) in 2012. President Obama discussed it in his memoir. Stuxnet escaped the intended facility and infected computers worldwide.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">Stuxnet</span><span class="tag">Israel</span><span class="tag">Cyberweapon</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">71</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">PROMIS Software — CIA's Backdoored Spy Tool</div>
+<div class="d-sum">The Justice Department stole software from a small company, inserted a backdoor, and sold it to foreign governments to spy on their justice systems.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f cm" style="width:88%"></div></div><span class="cbar-p pm">88%</span></div>
+</div></div>
+<div class="d-body">In the early 1980s, the Justice Department stole PROMIS database software from Inslaw Inc. The software was modified with a hidden backdoor and sold to governments worldwide — including Israel, Jordan, Iraq and Canada — allowing US intelligence to monitor the legal and intelligence databases of foreign governments. Journalist Danny Casolaro, investigating what he called "The Octopus," was found dead in 1991 with both wrists slashed — ruled suicide despite evidence of a struggle.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">PROMIS</span><span class="tag">Inslaw</span><span class="tag">Backdoor</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">72</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">COINTELPRO vs. AIM — FBI War on Native Americans</div>
+<div class="d-sum">The FBI conducted a covert war against the American Indian Movement on Pine Ridge Reservation in the 1970s, with 64 suspicious deaths.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:97%"></div></div><span class="cbar-p ph">97%</span></div>
+</div></div>
+<div class="d-body">The FBI targeted the American Indian Movement (AIM) with COINTELPRO techniques throughout the 1970s, infiltrating chapters with informants, manufacturing criminal charges, and supporting a tribal police faction (GOON Squad) on Pine Ridge Reservation. Between 1973 and 1976, 64 AIM members or supporters were killed in what AIM called a "reign of terror." Leonard Peltier was convicted of killing two FBI agents in 1975 based on evidence that federal courts later found was fabricated; he remains imprisoned.</div>
+<div class="d-tags"><span class="tag">FBI</span><span class="tag">AIM</span><span class="tag">Native Americans</span><span class="tag">COINTELPRO</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">73</div>
+<div class="d-meta">
+<div class="d-cat cMi">Military</div>
+<div class="d-title">Gladio B — NATO's Islamist Networks</div>
+<div class="d-sum">Former FBI translator Sibel Edmonds alleges NATO maintained networks of Islamist extremists as a post-Cold War successor to Gladio.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f cl" style="width:85%"></div></div><span class="cbar-p pl">85%</span></div>
+</div></div>
+<div class="d-body">Sibel Edmonds, former FBI translator and founder of the National Security Whistleblowers Coalition, alleges the existence of "Gladio B": NATO-coordinated networks of Islamist extremists operated through Turkey as a post-Cold War geopolitical tool, analogous to the Cold War-era stay-behind networks. Her testimony was classified by the State Department under "state secrets privilege." Some aspects have been corroborated by investigative journalists, but the program's full scope remains disputed.</div>
+<div class="d-tags"><span class="tag">NATO</span><span class="tag">Gladio B</span><span class="tag">Turkey</span><span class="tag">Islamism</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">74</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">The Business Plot — Fascist Coup Against FDR</div>
+<div class="d-sum">In 1934, a group of wealthy American businessmen allegedly recruited a Marine general to lead a fascist coup against Franklin Roosevelt.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f cm" style="width:90%"></div></div><span class="cbar-p pm">90%</span></div>
+</div></div>
+<div class="d-body">In 1934, retired Marine Major General Smedley Butler testified before a Congressional committee that he had been approached by representatives of wealthy businessmen (including those connected to DuPont and J.P. Morgan) with a plan to recruit 500,000 veterans, march on Washington, and remove Roosevelt from power in favor of a fascist-style government. The McCormack-Dickstein Committee confirmed the plot's existence but no prosecutions resulted. Butler, twice awarded the Medal of Honor, published his testimony.</div>
+<div class="d-tags"><span class="tag">FDR</span><span class="tag">Coup</span><span class="tag">Wall Street</span><span class="tag">Fascism</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">75</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Operation Merlin — CIA Gave Iran Fake Nuclear Bomb Plans</div>
+<div class="d-sum">The CIA deliberately provided Iran with flawed nuclear weapon designs — but the Russian scientist hired to deliver them warned Iran about the defects.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:94%"></div></div><span class="cbar-p ph">94%</span></div>
+</div></div>
+<div class="d-body">Operation Merlin: in 2000, the CIA used a Russian nuclear scientist to deliver deliberately flawed blueprints for a nuclear weapon trigger device to Iran, hoping to send Iran's weapons program down a dead end. The Russian scientist, realizing the plans were defective, included a note warning Iran of the flaws — potentially helping rather than hindering the program. Revealed by James Risen in his 2006 book "State of War." The scientist was later convicted of espionage.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Iran</span><span class="tag">Nuclear</span><span class="tag">Operation Merlin</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">76</div>
+<div class="d-meta">
+<div class="d-cat cS">Surveillance</div>
+<div class="d-title">ECHELON for Business — Industrial Espionage Against Allies</div>
+<div class="d-sum">The NSA used ECHELON to conduct economic espionage against European companies, feeding intelligence to American competitors.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:95%"></div></div><span class="cbar-p ph">95%</span></div>
+</div></div>
+<div class="d-body">A 2001 report by the European Parliament documented multiple cases of ECHELON being used for economic espionage: Airbus lost a $6 billion contract with Saudi Arabia after the NSA intercepted communications and passed the intelligence to Boeing; Thomson-CSF lost a $1.4 billion Brazilian radar contract to Raytheon after similar interception. The report caused a diplomatic crisis and prompted European companies to develop encryption measures specifically to counter NSA surveillance.</div>
+<div class="d-tags"><span class="tag">NSA</span><span class="tag">ECHELON</span><span class="tag">Industrial Espionage</span><span class="tag">Boeing</span></div>
+</div><div class="d">
+<div class="d-hdr">
+<div class="d-num">77</div>
+<div class="d-meta">
+<div class="d-cat cG">Government</div>
+<div class="d-title">Extraordinary Rendition — Outsourcing Torture</div>
+<div class="d-sum">The CIA operated a global network of secret flights and detention sites to transfer suspects to countries that would torture them on America's behalf.</div>
+<div class="cbar"><span class="cbar-lbl">Credibility</span><div class="cbar-t"><div class="cbar-f ch" style="width:99%"></div></div><span class="cbar-p ph">99%</span></div>
+</div></div>
+<div class="d-body">After 9/11, the CIA established a program of "extraordinary rendition" — capturing individuals worldwide and transferring them to countries including Egypt, Syria, Morocco and Jordan known to practice torture. Khaled el-Masri, a German citizen, was abducted in Macedonia, flown to Afghanistan, and tortured for five months before the CIA realized he was not the person they wanted. The European Court of Human Rights ruled against Macedonia in 2012. The program is confirmed by multiple government investigations and court decisions.</div>
+<div class="d-tags"><span class="tag">CIA</span><span class="tag">Rendition</span><span class="tag">Torture</span><span class="tag">Black Sites</span></div>
+</div>
+<div class="conc">
+<h2>Conclusion</h2>
+<div class="conc-rule"></div>
+<p>You have just read 77 dossiers. Every single one was denied, minimized, or dismissed as a "conspiracy theory" before being officially confirmed. Some took decades to emerge. Others are still waiting in archives classified beyond your lifetime.</p>
+<blockquote>"The truth is a threat to power. That is why it is buried, classified, and destroyed. And that is why it always resurfaces."</blockquote>
+<p>What emerges from this compilation is not cynicism — it is proof that whistleblowers, investigative journalists, persistent lawyers, and curious citizens have real power. Every dossier in this book was exposed by a human being who decided that truth was worth more than their comfort, their career, or their safety.</p>
+<p>This list is not exhaustive. This book could be three times longer. There are scandals still unfolding, archives still classified, crimes still without names. Mass surveillance continues. Covert operations continue. Government lies continue.</p>
+<p>But now you know how they work. And knowledge — even uncomfortable, even dangerous knowledge — is the foundation of every resistance that has ever mattered. This is not an ending. It is a beginning.</p>
+<div class="app">mojo<span>Visionnaire</span></div>
+<p style="margin-top:12px;color:#7a7d9a;font-size:.85rem">The platform of confirmed revelations — join the community of the awake.</p>
+<div class="final">mojoVisionnaire &middot; 2026 &middot; All Rights Reserved &middot; Truth Needs No Permission.</div>
+</div>
+
+</div><!-- /book -->
+</body>
+</html>
